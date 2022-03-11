@@ -16,4 +16,5 @@ public class Resort {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    private String name;
 }

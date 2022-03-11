@@ -16,4 +16,6 @@ public class SchUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    private String name;
 }
