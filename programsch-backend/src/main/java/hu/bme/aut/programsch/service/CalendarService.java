@@ -45,4 +45,8 @@ public class CalendarService {
     @Transactional
     public void deleteCalendar(long id) {
     }
+
+    public CalendarDto updateCalendar(CalendarDto calendarDto) {
+        return calendarDto;
+    }
 }

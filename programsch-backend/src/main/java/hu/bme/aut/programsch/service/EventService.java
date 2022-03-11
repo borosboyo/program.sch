@@ -45,4 +45,8 @@ public class EventService {
     @Transactional
     public void deleteEvent(long id) {
     }
+
+    public EventDto updateEvent(EventDto eventDto) {
+        return eventDto;
+    }
 }

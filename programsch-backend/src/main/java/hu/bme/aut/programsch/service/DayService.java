@@ -45,4 +45,8 @@ public class DayService {
     @Transactional
     public void deleteDay(long id) {
     }
+
+    public DayDto updateDay(DayDto dayDto) {
+        return dayDto;
+    }
 }

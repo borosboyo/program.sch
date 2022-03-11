@@ -45,4 +45,8 @@ public class SchUserService {
     @Transactional
     public void deleteSchUser(long id) {
     }
+
+    public SchUserDto updateSchUser(SchUserDto schUserDto) {
+        return schUserDto;
+    }
 }

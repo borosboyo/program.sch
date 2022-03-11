@@ -45,4 +45,8 @@ public class ResortService {
     @Transactional
     public void deleteResort(long id) {
     }
+
+    public ResortDto updateResort(ResortDto resortDto) {
+        return resortDto;
+    }
 }
