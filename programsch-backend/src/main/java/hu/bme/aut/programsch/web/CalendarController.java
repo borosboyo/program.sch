@@ -39,7 +39,7 @@ public class CalendarController {
     }
 
     @PutMapping("/{id}")
-    public CalendarDto updateCalendar(@PathVariable long id) {
-        //return calendarService.updateCalendar(calendarService.findById(id));
+    public CalendarDto updateCalendar(@RequestBody CalendarDto calendarDto) {
+        return calendarService.updateCalendar(calendarDto);
     }
 }

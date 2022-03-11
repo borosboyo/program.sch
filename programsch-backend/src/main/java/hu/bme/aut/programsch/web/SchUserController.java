@@ -39,7 +39,7 @@ public class SchUserController {
     }
 
     @PutMapping("/{id}")
-    public SchUserDto updateSchUser(@PathVariable long id) {
-        //return schUserService.updateSchUser(schUserService.findById(id));
+    public SchUserDto updateSchUser(@RequestBody SchUserDto schUserDto) {
+        return schUserService.updateSchUser(schUserDto);
     }
 }

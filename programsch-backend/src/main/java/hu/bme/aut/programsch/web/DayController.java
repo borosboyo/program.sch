@@ -39,7 +39,7 @@ public class DayController {
     }
 
     @PutMapping("/{id}")
-    public DayDto updateDay(@PathVariable long id) {
-        //return dayService.updateDay(dayService.findById(id));
+    public DayDto updateDay(@RequestBody DayDto dayDto) {
+        return dayService.updateDay(dayDto);
     }
 }

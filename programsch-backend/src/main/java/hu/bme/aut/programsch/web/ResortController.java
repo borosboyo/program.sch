@@ -39,7 +39,7 @@ public class ResortController {
     }
 
     @PutMapping("/{id}")
-    public ResortDto updateResort(@PathVariable long id) {
-        //return resortService.updateResort(resortService.findById(id));
+    public ResortDto updateResort(@RequestBody ResortDto resortDto) {
+        return resortService.updateResort(resortDto);
     }
 }
