@@ -36,6 +36,10 @@ public final class CircleEntity implements Serializable {
     private String websiteUrl;
     @Column
     private Long virGroupId;
+
+    @ManyToOne
+    private Resort resort;
+
     public long getId() {
         return id;
     }
