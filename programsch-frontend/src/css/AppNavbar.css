@@ -6,3 +6,8 @@ navbar-brand {
     flex: auto;
     justify-content: right;
 }
+
+#signInButton {
+    color: white;
+    text-decoration: none;
+}
