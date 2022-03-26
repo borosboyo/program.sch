@@ -27,12 +27,20 @@ public final class AppUserEntity {
     @ElementCollection(fetch = FetchType.EAGER)
     public List<String> permissions;
 
-    public AppUserEntity(String uid, String name, String email, String room, List<String> permissions) {
+    @Column
+    private boolean filtersEnabled;
+
+    @Column
+    @ManyToMany
+    private List<CircleEntity> filters;
+
+    public AppUserEntity(String uid, String name, String email, String room, List<String> permissions, boolean filtersEnabled) {
         this.uid = uid;
         this.name = name;
         this.email = email;
         this.room = room;
         this.permissions = permissions;
+        this.filtersEnabled = filtersEnabled;
     }
 
     public String getUid() {
@@ -73,5 +81,13 @@ public final class AppUserEntity {
 
     public void setPermissions(List<String> permissions) {
         this.permissions = permissions;
+    }
+
+    public boolean getFiltersEnabled() {
+        return filtersEnabled;
+    }
+
+    public void setFiltersEnabled(boolean filtersEnabled) {
+        this.filtersEnabled = filtersEnabled;
     }
 }

@@ -17,9 +17,14 @@ public class Resort {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column
     private String name;
 
     @Column
     @OneToMany(mappedBy = "resort")
     private List<CircleEntity> circleEntities;
+
+    public Resort(String name) {
+        this.name = name;
+    }
 }

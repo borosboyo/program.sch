@@ -6,12 +6,12 @@ export class LoginControl extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {userObject: {}, loginUrl: ''};
+        this.state = {isLoggedIn: {}, loginUrl: ''};
     }
 
-    reloadPage(){
+    reloadPage() {
         const reloadCount = sessionStorage.getItem('reloadCount');
-        if(reloadCount < 2) {
+        if (reloadCount < 2) {
             sessionStorage.setItem('reloadCount', String(reloadCount + 1));
             window.location.reload();
         } else {
@@ -20,19 +20,18 @@ export class LoginControl extends React.Component {
     }
 
     componentDidMount() {
-        this.handleGetLoginState()
+        this.handleGetLoginState();
     }
 
     handleGetLoginState() {
         fetch(`http://localhost:8080/isLoggedIn`, {
-            headers : {
+            headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             }
         })
             .then((response) => response.json())
-            .then(data => this.setState({userObject: data}) );
-        this.reloadPage();
+            .then(data => this.setState({isLoggedIn: data}))
     }
 
     handleLogin(){
@@ -48,20 +47,20 @@ export class LoginControl extends React.Component {
         return this.state.loginUrl.url;
     }
 
-    handleLogout(){
-        fetch(`http://localhost:8080/logout`).then(data => console.log(data))
+
+    handleLogout() {
+        fetch(`http://localhost:8080/logout`).then(data => console.log("logout"))
         this.reloadPage();
     }
 
-
     render() {
-        const user = this.state.userObject;
-        if (user.name !== undefined) {
+        const isLoggedIn = this.state.isLoggedIn;
+        if (isLoggedIn) {
             return (
                 <div className="collapse navbar-collapse" id="rightButtons">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0" id="loginButtons">
                         <li className="nav-item">
-                            <a className="nav-link active" aria-current="page" href="#">Profil</a>
+                            <a className="nav-link active" aria-current="page" href="/profile">Profil</a>
                         </li>
                         <li className="nav-item">
                             <Button onClick={() => this.handleLogout()}>Kijelentkezés</Button>
@@ -78,6 +77,5 @@ export class LoginControl extends React.Component {
                     </ul>
                 </div>);
         }
-
     }
 }

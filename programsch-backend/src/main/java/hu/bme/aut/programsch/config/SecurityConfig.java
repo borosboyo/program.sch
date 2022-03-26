@@ -11,15 +11,17 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
+
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/", "/index", "/circle", "/items", "/search/**",
-                        "/item/**", "/items/**", "/provider/**", "/p/**").permitAll()
-                .antMatchers("/loggedin", "/login").permitAll()
+                        "/item/**", "/items/**", "/provider/**", "/p/**", "/enableFilters").permitAll()
+                .antMatchers("/loggedin", "/logout").permitAll()
                 .antMatchers("/api/**").permitAll()
                 .antMatchers("/profile", "/profile/**", "/stats").hasRole(Role.USER.name())
                 .antMatchers("/configure/**").hasAnyRole(Role.LEADER.name(), Role.ADMIN.name())
@@ -28,10 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/login");
 
-        http.csrf().ignoringAntMatchers("/api/**",
-                "/configure/order/update",
-                "/configure/order/set-comment",
-                "/configure/order/change-price");
+        http.cors();
     }
 
     protected void configure(AuthenticationManagerBuilder auth) {

@@ -1,6 +1,5 @@
 import React from 'react';
 import AppNavbar from './AppNavbar';
-import {Container} from "reactstrap";
 
 export class Home extends React.Component {
 
@@ -8,8 +7,6 @@ export class Home extends React.Component {
         return (
             <div>
                 <AppNavbar/>
-                <Container fluid>
-                </Container>
             </div>
         );
     }

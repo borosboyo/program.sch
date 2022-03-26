@@ -1,21 +1,18 @@
 import React from 'react';
 import {Home} from "./Home";
-import {LoginControl} from "./LoginControl";
-import AppNavbar from "./AppNavbar";
-import {Redirect} from "react-router-dom";
-
+//UNUSED!!
 export class LoginRedirect extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {loginUrl: ''};
-    }
-
-    componentDidMount() {
         const queryParams = new URLSearchParams(window.location.search);
         const code = queryParams.get('code');
         const state = queryParams.get('state');
         this.handleLoginRequest(code, state);
+    }
+
+    componentDidMount() {
     }
 
     async handleLoginRequest(code, state) {
@@ -33,7 +30,7 @@ export class LoginRedirect extends React.Component {
     render() {
         return (
             <div>
-                <Home></Home>
+                <Home/>
             </div>
         )
     }
