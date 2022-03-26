@@ -40,6 +40,15 @@ public final class CircleEntity implements Serializable {
     @ManyToOne
     private Resort resort;
 
+    @Column
+    @ManyToMany
+    private List<AppUserEntity> filteredBy;
+
+    public CircleEntity(String displayName, Resort resort) {
+        this.displayName = displayName;
+        this.resort = resort;
+    }
+
     public long getId() {
         return id;
     }
@@ -118,6 +127,15 @@ public final class CircleEntity implements Serializable {
 
     public void setVirGroupId(Long virGroupId) {
         this.virGroupId = virGroupId;
+    }
+
+
+    public Resort getResort() {
+        return resort;
+    }
+
+    public void setResort(Resort resort) {
+        this.resort = resort;
     }
 
 }
