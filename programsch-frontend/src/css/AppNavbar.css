@@ -1,0 +1,14 @@
+
+#navbar {
+    margin-bottom: 30px;
+}
+
+#loginButtons {
+    flex: auto;
+    justify-content: right;
+}
+
+#signInButton {
+    color: white;
+    text-decoration: none;
+}

@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "resort")
@@ -16,5 +17,14 @@ public class Resort {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column
     private String name;
+
+    @Column
+    @OneToMany(mappedBy = "resort")
+    private List<CircleEntity> circleEntities;
+
+    public Resort(String name) {
+        this.name = name;
+    }
 }

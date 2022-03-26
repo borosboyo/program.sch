@@ -12,5 +12,5 @@ public interface ResortRepository extends JpaRepository<Resort, Long> {
     @Modifying
     long removeById(long id);
 
-    List<Resort> findByName(String name);
+    Resort findByName(String name);
 }
