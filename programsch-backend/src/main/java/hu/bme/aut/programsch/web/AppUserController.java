@@ -1,8 +1,11 @@
 package hu.bme.aut.programsch.web;
 
-import hu.bme.aut.programsch.model.AppUserEntity;
+import hu.bme.aut.programsch.dto.AppUserDto;
+import hu.bme.aut.programsch.model.AppUser;
 import hu.bme.aut.programsch.service.AppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,26 +19,28 @@ public class AppUserController {
     private AppUserService appUserService;
 
     @GetMapping(value = "/appUserEntity", produces = "application/json")
-    public AppUserEntity getAppUserEntity() {
+    public AppUser getAppUserEntity() {
         return appUserService.findAll().get(0);
     }
 
     @GetMapping(value = "/getFiltersEnabled", produces = "application/json")
     public boolean getAreFiltersEnabled() {
-        return appUserService.findAll().get(0).getFiltersEnabled();
+        return appUserService.findAllDto().get(0).isFiltersEnabled();
     }
 
     @PostMapping("/enableFilters")
-    public void enableFilters() {
-        AppUserEntity appUser = appUserService.findAll().get(0);
-        appUser.setFiltersEnabled(true);
-        appUserService.save(appUser);
+    public ResponseEntity<AppUserDto> enableFilters() {
+        AppUserDto appUserDto = appUserService.findAllDto().get(0);
+        appUserDto.setFiltersEnabled(true);
+        appUserService.save(appUserDto);
+        return new ResponseEntity<>(appUserService.save(appUserDto), HttpStatus.OK);
     }
 
     @PostMapping("/disableFilters")
     public void disableFilters() {
-        AppUserEntity appUser = appUserService.findAll().get(0);
+        AppUserDto appUser = appUserService.findAllDto().get(0);
         appUser.setFiltersEnabled(false);
         appUserService.save(appUser);
     }
 }
+

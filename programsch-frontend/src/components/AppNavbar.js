@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import '../css/AppNavbar.css'
-import 'bootstrap/dist/css/bootstrap.min.css';
 import {LoginControl} from './LoginControl';
 
 export default class AppNavbar extends Component {

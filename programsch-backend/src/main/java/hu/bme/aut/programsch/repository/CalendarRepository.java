@@ -9,8 +9,4 @@ import java.util.List;
 
 @Repository
 public interface CalendarRepository extends JpaRepository<Calendar, Long> {
-    @Modifying
-    long removeById(long id);
-
-    List<Calendar> findByName(String name);
 }

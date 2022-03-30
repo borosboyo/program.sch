@@ -1,6 +1,8 @@
 package hu.bme.aut.programsch.service;
 
-import hu.bme.aut.programsch.model.AppUserEntity;
+import hu.bme.aut.programsch.dto.AppUserDto;
+import hu.bme.aut.programsch.mapper.AppUserMapper;
+import hu.bme.aut.programsch.model.AppUser;
 import hu.bme.aut.programsch.repository.AppUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,10 +15,16 @@ import java.util.List;
 public class AppUserService {
 
     private final AppUserRepository appUserRepository;
+    private final AppUserMapper appUserMapper;
 
     @Transactional
-    public AppUserEntity getById(String uid) {
+    public AppUser getById(String uid) {
         return appUserRepository.getById(uid);
+    }
+
+    @Transactional
+    public AppUserDto getByIdDto(String uid) {
+        return appUserMapper.appUserEntityToDto(appUserRepository.getById(uid));
     }
 
     @Transactional
@@ -25,13 +33,29 @@ public class AppUserService {
     }
 
     @Transactional
-    public void save(AppUserEntity appUserEntity) {
-        appUserRepository.save(appUserEntity);
+    public AppUserDto save(AppUserDto appUserDto) {
+        AppUser appUserEntity = appUserRepository.save(
+                new AppUser(
+                        appUserDto.getName(),
+                        appUserDto.getEmail()));
+        return appUserMapper.appUserEntityToDto(appUserEntity);
     }
 
     @Transactional
-    public List<AppUserEntity> findAll() {
+    public AppUserDto save(AppUser appUser) {
+        return appUserMapper.appUserEntityToDto(appUserRepository.save(appUser));
+    }
+
+    @Transactional
+    public List<AppUser> findAll() {
         return appUserRepository.findAll();
     }
+
+    @Transactional
+    public List<AppUserDto> findAllDto() {
+        return appUserMapper.appUserEntitiesToDtos(appUserRepository.findAll());
+    }
+
+
 
 }

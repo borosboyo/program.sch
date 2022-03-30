@@ -1,52 +1,46 @@
 package hu.bme.aut.programsch.service;
 
-import hu.bme.aut.programsch.dto.CalendarDto;
-import hu.bme.aut.programsch.mapper.CalendarMapper;
+
 import hu.bme.aut.programsch.model.Calendar;
+import hu.bme.aut.programsch.model.Day;
 import hu.bme.aut.programsch.repository.CalendarRepository;
+import hu.bme.aut.programsch.repository.DayRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
 public class CalendarService {
+
     private final CalendarRepository calendarRepository;
 
-    private final CalendarMapper calendarMapper;
+    private final DayRepository dayRepository;
 
     @Transactional
-    public CalendarDto findById(long id) {
-        Optional<Calendar> calendar = calendarRepository.findById(id);
-        return calendar.map(calendarMapper::calendarToDto).orElse(null);
+    public Calendar getCalendar() {
+        checkIfCalendarEmpty();
+        return calendarRepository.findAll().get(0);
     }
 
-    @Transactional
-    public List<CalendarDto> findAll() {
-        return calendarMapper.calendarsToDto(calendarRepository.findAll());
-    }
 
-    @Transactional
-    public CalendarDto createCalendar(CalendarDto calendarDto) {
-        return new CalendarDto();
-    }
-
-    @Transactional
-    public void deleteAll() {
-        List<Calendar> calendars = calendarRepository.findAll();
-        for (Calendar b : calendars) {
-            deleteCalendar(b.getId());
+    private void checkIfCalendarEmpty() {
+        if(calendarRepository.findAll().isEmpty()) {
+            Calendar calendar = new Calendar();
+            addOneYear(calendar);
+            calendarRepository.save(calendar);
         }
     }
 
-    @Transactional
-    public void deleteCalendar(long id) {
-    }
-
-    public CalendarDto updateCalendar(CalendarDto calendarDto) {
-        return calendarDto;
+    private void addOneYear(Calendar calendar) {
+        for(int ii = 0; ii < 365; ii++) {
+            Day day = new Day(LocalDate.now().plusDays(ii));
+            day.setCalendar(calendar);
+            dayRepository.save(day);
+            calendar.getDays().add(day);
+        }
     }
 }

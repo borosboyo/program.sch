@@ -9,8 +9,4 @@ import java.util.List;
 
 @Repository
 public interface DayRepository extends JpaRepository<Day, Long> {
-    @Modifying
-    long removeById(long id);
-
-    List<Day> findByName(String name);
 }

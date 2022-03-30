@@ -1,0 +1,7 @@
+.button-box  {
+    text-align:center;
+}
+.button-box > a {
+    margin-left: 5px;
+    margin-right: 5px;
+}

@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "circleMembers")
-public final class CircleMemberEntity implements Serializable {
+public final class CircleMember implements Serializable {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -15,7 +15,7 @@ public final class CircleMemberEntity implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
-    private CircleEntity circle;
+    private Circle circle;
 
     @Column
     private String name;

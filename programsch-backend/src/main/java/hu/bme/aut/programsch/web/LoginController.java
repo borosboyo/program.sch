@@ -6,7 +6,7 @@ import hu.bme.aut.programsch.config.authsch.response.AuthResponse;
 import hu.bme.aut.programsch.config.authsch.response.ProfileDataResponse;
 import hu.bme.aut.programsch.config.authsch.struct.PersonEntitlement;
 import hu.bme.aut.programsch.config.authsch.struct.Scope;
-import hu.bme.aut.programsch.model.AppUserEntity;
+import hu.bme.aut.programsch.model.AppUser;
 import hu.bme.aut.programsch.model.LoginUrl;
 import hu.bme.aut.programsch.service.AppUserService;
 import hu.bme.aut.programsch.service.CircleService;
@@ -46,7 +46,7 @@ public class LoginController {
     @Autowired
     private CircleService circleService;
 
-    private AppUserEntity appUserEntity;
+    private AppUser appUserEntity;
 
     private boolean loggedIn = false;
 
@@ -56,7 +56,7 @@ public class LoginController {
         try {
             AuthResponse response = authSchAPI.validateAuthentication(code);
             ProfileDataResponse profile = authSchAPI.getProfile(response.getAccessToken());
-            AppUserEntity appUser;
+            AppUser appUser;
             List<Long> ownedCircles = getOwnedCircleIds(profile);
             if (appUserService.exists(profile.getInternalId().toString())) {
                 appUser = appUserService.getById(profile.getInternalId().toString());
@@ -67,12 +67,11 @@ public class LoginController {
                 }
 
             } else {
-                appUser = new AppUserEntity(profile.getInternalId().toString(),
+                appUser = new AppUser(profile.getInternalId().toString(),
                         profile.getSurname() + " " + profile.getGivenName(),
                         profile.getMail(),
                         "",
-                        getCirclePermissionList(ownedCircles),
-                        false);
+                        getCirclePermissionList(ownedCircles));
                 appUserService.save(appUser);
                 this.appUserEntity = appUser;
             }
@@ -88,7 +87,9 @@ public class LoginController {
                     .location(URI.create("http://localhost:3000"))
                     .build();
         } catch (Exception e) {
-            auth.setAuthenticated(false);
+            if(auth != null) {
+                auth.setAuthenticated(false);
+            }
             e.printStackTrace();
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -151,7 +152,7 @@ public class LoginController {
         return permissions;
     }
 
-    private List<GrantedAuthority> getAuthorities(AppUserEntity user) {
+    private List<GrantedAuthority> getAuthorities(AppUser user) {
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_${Role.USER.name}"));
         if (user.permissions.contains("ROLE_${Role.LEADER.name}"))
