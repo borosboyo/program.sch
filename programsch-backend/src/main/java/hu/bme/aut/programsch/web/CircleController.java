@@ -1,5 +1,6 @@
 package hu.bme.aut.programsch.web;
 
+import hu.bme.aut.programsch.dto.CircleFilterDto;
 import hu.bme.aut.programsch.model.Circle;
 import hu.bme.aut.programsch.service.CircleService;
 import hu.bme.aut.programsch.service.ResortService;
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController
+@RestController 
 public class CircleController {
 
     @Autowired
@@ -26,5 +27,10 @@ public class CircleController {
     @GetMapping("/circles")
     public int getCircles(){
         return circleService.findAll().size();
+    }
+
+    @GetMapping("/filters")
+    public List<CircleFilterDto> getFilters() {
+        return circleService.findAllFilters();
     }
 }

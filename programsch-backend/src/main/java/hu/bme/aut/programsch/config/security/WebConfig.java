@@ -1,4 +1,4 @@
-package hu.bme.aut.programsch.config;
+package hu.bme.aut.programsch.config.security;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

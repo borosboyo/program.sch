@@ -1,25 +1,44 @@
 import React from 'react'
 import '../css/Calendar.css'
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap-icons/font/bootstrap-icons.css';
 import moment from "moment";
 
 export default class Calendar extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {startOfWeek: '', endOfWeek: ''};
+        this.state = {startOfWeek: '', endOfWeek: '', week: {}};
     }
 
     componentDidMount() {
         this.resolveDates();
+        this.fetchWeek();
     }
 
-    resolveDates(){
+    fetchWeek() {
+        const startOfWeek = this.state.startOfWeek;
+        const endOfWeek = this.state.endOfWeek;
+        fetch('http://localhost:8080/week', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(startOfWeek, endOfWeek)
+        });
+    }
+
+    resolveDates() {
         this.setState({startOfWeek: moment().startOf('week').format('YYYY. MM. DD.')});
         this.setState({endOfWeek: moment().endOf('week').format('YYYY. MM. DD.')});
     }
 
+    handleNextWeek() {
+
+    }
+
+    handlePrevWeek() {
+
+    }
 
     render() {
         return (
@@ -49,7 +68,7 @@ export default class Calendar extends React.Component {
                 </div>
                 <div className="button-box col-lg-12">
                     <a href="" className="btn btn-primary" role="button">
-                         Előző hét
+                        Előző hét
                     </a>
                     <a href="" className="btn btn-primary" role="button">
                         Következő hét

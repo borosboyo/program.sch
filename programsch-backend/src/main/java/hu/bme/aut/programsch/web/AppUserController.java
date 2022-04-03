@@ -1,6 +1,7 @@
 package hu.bme.aut.programsch.web;
 
 import hu.bme.aut.programsch.dto.AppUserDto;
+import hu.bme.aut.programsch.dto.CircleFilterDto;
 import hu.bme.aut.programsch.model.AppUser;
 import hu.bme.aut.programsch.service.AppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -18,7 +21,7 @@ public class AppUserController {
     @Autowired
     private AppUserService appUserService;
 
-    @GetMapping(value = "/appUserEntity", produces = "application/json")
+    @GetMapping(value = "/appUser", produces = "application/json")
     public AppUser getAppUserEntity() {
         return appUserService.findAll().get(0);
     }
@@ -41,6 +44,12 @@ public class AppUserController {
         AppUserDto appUser = appUserService.findAllDto().get(0);
         appUser.setFiltersEnabled(false);
         appUserService.save(appUser);
+    }
+
+    @GetMapping("/appuser/filters")
+    public List<CircleFilterDto> getUserFilters() {
+        System.out.println(appUserService.findUserFilters());
+        return appUserService.findUserFilters();
     }
 }
 

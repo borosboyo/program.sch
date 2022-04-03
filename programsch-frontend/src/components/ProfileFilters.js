@@ -6,7 +6,7 @@ export class ProfileFilters extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {filter: {}};
+        this.state = {filtersEnabled: {}};
     }
 
     componentDidMount() {
@@ -24,8 +24,8 @@ export class ProfileFilters extends React.Component {
             .then(data => this.setState({filter: data}));
     }
 
-    async handleEnableFilters() {
-        await fetch('http://localhost:8080/enableFilters', {
+     handleEnableFilters() {
+         fetch('http://localhost:8080/enableFilters', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -34,8 +34,8 @@ export class ProfileFilters extends React.Component {
         }).then(data => console.log("enable"));
     }
 
-    async handleDisableFilters() {
-        await fetch('http://localhost:8080/disableFilters', {
+     handleDisableFilters() {
+         fetch('http://localhost:8080/disableFilters', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

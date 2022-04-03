@@ -4,9 +4,30 @@ import AppNavbar from "./AppNavbar";
 export class EditFilters extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {filters: {}, userFilters: {}};
     }
 
     componentDidMount() {
+    }
+
+    handleGetFilterList() {
+        fetch('http://localhost:8080/filters', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }).then(data => this.setState({filters: data}));
+    }
+
+    handleGetUserFilterList() {
+        fetch('http://localhost:8080/disableFilters', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }).then(data => this.setState({userFilters: data}));
     }
 
     render() {

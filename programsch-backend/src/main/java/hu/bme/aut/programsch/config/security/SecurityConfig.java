@@ -1,5 +1,5 @@
 // Role.java
-package hu.bme.aut.programsch.config;
+package hu.bme.aut.programsch.config.security;
 
 import hu.bme.aut.programsch.config.authsch.AuthSchAPI;
 import hu.bme.aut.programsch.config.authsch.Role;
