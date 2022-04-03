@@ -10,6 +10,11 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 
 @EnableWebSecurity
@@ -23,6 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/item/**", "/items/**", "/provider/**", "/p/**", "/enableFilters").permitAll()
                 .antMatchers("/loggedin", "/logout").permitAll()
                 .antMatchers("/api/**").permitAll()
+                .antMatchers("/disableFilters").permitAll()
                 .antMatchers("/profile", "/profile/**", "/stats").hasRole(Role.USER.name())
                 .antMatchers("/configure/**").hasAnyRole(Role.LEADER.name(), Role.ADMIN.name())
                 .antMatchers("/admin", "/admin/**").hasRole(Role.ADMIN.name())
@@ -30,14 +36,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/login");
 
-        http.cors();
+        http.cors().and().antMatcher("/enableFilters").cors().and().antMatcher("/disableFilters").cors();
+
     }
 
     protected void configure(AuthenticationManagerBuilder auth) {
         if (auth != null) {
             auth.eraseCredentials(true);
         }
+    }
 
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000/"));
+        configuration.setAllowedMethods(Arrays.asList("GET","POST"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 
     @Bean
