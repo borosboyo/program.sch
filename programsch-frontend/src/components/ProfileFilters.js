@@ -7,14 +7,28 @@ export class ProfileFilters extends React.Component {
     constructor(props) {
         super(props);
         this.state = {filtersEnabled: {}};
+        this.handleGetFilterState = this.handleGetFilterState.bind(this);
+        this.handleEnableFilters = this.handleEnableFilters.bind(this);
+        this.handleDisableFilters = this.handleDisableFilters.bind(this);
     }
 
     componentDidMount() {
-        this.handleGetFilters();
+        this.handleGetFilterState();
     }
 
-    handleGetFilters() {
-        fetch(`http://localhost:8080/getFiltersEnabled`, {
+    reloadPage() {
+        const reloadCount = sessionStorage.getItem('reloadCount');
+        if (reloadCount < 2) {
+            sessionStorage.setItem('reloadCount', String(reloadCount + 1));
+            window.location.reload();
+        } else {
+            sessionStorage.removeItem('reloadCount');
+        }
+    }
+
+    handleGetFilterState() {
+        fetch(`http://localhost:8080/api/filter/filtersEnabled`, {
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
@@ -25,23 +39,27 @@ export class ProfileFilters extends React.Component {
     }
 
      handleEnableFilters() {
-         fetch('http://localhost:8080/enableFilters', {
+         fetch('http://localhost:8080/api/filter/enableFilters', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             }
         }).then(data => console.log("enable"));
+         this.handleGetFilterState();
+         this.reloadPage();
     }
 
      handleDisableFilters() {
-         fetch('http://localhost:8080/disableFilters', {
+         fetch('http://localhost:8080/api/filter/disableFilters', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             }
         }).then(data => console.log("disable"));
+         this.handleGetFilterState();
+         this.reloadPage();
     }
 
     //isEmptyObject(obj) {
@@ -50,7 +68,7 @@ export class ProfileFilters extends React.Component {
 
     render() {
         const filter = this.state.filter;
-        if (!filter) {
+        if (filter) {
             return (
                 <div className="col-md-6">
                     <div className="panel panel-default">

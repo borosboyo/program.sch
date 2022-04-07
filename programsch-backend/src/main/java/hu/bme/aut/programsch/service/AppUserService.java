@@ -20,15 +20,9 @@ public class AppUserService {
 
     private final FilterService filterService;
 
-
     @Transactional
     public AppUser getById(String uid) {
         return appUserRepository.getById(uid);
-    }
-
-    @Transactional
-    public AppUserDto getByIdDto(String uid) {
-        return appUserMapper.appUserEntityToDto(appUserRepository.getById(uid));
     }
 
     @Transactional
@@ -41,22 +35,22 @@ public class AppUserService {
         AppUser newUser = new AppUser(appUserDto.getUid(),appUserDto.getName(), appUserDto.getEmail());
         Filter newFilter = new Filter(appUserDto.getUid());
         filterService.save(newFilter);
-        return appUserMapper.appUserEntityToDto(appUserRepository.save(newUser));
+        return appUserMapper.appUserToDto(appUserRepository.save(newUser));
     }
 
     @Transactional
     public AppUserDto save(AppUser appUser) {
-        return appUserMapper.appUserEntityToDto(appUserRepository.save(appUser));
+        return appUserMapper.appUserToDto(appUserRepository.save(appUser));
     }
 
     @Transactional
-    public List<AppUser> findAll() {
-        return appUserRepository.findAll();
+    public List<AppUserDto> findAll() {
+        return appUserMapper.appUsersToDtos(appUserRepository.findAll());
     }
 
     @Transactional
-    public List<AppUserDto> findAllDto() {
-        return appUserMapper.appUserEntitiesToDtos(appUserRepository.findAll());
+    public AppUserDto findUser() {
+        return appUserMapper.appUserToDto(appUserRepository.findAll().get(0));
     }
 
     @Transactional

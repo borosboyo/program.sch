@@ -36,4 +36,16 @@ public class FilterService {
     public void save(Filter newFilter) {
         filterRepository.save(newFilter);
     }
+
+    @Transactional
+    public void delete(Filter filter) {
+        filterRepository.delete(filter);
+    }
+
+    @Transactional
+    public Filter createNewFilter(String uid) {
+        Filter filter = new Filter();
+        filter.setUserId(uid);
+        return filterRepository.save(filter);
+    }
 }

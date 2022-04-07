@@ -17,8 +17,8 @@ export default class Calendar extends React.Component {
     fetchWeek() {
         const startOfWeek = this.state.startOfWeek;
         const endOfWeek = this.state.endOfWeek;
-        fetch('http://localhost:8080/week', {
-            method: 'POST',
+        fetch('http://localhost:8080/api/day/week', {
+            method: 'GET',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'

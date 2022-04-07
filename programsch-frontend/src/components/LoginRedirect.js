@@ -18,7 +18,7 @@ export class LoginRedirect extends React.Component {
     async handleLoginRequest(code, state) {
         console.log(code);
         console.log(state);
-        await fetch('http://localhost:8080/loggedin/' + code + "/" + state, {
+        await fetch('http://localhost:8080/api/loggedin/' + code + "/" + state, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',

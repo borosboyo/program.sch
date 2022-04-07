@@ -10,6 +10,7 @@ import hu.bme.aut.programsch.model.AppUser;
 import hu.bme.aut.programsch.model.LoginUrl;
 import hu.bme.aut.programsch.service.AppUserService;
 import hu.bme.aut.programsch.service.CircleService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,23 +31,17 @@ import java.util.List;
 import java.util.Objects;
 
 @RestController
-@CrossOrigin("*")
+@RequestMapping("/api")
+@RequiredArgsConstructor
 public class LoginController {
 
     private final String USER_SESSION_ATTRIBUTE_NAME = "user_id";
     private final String USER_ENTITY_DTO_SESSION_ATTRIBUTE_NAME = "user";
     private final String CIRCLE_OWNERSHIP_SESSION_ATTRIBUTE_NAME = "circles";
 
-    @Autowired
-    private AuthSchAPI authSchAPI;
-
-    @Autowired
-    private AppUserService appUserService;
-
-    @Autowired
-    private CircleService circleService;
-
-    private AppUser appUserEntity;
+    private final AppUserService appUserService;
+    private final AuthSchAPI authSchAPI;
+    private final CircleService circleService;
 
     private boolean loggedIn = false;
 
@@ -73,7 +68,7 @@ public class LoginController {
                         "",
                         getCirclePermissionList(ownedCircles));
                 appUserService.save(appUser);
-                this.appUserEntity = appUser;
+                AppUser appUserEntity = appUser;
             }
 
             auth = new UsernamePasswordAuthenticationToken(code, state, getAuthorities(appUser));

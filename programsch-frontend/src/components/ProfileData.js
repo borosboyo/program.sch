@@ -13,7 +13,7 @@ export class ProfileData extends React.Component {
     }
 
     handleGetUserObject() {
-        fetch(`http://localhost:8080/appUserEntity`, {
+        fetch(`http://localhost:8080/api/appuser`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'

@@ -13,7 +13,8 @@ export class Profile extends React.Component {
     }
 
     handleGetLoginState() {
-        fetch(`http://localhost:8080/isLoggedIn`, {
+        fetch(`http://localhost:8080/api/isLoggedIn`, {
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'

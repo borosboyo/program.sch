@@ -10,5 +10,5 @@ public class AppUserDto {
     private String uid;
     private String name;
     private String email;
-    private boolean filtersEnabled = false;
+    private boolean filtersEnabled;
 }
