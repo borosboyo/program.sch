@@ -15,16 +15,6 @@ import java.net.URL;
 import java.util.Base64;
 import java.util.List;
 
-/**
- * <h1>How to init:</h1>
- * Set client id and key with {@link #setClientIdentifier(String)} and {@link #setClientKey(String)}.
- * Store it in application scope.
- *
- * @author Gerviba
- * @see {@link #validateAuthentication(String)}
- * @see {@link #refreshToken(String)}
- * @see {@link #getProfile(String)}
- */
 public class AuthSchAPI implements Serializable {
 
     private static final long serialVersionUID = 3441712708900902459L;
@@ -139,7 +129,7 @@ public class AuthSchAPI implements Serializable {
      * Login URL generator
      *
      * @param uniqueId A unique identifier for the user. Must be hashed! (eg. sha256(JSESSIONID))
-     * @param scopes A list of used scopes
+     * @param scopes   A list of used scopes
      * @return Generated login url
      */
     public String generateLoginUrl(String uniqueId, List<Scope> scopes) {
@@ -151,7 +141,7 @@ public class AuthSchAPI implements Serializable {
      * Login URL generator
      *
      * @param uniqueId A unique identifier for the user. Must be hashed! (eg. sha256(JSESSIONID))
-     * @param scopes A list of used scopes
+     * @param scopes   A list of used scopes
      * @return Generated login url
      */
     public String generateLoginUrl(String uniqueId, Scope... scopes) {

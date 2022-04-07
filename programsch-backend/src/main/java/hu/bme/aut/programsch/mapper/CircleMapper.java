@@ -10,11 +10,11 @@ import org.mapstruct.Mapping;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
-public interface ResortMapper {
+public interface CircleMapper {
+    CircleDto circleToDto(Circle circle);
+
+    List<CircleDto> circlesDtos(List<Circle> circle);
+
+    @Mapping(target = "circles", ignore = true)
     ResortDto resortToDto(Resort resort);
-
-    List<ResortDto> resortsToDtos(List<Resort> resorts);
-
-    @Mapping(target = "resort", ignore = true, source = "resort")
-    CircleDto circleToDto(Circle Circle);
 }

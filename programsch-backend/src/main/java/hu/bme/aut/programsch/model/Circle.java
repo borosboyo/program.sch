@@ -1,14 +1,14 @@
 package hu.bme.aut.programsch.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
 @Table(name = "circles")
-public final class CircleEntity implements Serializable {
+@NoArgsConstructor
+public final class Circle implements Serializable {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,15 +21,14 @@ public final class CircleEntity implements Serializable {
     private String description;
     @Column
     private int founded;
-    @Column
-    @OneToMany(mappedBy = "circle", fetch = FetchType.LAZY, orphanRemoval = true)
-    @JsonManagedReference
-    private List<CircleMemberEntity> members;
-
-    @Column
-    @OneToMany(mappedBy = "circle", fetch = FetchType.LAZY, orphanRemoval = true)
-    @JsonManagedReference
-    private List<OpeningEntity> openings;
+    //@Column
+    //@OneToMany(mappedBy = "circle", fetch = FetchType.LAZY, orphanRemoval = true)
+    //@JsonManagedReference
+    //private List<CircleMember> members;
+    //@Column
+    //@OneToMany(mappedBy = "circle", fetch = FetchType.LAZY, orphanRemoval = true)
+    //@JsonManagedReference
+    //private List<Event> openings;
     @Column
     private String facebookUrl;
     @Column
@@ -39,6 +38,12 @@ public final class CircleEntity implements Serializable {
 
     @ManyToOne
     private Resort resort;
+
+    public Circle(String displayName, Resort resort) {
+        this.displayName = displayName;
+        this.resort = resort;
+    }
+
 
     public long getId() {
         return id;
@@ -80,22 +85,6 @@ public final class CircleEntity implements Serializable {
         this.founded = founded;
     }
 
-    public List<CircleMemberEntity> getMembers() {
-        return members;
-    }
-
-    public void setMembers(List<CircleMemberEntity> members) {
-        this.members = members;
-    }
-
-    public List<OpeningEntity> getOpenings() {
-        return openings;
-    }
-
-    public void setOpenings(List<OpeningEntity> openings) {
-        this.openings = openings;
-    }
-
     public String getFacebookUrl() {
         return facebookUrl;
     }
@@ -118,6 +107,15 @@ public final class CircleEntity implements Serializable {
 
     public void setVirGroupId(Long virGroupId) {
         this.virGroupId = virGroupId;
+    }
+
+
+    public Resort getResort() {
+        return resort;
+    }
+
+    public void setResort(Resort resort) {
+        this.resort = resort;
     }
 
 }

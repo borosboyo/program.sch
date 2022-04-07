@@ -10,7 +10,7 @@ import java.util.List;
 @Table(name = "appusers")
 @Proxy(lazy = false)
 @NoArgsConstructor
-public final class AppUserEntity {
+public final class AppUser {
     @Id
     @Column(unique = true)
     public String uid;
@@ -27,20 +27,23 @@ public final class AppUserEntity {
     @ElementCollection(fetch = FetchType.EAGER)
     public List<String> permissions;
 
-    @Column
-    private boolean filtersEnabled;
-
-    @Column
-    @ManyToMany
-    private List<CircleEntity> filters;
-
-    public AppUserEntity(String uid, String name, String email, String room, List<String> permissions, boolean filtersEnabled) {
+    public AppUser(String uid, String name, String email, String room, List<String> permissions) {
         this.uid = uid;
         this.name = name;
         this.email = email;
         this.room = room;
         this.permissions = permissions;
-        this.filtersEnabled = filtersEnabled;
+    }
+
+    public AppUser(String name, String email) {
+        this.name = name;
+        this.email = email;
+    }
+
+    public AppUser(String uid, String name, String email) {
+        this.uid = uid;
+        this.name = name;
+        this.email = email;
     }
 
     public String getUid() {
@@ -83,11 +86,4 @@ public final class AppUserEntity {
         this.permissions = permissions;
     }
 
-    public boolean getFiltersEnabled() {
-        return filtersEnabled;
-    }
-
-    public void setFiltersEnabled(boolean filtersEnabled) {
-        this.filtersEnabled = filtersEnabled;
-    }
 }

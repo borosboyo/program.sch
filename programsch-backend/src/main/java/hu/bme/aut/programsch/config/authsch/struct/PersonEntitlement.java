@@ -34,6 +34,7 @@ public class PersonEntitlement implements Serializable {
 
     /**
      * Date Format: YYYY-MM-DD
+     *
      * @return
      */
     public String getStart() {
@@ -42,8 +43,9 @@ public class PersonEntitlement implements Serializable {
 
     /**
      * Date Format: YYYY-MM-DD
-     * @warning It can be null!
+     *
      * @return
+     * @warning It can be null!
      */
     public String getEnd() {
         return end;

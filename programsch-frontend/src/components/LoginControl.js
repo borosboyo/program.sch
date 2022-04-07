@@ -24,7 +24,7 @@ export class LoginControl extends React.Component {
     }
 
     handleGetLoginState() {
-        fetch(`http://localhost:8080/isLoggedIn`, {
+        fetch(`http://localhost:8080/api/isLoggedIn`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
@@ -35,7 +35,7 @@ export class LoginControl extends React.Component {
     }
 
     handleLogin(){
-        fetch(`http://localhost:8080/login`, {
+        fetch(`http://localhost:8080/api/login`, {
             headers : {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
@@ -49,7 +49,7 @@ export class LoginControl extends React.Component {
 
 
     handleLogout() {
-        fetch(`http://localhost:8080/logout`).then(data => console.log("logout"))
+        fetch(`http://localhost:8080/api/logout`).then(data => console.log("logout"))
         this.reloadPage();
     }
 

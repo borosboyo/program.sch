@@ -1,45 +1,23 @@
 package hu.bme.aut.programsch.web;
 
-import hu.bme.aut.programsch.dto.CalendarDto;
+import hu.bme.aut.programsch.model.Calendar;
 import hu.bme.aut.programsch.service.CalendarService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 
 @RestController
-@RequestMapping("/api/calendars")
+@RequestMapping("/api/calendar")
 @RequiredArgsConstructor
 public class CalendarController {
+
     private final CalendarService calendarService;
 
     @GetMapping
-    public List<CalendarDto> getCalendars() {
-        return calendarService.findAll();
+    public Calendar getCalendar() {
+        return calendarService.getCalendar();
     }
 
-    @GetMapping("/{id}")
-    public CalendarDto getCalendarById(@PathVariable long id) {
-        return calendarService.findById(id);
-    }
-
-    @PostMapping
-    public CalendarDto createCalendar(@RequestBody CalendarDto calendarDto) {
-        return calendarService.createCalendar(calendarDto);
-    }
-
-    @DeleteMapping
-    public void deleteAllCalendars() {
-        calendarService.deleteAll();
-    }
-
-    @DeleteMapping("/{id}")
-    public void deleteCalendar(@PathVariable long id) {
-        calendarService.deleteCalendar(id);
-    }
-
-    @PutMapping("/{id}")
-    public CalendarDto updateCalendar(@RequestBody CalendarDto calendarDto) {
-        return calendarService.updateCalendar(calendarDto);
-    }
 }

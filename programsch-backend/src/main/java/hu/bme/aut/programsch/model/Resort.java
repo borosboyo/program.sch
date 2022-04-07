@@ -21,8 +21,8 @@ public class Resort {
     private String name;
 
     @Column
-    @OneToMany(mappedBy = "resort")
-    private List<CircleEntity> circleEntities;
+    @OneToMany(mappedBy = "resort", fetch = FetchType.EAGER)
+    private List<Circle> circles;
 
     public Resort(String name) {
         this.name = name;

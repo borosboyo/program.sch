@@ -6,11 +6,11 @@ import hu.bme.aut.programsch.config.authsch.response.AuthResponse;
 import hu.bme.aut.programsch.config.authsch.response.ProfileDataResponse;
 import hu.bme.aut.programsch.config.authsch.struct.PersonEntitlement;
 import hu.bme.aut.programsch.config.authsch.struct.Scope;
-import hu.bme.aut.programsch.model.AppUserEntity;
+import hu.bme.aut.programsch.model.AppUser;
 import hu.bme.aut.programsch.model.LoginUrl;
 import hu.bme.aut.programsch.service.AppUserService;
 import hu.bme.aut.programsch.service.CircleService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,7 +18,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -30,33 +33,27 @@ import java.util.List;
 import java.util.Objects;
 
 @RestController
-@CrossOrigin("*")
+@RequestMapping("/api")
+@RequiredArgsConstructor
 public class LoginController {
 
     private final String USER_SESSION_ATTRIBUTE_NAME = "user_id";
     private final String USER_ENTITY_DTO_SESSION_ATTRIBUTE_NAME = "user";
     private final String CIRCLE_OWNERSHIP_SESSION_ATTRIBUTE_NAME = "circles";
 
-    @Autowired
-    private AuthSchAPI authSchAPI;
-
-    @Autowired
-    private AppUserService appUserService;
-
-    @Autowired
-    private CircleService circleService;
-
-    private AppUserEntity appUserEntity;
+    private final AppUserService appUserService;
+    private final AuthSchAPI authSchAPI;
+    private final CircleService circleService;
 
     private boolean loggedIn = false;
 
     @GetMapping("/loggedin")
-    public ResponseEntity<Void> loggedIn(@RequestParam String code, @RequestParam String state, HttpServletRequest request){
+    public ResponseEntity<Void> loggedIn(@RequestParam String code, @RequestParam String state, HttpServletRequest request) {
         Authentication auth = null;
         try {
             AuthResponse response = authSchAPI.validateAuthentication(code);
             ProfileDataResponse profile = authSchAPI.getProfile(response.getAccessToken());
-            AppUserEntity appUser;
+            AppUser appUser;
             List<Long> ownedCircles = getOwnedCircleIds(profile);
             if (appUserService.exists(profile.getInternalId().toString())) {
                 appUser = appUserService.getById(profile.getInternalId().toString());
@@ -67,14 +64,13 @@ public class LoginController {
                 }
 
             } else {
-                appUser = new AppUserEntity(profile.getInternalId().toString(),
+                appUser = new AppUser(profile.getInternalId().toString(),
                         profile.getSurname() + " " + profile.getGivenName(),
                         profile.getMail(),
                         "",
-                        getCirclePermissionList(ownedCircles),
-                        false);
+                        getCirclePermissionList(ownedCircles));
                 appUserService.save(appUser);
-                this.appUserEntity = appUser;
+                AppUser appUserEntity = appUser;
             }
 
             auth = new UsernamePasswordAuthenticationToken(code, state, getAuthorities(appUser));
@@ -88,7 +84,9 @@ public class LoginController {
                     .location(URI.create("http://localhost:3000"))
                     .build();
         } catch (Exception e) {
-            auth.setAuthenticated(false);
+            if (auth != null) {
+                auth.setAuthenticated(false);
+            }
             e.printStackTrace();
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -151,7 +149,7 @@ public class LoginController {
         return permissions;
     }
 
-    private List<GrantedAuthority> getAuthorities(AppUserEntity user) {
+    private List<GrantedAuthority> getAuthorities(AppUser user) {
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_${Role.USER.name}"));
         if (user.permissions.contains("ROLE_${Role.LEADER.name}"))
@@ -160,7 +158,7 @@ public class LoginController {
     }
 
     @GetMapping(value = "/isLoggedIn", produces = "application/json")
-    public boolean getIsLoggedIn(){
+    public boolean getIsLoggedIn() {
         return loggedIn;
     }
 }
