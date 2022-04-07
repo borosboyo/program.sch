@@ -24,7 +24,7 @@ public class DbConfigService {
     }
 
     private void createResorts() {
-        if(resortRepository.findAll().isEmpty()){
+        if (resortRepository.findAll().isEmpty()) {
             resortRepository.save(new Resort("Bulis Reszort"));
             resortRepository.save(new Resort("Egyéb"));
             resortRepository.save(new Resort("Energetikai Szakkollégium"));
@@ -40,7 +40,7 @@ public class DbConfigService {
     }
 
     private void createCircles() {
-        if(circleRepository.findAll().isEmpty()) {
+        if (circleRepository.findAll().isEmpty()) {
             createBulisCircles();
             createEgyebCircles();
             createEnergetikaiSzakkoliCircles();
@@ -83,10 +83,10 @@ public class DbConfigService {
     }
 
     private void createSportCircles() {
-        circleRepository.save(new Circle("Általános szertár", resortRepository.findByName("Bulis Reszort")));
-        circleRepository.save(new Circle("DiákSportKör", resortRepository.findByName("Bulis Reszort")));
-        circleRepository.save(new Circle("Csocsó kör", resortRepository.findByName("Bulis Reszort")));
-        circleRepository.save(new Circle("Asztalitenisz", resortRepository.findByName("Bulis Reszort")));
+        circleRepository.save(new Circle("Általános szertár", resortRepository.findByName("Sport Reszort")));
+        circleRepository.save(new Circle("DiákSportKör", resortRepository.findByName("Sport Reszort")));
+        circleRepository.save(new Circle("Csocsó kör", resortRepository.findByName("Sport Reszort")));
+        circleRepository.save(new Circle("Asztalitenisz", resortRepository.findByName("Sport Reszort")));
 
         Resort resort = resortRepository.findByName("Sport Reszort");
         resort.setCircles(circleRepository.findAllByResort(resort));

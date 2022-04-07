@@ -1,7 +1,6 @@
 package hu.bme.aut.programsch.web;
 
 import hu.bme.aut.programsch.dto.ResortDto;
-import hu.bme.aut.programsch.model.Resort;
 import hu.bme.aut.programsch.service.ResortService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

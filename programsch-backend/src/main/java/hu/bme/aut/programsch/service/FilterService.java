@@ -21,11 +21,11 @@ public class FilterService {
     }
 
     @Transactional
-    public Filter findUserFilters(String uid){
+    public Filter findUserFilters(String uid) {
         List<Filter> filters = filterRepository.findAll();
 
-        for(Filter filter : filters) {
-            if(Objects.equals(filter.getUserId(), uid)){
+        for (Filter filter : filters) {
+            if (Objects.equals(filter.getUserId(), uid)) {
                 return filter;
             }
         }

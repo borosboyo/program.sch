@@ -67,6 +67,7 @@ public enum Scope {
      * visszatérésre az ezt tartalmazó engedélykérés), csak indokolt esetben, központi
      * engedélyezés után használható (ehhez adj fel egy ticketet a support.sch.bme.hu
      * oldalon, amelyben leírod hogy mihez és miért van rá szükséged.
+     *
      * @warning Külön engedélyeztetni kell.
      */
     NEPTUN_CODE("niifPersonOrgID") {
@@ -110,6 +111,7 @@ public enum Scope {
      * Felhasználó szobaszáma (ha kollégista, akkor a kollégium neve és a szobaszám található
      * meg benne, ha nem kollégista, akkor pedig null-t ad vissza). Amennyiben a felhasználó
      * nem rendelkezik SCH Accounttal, szintén null-t ad eredményül.
+     *
      * @deprecated Határozatlan ideig nem elérhető jogi okokból.
      */
     @Deprecated
@@ -141,6 +143,7 @@ public enum Scope {
     /**
      * Közösségi belépők a VIR-ről, február és július között az őszi, egyébként (tehát
      * augusztustól januárig) a tavaszi belépők
+     *
      * @see Entrant
      */
     ENTRANTS("entrants") {
@@ -167,6 +170,7 @@ public enum Scope {
     /**
      * Egyetemi jogviszony, jelenlegi lehetséges értékek:
      * BME, BME_VIK, BME_VIK_ACTIVE, BME_VIK_NEWBIE
+     *
      * @see BMEUnitScope
      */
     BME_UNIT_SCOPE("bmeunitscope") {

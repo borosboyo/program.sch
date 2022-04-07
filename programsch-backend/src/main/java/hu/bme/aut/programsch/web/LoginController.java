@@ -11,7 +11,6 @@ import hu.bme.aut.programsch.model.LoginUrl;
 import hu.bme.aut.programsch.service.AppUserService;
 import hu.bme.aut.programsch.service.CircleService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,7 +18,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -46,7 +48,7 @@ public class LoginController {
     private boolean loggedIn = false;
 
     @GetMapping("/loggedin")
-    public ResponseEntity<Void> loggedIn(@RequestParam String code, @RequestParam String state, HttpServletRequest request){
+    public ResponseEntity<Void> loggedIn(@RequestParam String code, @RequestParam String state, HttpServletRequest request) {
         Authentication auth = null;
         try {
             AuthResponse response = authSchAPI.validateAuthentication(code);
@@ -82,7 +84,7 @@ public class LoginController {
                     .location(URI.create("http://localhost:3000"))
                     .build();
         } catch (Exception e) {
-            if(auth != null) {
+            if (auth != null) {
                 auth.setAuthenticated(false);
             }
             e.printStackTrace();
@@ -156,7 +158,7 @@ public class LoginController {
     }
 
     @GetMapping(value = "/isLoggedIn", produces = "application/json")
-    public boolean getIsLoggedIn(){
+    public boolean getIsLoggedIn() {
         return loggedIn;
     }
 }

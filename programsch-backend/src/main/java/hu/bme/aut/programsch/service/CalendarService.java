@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+
 @Service
 @RequiredArgsConstructor
 public class CalendarService {
@@ -26,7 +27,7 @@ public class CalendarService {
 
 
     private void checkIfCalendarEmpty() {
-        if(calendarRepository.findAll().isEmpty()) {
+        if (calendarRepository.findAll().isEmpty()) {
             Calendar calendar = new Calendar();
             addOneYear(calendar);
             calendarRepository.save(calendar);
@@ -34,7 +35,7 @@ public class CalendarService {
     }
 
     private void addOneYear(Calendar calendar) {
-        for(int ii = 0; ii < 365; ii++) {
+        for (int ii = 0; ii < 365; ii++) {
             Day day = new Day(LocalDate.now().plusDays(ii));
             day.setCalendar(calendar);
             dayRepository.save(day);

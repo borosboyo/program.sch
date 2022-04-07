@@ -15,12 +15,12 @@ public class EventService {
     private final EventRepository openingRepository;
 
     @Transactional
-    public List<Event> findAll(){
+    public List<Event> findAll() {
         return openingRepository.findAll();
     }
 
     @Transactional
-    public void save(Event openingEntity){
+    public void save(Event openingEntity) {
         openingRepository.save(openingEntity);
     }
 }

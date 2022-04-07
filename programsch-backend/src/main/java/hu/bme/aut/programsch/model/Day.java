@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -24,7 +23,7 @@ public class Day {
     @Column
     @OneToMany(mappedBy = "day", fetch = FetchType.LAZY, orphanRemoval = true)
     @JsonManagedReference
-    private List<Event> event;
+    private List<Event> events;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Calendar calendar;

@@ -1,6 +1,5 @@
 package hu.bme.aut.programsch.dto;
 
-import hu.bme.aut.programsch.model.Resort;
 import lombok.Data;
 
 @Data

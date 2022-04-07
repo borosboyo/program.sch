@@ -1,12 +1,9 @@
 package hu.bme.aut.programsch.web;
 
 import hu.bme.aut.programsch.dto.CircleDto;
-import hu.bme.aut.programsch.model.Circle;
 import hu.bme.aut.programsch.service.CircleService;
 import hu.bme.aut.programsch.service.ResortService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,7 +20,7 @@ public class CircleController {
     private final ResortService resortService;
 
     @GetMapping()
-    public List<CircleDto> getCircles(){
+    public List<CircleDto> getCircles() {
         return circleService.findAll();
     }
 }

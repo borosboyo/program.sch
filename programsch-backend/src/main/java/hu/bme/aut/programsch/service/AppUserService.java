@@ -32,7 +32,7 @@ public class AppUserService {
 
     @Transactional
     public AppUserDto save(AppUserDto appUserDto) {
-        AppUser newUser = new AppUser(appUserDto.getUid(),appUserDto.getName(), appUserDto.getEmail());
+        AppUser newUser = new AppUser(appUserDto.getUid(), appUserDto.getName(), appUserDto.getEmail());
         Filter newFilter = new Filter(appUserDto.getUid());
         filterService.save(newFilter);
         return appUserMapper.appUserToDto(appUserRepository.save(newUser));

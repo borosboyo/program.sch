@@ -1,11 +1,9 @@
 package hu.bme.aut.programsch.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
 @Table(name = "circles")
@@ -23,15 +21,14 @@ public final class Circle implements Serializable {
     private String description;
     @Column
     private int founded;
-    @Column
-    @OneToMany(mappedBy = "circle", fetch = FetchType.LAZY, orphanRemoval = true)
-    @JsonManagedReference
-    private List<CircleMember> members;
-
-    @Column
-    @OneToMany(mappedBy = "circle", fetch = FetchType.LAZY, orphanRemoval = true)
-    @JsonManagedReference
-    private List<Event> openings;
+    //@Column
+    //@OneToMany(mappedBy = "circle", fetch = FetchType.LAZY, orphanRemoval = true)
+    //@JsonManagedReference
+    //private List<CircleMember> members;
+    //@Column
+    //@OneToMany(mappedBy = "circle", fetch = FetchType.LAZY, orphanRemoval = true)
+    //@JsonManagedReference
+    //private List<Event> openings;
     @Column
     private String facebookUrl;
     @Column
@@ -86,22 +83,6 @@ public final class Circle implements Serializable {
 
     public void setFounded(int founded) {
         this.founded = founded;
-    }
-
-    public List<CircleMember> getMembers() {
-        return members;
-    }
-
-    public void setMembers(List<CircleMember> members) {
-        this.members = members;
-    }
-
-    public List<Event> getOpenings() {
-        return openings;
-    }
-
-    public void setOpenings(List<Event> openings) {
-        this.openings = openings;
     }
 
     public String getFacebookUrl() {

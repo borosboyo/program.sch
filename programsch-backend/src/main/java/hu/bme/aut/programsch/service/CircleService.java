@@ -1,11 +1,11 @@
 package hu.bme.aut.programsch.service;
 
 import hu.bme.aut.programsch.config.db.DbConfigService;
+import hu.bme.aut.programsch.dto.CircleDto;
+import hu.bme.aut.programsch.mapper.CircleMapper;
 import hu.bme.aut.programsch.model.Circle;
 import hu.bme.aut.programsch.repository.CircleRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,15 +19,12 @@ public class CircleService {
 
     private final DbConfigService dbConfigService;
 
-    @Transactional
-    public Page<Circle> findAll(Pageable pageable) {
-        return circleRepository.findAll(pageable);
-    }
+    private final CircleMapper circleMapper;
 
     @Transactional
-    public List<Circle> findAll() {
+    public List<CircleDto> findAll() {
         dbConfigService.injectCirclesIntoDb();
-        return circleRepository.findAll();
+        return circleMapper.circlesDtos(circleRepository.findAll());
     }
 
     @Transactional
@@ -39,7 +36,6 @@ public class CircleService {
     public Circle findByVirGroupId(Long id) {
         return circleRepository.findOneByVirGroupId(id);
     }
-
 
 
 }
