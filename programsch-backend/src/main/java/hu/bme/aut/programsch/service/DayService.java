@@ -1,5 +1,7 @@
 package hu.bme.aut.programsch.service;
 
+import hu.bme.aut.programsch.dto.DayDto;
+import hu.bme.aut.programsch.mapper.DayMapper;
 import hu.bme.aut.programsch.model.Day;
 import hu.bme.aut.programsch.repository.DayRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,8 +16,10 @@ import java.util.List;
 public class DayService {
     private final DayRepository dayRepository;
 
+    private final DayMapper dayMapper;
+
     @Transactional
-    public List<Day> getWeek(LocalDate startOfWeek, LocalDate endOfWeek) {
-        return dayRepository.findByDateBetween(startOfWeek, endOfWeek);
+    public List<DayDto> getWeek(LocalDate startOfWeek, LocalDate endOfWeek) {
+        return dayMapper.daysToDto(dayRepository.findByDateBetween(startOfWeek, endOfWeek));
     }
 }

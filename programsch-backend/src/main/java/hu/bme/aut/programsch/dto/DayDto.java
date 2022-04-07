@@ -9,5 +9,5 @@ import java.util.List;
 public class DayDto {
     private LocalDate date;
     private List<EventDto> events;
-    private List<CalendarDto> calendars;
+    private CalendarDto calendar;
 }
