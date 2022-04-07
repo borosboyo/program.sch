@@ -10,6 +10,5 @@ public class AppUserDto {
     private String uid;
     private String name;
     private String email;
-    private List<CircleFilterDto> filters = new ArrayList<>();
     private boolean filtersEnabled = false;
 }

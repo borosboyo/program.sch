@@ -42,10 +42,6 @@ public final class Circle implements Serializable {
     @ManyToOne
     private Resort resort;
 
-    @Column
-    @ManyToMany
-    private List<AppUser> filteredBy;
-
     public Circle(String displayName, Resort resort) {
         this.displayName = displayName;
         this.resort = resort;

@@ -1,9 +1,9 @@
 package hu.bme.aut.programsch.service;
 
 import hu.bme.aut.programsch.dto.AppUserDto;
-import hu.bme.aut.programsch.dto.CircleFilterDto;
 import hu.bme.aut.programsch.mapper.AppUserMapper;
 import hu.bme.aut.programsch.model.AppUser;
+import hu.bme.aut.programsch.model.Filter;
 import hu.bme.aut.programsch.repository.AppUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,8 @@ public class AppUserService {
     private final AppUserRepository appUserRepository;
     private final AppUserMapper appUserMapper;
 
-    private final CircleService circleService;
+    private final FilterService filterService;
+
 
     @Transactional
     public AppUser getById(String uid) {
@@ -37,11 +38,10 @@ public class AppUserService {
 
     @Transactional
     public AppUserDto save(AppUserDto appUserDto) {
-        AppUser appUserEntity = appUserRepository.save(
-                new AppUser(
-                        appUserDto.getName(),
-                        appUserDto.getEmail()));
-        return appUserMapper.appUserEntityToDto(appUserEntity);
+        AppUser newUser = new AppUser(appUserDto.getUid(),appUserDto.getName(), appUserDto.getEmail());
+        Filter newFilter = new Filter(appUserDto.getUid());
+        filterService.save(newFilter);
+        return appUserMapper.appUserEntityToDto(appUserRepository.save(newUser));
     }
 
     @Transactional
@@ -60,7 +60,7 @@ public class AppUserService {
     }
 
     @Transactional
-    public List<CircleFilterDto> findUserFilters() {
-        return appUserMapper.appUserEntityToDto(appUserRepository.findAll().get(0)).getFilters();
+    public Filter findUserFilters(String uid) {
+        return filterService.findUserFilters(uid);
     }
 }

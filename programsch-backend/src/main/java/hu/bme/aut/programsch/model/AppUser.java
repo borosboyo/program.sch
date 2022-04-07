@@ -40,6 +40,12 @@ public final class AppUser {
         this.email = email;
     }
 
+    public AppUser(String uid, String name, String email) {
+        this.uid = uid;
+        this.name = name;
+        this.email = email;
+    }
+
     public String getUid() {
         return uid;
     }

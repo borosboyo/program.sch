@@ -1,8 +1,6 @@
 package hu.bme.aut.programsch.service;
 
 import hu.bme.aut.programsch.config.db.DbConfigService;
-import hu.bme.aut.programsch.dto.CircleFilterDto;
-import hu.bme.aut.programsch.mapper.CircleMapper;
 import hu.bme.aut.programsch.model.Circle;
 import hu.bme.aut.programsch.repository.CircleRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,8 +17,6 @@ public class CircleService {
 
     private final CircleRepository circleRepository;
 
-    private final CircleMapper circleMapper;
-
     private final DbConfigService dbConfigService;
 
     @Transactional
@@ -32,11 +28,6 @@ public class CircleService {
     public List<Circle> findAll() {
         dbConfigService.injectCirclesIntoDb();
         return circleRepository.findAll();
-    }
-
-    @Transactional
-    public List<CircleFilterDto> findAllFilters() {
-        return circleMapper.circlesToCircleFilterDtos(circleRepository.findAll());
     }
 
     @Transactional

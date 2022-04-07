@@ -11,6 +11,4 @@ public interface AppUserMapper {
     AppUserDto appUserEntityToDto(AppUser appUser);
 
     List<AppUserDto> appUserEntitiesToDtos(List<AppUser> appUsers);
-
-
 }
