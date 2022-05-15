@@ -19,27 +19,4 @@ public class CalendarService {
 
     private final DayRepository dayRepository;
 
-    @Transactional
-    public Calendar getCalendar() {
-        checkIfCalendarEmpty();
-        return calendarRepository.findAll().get(0);
-    }
-
-
-    private void checkIfCalendarEmpty() {
-        if (calendarRepository.findAll().isEmpty()) {
-            Calendar calendar = new Calendar();
-            addOneYear(calendar);
-            calendarRepository.save(calendar);
-        }
-    }
-
-    private void addOneYear(Calendar calendar) {
-        for (int ii = 0; ii < 365; ii++) {
-            Day day = new Day(LocalDate.now().plusDays(ii));
-            day.setCalendar(calendar);
-            dayRepository.save(day);
-            calendar.getDays().add(day);
-        }
-    }
 }

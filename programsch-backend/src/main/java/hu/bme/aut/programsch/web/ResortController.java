@@ -4,6 +4,7 @@ import hu.bme.aut.programsch.dto.ResortDto;
 import hu.bme.aut.programsch.service.ResortService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,5 +20,10 @@ public class ResortController {
     @GetMapping
     public List<ResortDto> getResorts() {
         return resortService.findAll();
+    }
+
+    @GetMapping("/{name}")
+    public ResortDto getResortByName(@PathVariable String name) {
+        return resortService.findByName(name);
     }
 }

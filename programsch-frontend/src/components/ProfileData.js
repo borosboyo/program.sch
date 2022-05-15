@@ -1,5 +1,6 @@
 import React from "react";
 import {ProfileFilters} from "./ProfileFilters";
+import '../css/ProfileData.css';
 
 export class ProfileData extends React.Component {
 
@@ -26,12 +27,12 @@ export class ProfileData extends React.Component {
     render() {
         const userObject = this.state.userObject;
         return (
-            <section>
-                <div className="container">
+            <section id="profilePanel" className="container justify-content-center">
+                <div className="container text-center">
                     <div className="page-header">
                         <h1> Profil <small> - {userObject.name}</small></h1>
                     </div>
-                    <div className="row">
+                    <div className="row justify-content-center" id="profileData">
                         <div className="col-md-6">
                             <div className="panel panel-default">
                                 <div className="panel-heading">
@@ -51,6 +52,8 @@ export class ProfileData extends React.Component {
                                 </table>
                             </div>
                         </div>
+                    </div>
+                    <div className="row justify-content-center">
                         <ProfileFilters/>
                     </div>
                 </div>

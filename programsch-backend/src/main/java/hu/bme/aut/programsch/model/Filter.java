@@ -7,7 +7,7 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "filter")
+@Table(name = "filter", schema = "public")
 public class Filter {
     @Id
     @Column

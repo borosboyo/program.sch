@@ -63,7 +63,7 @@ export class LoginControl extends React.Component {
                             <a className="nav-link active" aria-current="page" href="/profile">Profil</a>
                         </li>
                         <li className="nav-item">
-                            <Button onClick={() => this.handleLogout()}>Kijelentkezés</Button>
+                            <Button className="btn btn-danger" onClick={() => this.handleLogout()}>Kijelentkezés</Button>
                         </li>
                     </ul>
                 </div>);
@@ -72,7 +72,7 @@ export class LoginControl extends React.Component {
                 <div className="collapse navbar-collapse" id="rightButtons">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0" id="loginButtons">
                         <li className="nav-item">
-                            <Button><a id={"signInButton"} href={this.handleLogin()}>Bejelentkezés</a></Button>
+                            <Button className="btn btn-success"><a id={"signInButton"} href={this.handleLogin()}>Bejelentkezés</a></Button>
                         </li>
                     </ul>
                 </div>);

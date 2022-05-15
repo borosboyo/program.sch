@@ -1,6 +1,7 @@
 import React from "react";
 import {Button} from "reactstrap";
 import {Link} from "react-router-dom";
+import '../css/ProfileFilter.css';
 
 export class ProfileFilters extends React.Component {
 
@@ -75,7 +76,7 @@ export class ProfileFilters extends React.Component {
                         <div className="panel-heading">
                             <h3 className="panel-title">Műveletek</h3>
                         </div>
-                        <div className="list-group">
+                        <div className="list-group align-items-center">
                             <Button tag={Link} to={"/filters"}
                                className="list-group-item list-group-item-info">Szűrők beállítása</Button>
                             <Button onClick={this.handleDisableFilters}
@@ -92,8 +93,8 @@ export class ProfileFilters extends React.Component {
                         <div className="panel-heading">
                             <h3 className="panel-title">Műveletek</h3>
                         </div>
-                        <div className="list-group">
-                            <Button className="list-group-item list-group-item-info" onClick={this.handleEnableFilters}>
+                        <div className="list-group  align-items-center">
+                            <Button className="list-group-item list-group-item-success" onClick={this.handleEnableFilters}>
                                 Programok szűrésének bekapcsolása
                             </Button>
                         </div>

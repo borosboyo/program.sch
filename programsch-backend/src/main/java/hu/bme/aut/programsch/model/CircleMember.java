@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "circleMembers")
+@Table(name = "circleMembers", schema = "public")
 public final class CircleMember implements Serializable {
     @Id
     @Column

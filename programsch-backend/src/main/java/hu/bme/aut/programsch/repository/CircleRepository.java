@@ -13,4 +13,6 @@ public interface CircleRepository extends JpaRepository<Circle, Long> {
     List<Circle> findAllByResort(Resort resort);
 
     Circle findOneByVirGroupId(long virGroupId);
+
+    Circle findByDisplayName(String displayName);
 }

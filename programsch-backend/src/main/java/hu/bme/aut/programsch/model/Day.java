@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name = "day")
+@Table(name = "day", schema = "public")
 @Data
 @NoArgsConstructor
 public class Day {
@@ -17,19 +17,19 @@ public class Day {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column
-    private LocalDate date;
+   //@Column
+   //private LocalDate date;
 
-    @Column
-    @OneToMany(mappedBy = "day", fetch = FetchType.LAZY, orphanRemoval = true)
-    @JsonManagedReference
-    private List<Event> events;
+   //@Column
+   //@OneToMany(mappedBy = "day", fetch = FetchType.LAZY, orphanRemoval = true)
+   //@JsonManagedReference
+   //private List<Event> events;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Calendar calendar;
+   //@ManyToOne(fetch = FetchType.LAZY)
+   //private Calendar calendar;
 
-    public Day(LocalDate date) {
-        this.date = date;
-    }
+   //public Day(LocalDate date) {
+   //    this.date = date;
+   //}
 
 }

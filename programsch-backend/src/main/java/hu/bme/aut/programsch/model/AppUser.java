@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "appusers")
+@Table(name = "appusers", schema = "public")
 @Proxy(lazy = false)
 @NoArgsConstructor
 public final class AppUser {

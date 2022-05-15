@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface DayRepository extends JpaRepository<Day, Long> {
 
-    List<Day> findByDateBetween(LocalDate startOfWeek, LocalDate endOfWeek);
+    //List<Day> findByDateBetween(LocalDate startOfWeek, LocalDate endOfWeek);
 }

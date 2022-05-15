@@ -15,9 +15,9 @@ public class CalendarController {
 
     private final CalendarService calendarService;
 
-    @GetMapping
-    public Calendar getCalendar() {
-        return calendarService.getCalendar();
-    }
+   //@GetMapping
+   //public Calendar getCalendar() {
+   //    return calendarService.getCalendar();
+   //}
 
 }

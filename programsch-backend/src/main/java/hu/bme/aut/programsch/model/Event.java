@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators.PropertyGenerator;
+import hu.bme.aut.programsch.dto.CircleDto;
+import hu.bme.aut.programsch.dto.ResortDto;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -11,7 +13,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "openings")
+@Table(name = "event", schema = "public")
 @Data
 public final class Event implements Serializable {
     @Id
@@ -20,7 +22,7 @@ public final class Event implements Serializable {
     private long id;
 
     @Column
-    private String eventDescription;
+    private String name;
 
     @JsonBackReference
     @JsonIdentityInfo(generator = PropertyGenerator.class, property = "id")
@@ -28,10 +30,18 @@ public final class Event implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Circle circle;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Day day;
-
+    @Column
     private LocalDateTime start;
-
-    private LocalDateTime finish;
+    @Column(name = "`end`")
+    private LocalDateTime end;
+    @Column
+    private String place;
+    @Column
+    private String facebookUrl;
+    @Column
+    private String poster;
+    @Column
+    private String tldr;
+    @Column
+    private String description;
 }

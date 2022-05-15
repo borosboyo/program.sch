@@ -14,10 +14,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DayController {
 
-    private final DayService dayService;
+   //private final DayService dayService;
 
-    @GetMapping("/currentweek")
-    public List<DayDto> getCurrentWeek(@RequestParam String startOfWeek, @RequestParam String endOfWeek) {
-        return dayService.getWeek(LocalDate.parse(startOfWeek), LocalDate.parse(endOfWeek));
-    }
+   //@GetMapping("/week/{startOfWeek}/{endOfWeek}")
+   //public List<DayDto> getCurrentWeek(@PathVariable String startOfWeek, @PathVariable String endOfWeek) {
+   //    return dayService.getWeek(LocalDate.parse(startOfWeek), LocalDate.parse(endOfWeek));
+   //}
 }

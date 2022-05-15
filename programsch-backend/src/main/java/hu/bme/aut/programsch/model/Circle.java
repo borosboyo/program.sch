@@ -1,12 +1,14 @@
 package hu.bme.aut.programsch.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
-@Table(name = "circles")
+@Table(name = "circles", schema = "public")
 @NoArgsConstructor
 public final class Circle implements Serializable {
     @Id
@@ -25,10 +27,12 @@ public final class Circle implements Serializable {
     //@OneToMany(mappedBy = "circle", fetch = FetchType.LAZY, orphanRemoval = true)
     //@JsonManagedReference
     //private List<CircleMember> members;
-    //@Column
-    //@OneToMany(mappedBy = "circle", fetch = FetchType.LAZY, orphanRemoval = true)
-    //@JsonManagedReference
-    //private List<Event> openings;
+
+    @Column
+    @OneToMany(mappedBy = "circle", fetch = FetchType.LAZY, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Event> events;
+
     @Column
     private String facebookUrl;
     @Column

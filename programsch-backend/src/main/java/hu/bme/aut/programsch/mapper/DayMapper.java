@@ -16,13 +16,13 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface DayMapper {
 
-    DayDto dayToDto(Day day);
-
-    List<DayDto> daysToDto(List<Day> days);
-
-    @Mapping(target = "day", ignore = true)
-    EventDto eventToDto(Event event);
-
-    @Mapping(target = "days", ignore = true)
-    CalendarDto calendarToDto(Calendar calendar);
+    //DayDto dayToDto(Day day);
+//
+    //List<DayDto> daysToDto(List<Day> days);
+//
+    //@Mapping(target = "day", ignore = true)
+    //EventDto eventToDto(Event event);
+//
+    //@Mapping(target = "days", ignore = true)
+    //CalendarDto calendarToDto(Calendar calendar);
 }

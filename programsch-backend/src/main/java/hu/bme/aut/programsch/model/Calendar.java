@@ -8,16 +8,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "calendar")
+@Table(name = "calendar", schema = "public")
 @Data
 public class Calendar {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column
-    @OneToMany(mappedBy = "calendar", fetch = FetchType.EAGER)
-    @JsonManagedReference
-    private List<Day> days = new ArrayList<>();
+    //@Column
+    //@OneToMany(mappedBy = "calendar", fetch = FetchType.EAGER)
+    //@JsonManagedReference
+    //private List<Day> days = new ArrayList<>();
 
 }

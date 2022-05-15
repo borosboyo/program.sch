@@ -1,8 +1,10 @@
 package hu.bme.aut.programsch.mapper;
 
+import hu.bme.aut.programsch.dto.CircleDto;
 import hu.bme.aut.programsch.dto.DayDto;
 import hu.bme.aut.programsch.dto.EventDto;
 import hu.bme.aut.programsch.dto.ResortDto;
+import hu.bme.aut.programsch.model.Circle;
 import hu.bme.aut.programsch.model.Day;
 import hu.bme.aut.programsch.model.Event;
 import hu.bme.aut.programsch.model.Resort;
@@ -17,5 +19,6 @@ public interface EventMapper {
     List<EventDto> eventsToDtos(List<Event> event);
 
     @Mapping(target = "events", ignore = true)
-    DayDto dayToDto(Day day);
+    @Mapping(target = "resort", ignore = true)
+    CircleDto circleToDto(Circle circle);
 }

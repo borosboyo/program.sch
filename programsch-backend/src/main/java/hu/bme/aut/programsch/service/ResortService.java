@@ -21,4 +21,9 @@ public class ResortService {
     public List<ResortDto> findAll() {
         return resortMapper.resortsToDtos(resortRepository.findAll());
     }
+
+    @Transactional
+    public ResortDto findByName(String name) {
+        return resortMapper.resortToDto(resortRepository.findByName(name));
+    }
 }

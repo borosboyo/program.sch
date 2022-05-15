@@ -1,8 +1,10 @@
 package hu.bme.aut.programsch.mapper;
 
 import hu.bme.aut.programsch.dto.CircleDto;
+import hu.bme.aut.programsch.dto.EventDto;
 import hu.bme.aut.programsch.dto.ResortDto;
 import hu.bme.aut.programsch.model.Circle;
+import hu.bme.aut.programsch.model.Event;
 import hu.bme.aut.programsch.model.Resort;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -17,4 +19,7 @@ public interface CircleMapper {
 
     @Mapping(target = "circles", ignore = true)
     ResortDto resortToDto(Resort resort);
+
+    @Mapping(target = "circle", ignore = true)
+    EventDto eventToDto(Event events);
 }

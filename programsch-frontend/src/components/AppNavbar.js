@@ -16,10 +16,10 @@ export default class AppNavbar extends Component {
                 <div className="collapse navbar-collapse" id="leftButtons">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         <li className="nav-item">
-                            <a className="nav-link active" aria-current="page" href="#">Új program</a>
+                            <a className="nav-link active" aria-current="page" href="/newevent">Új program</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link active" href="#">API</a>
+                            <a className="nav-link active" href="http://localhost:8080/swagger-ui/index.html">API</a>
                         </li>
                     </ul>
                 </div>
