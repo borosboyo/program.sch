@@ -14,11 +14,10 @@ export class Event extends React.Component<{ currentEvent: T, onClick: () => voi
             <h5 className="card-title">{this.props.currentEvent.name}</h5>
             <p className="card-text" id="tldr">{this.props.currentEvent.tldr}</p>
             <p className="card-text">{this.props.currentEvent.description}</p>
-            <p><PlaceIcon/>{this.props.currentEvent.place}
-                <AccessTimeIcon/> {moment(this.props.currentEvent.start).format("YYYY-MM-DD HH:mm")} - {moment(this.props.currentEvent.end).format("YYYY-MM-DD HH:mm")}
-                <a href={this.props.currentEvent.facebookUrl}><FacebookIcon/></a></p>
-            <p><Button tag={Link} to={"/event/" + this.props.currentEvent.id}><EditIcon></EditIcon></Button>
-                <Button><DeleteIcon onClick={this.props.onClick}/></Button></p>
+            <p><PlaceIcon/>{this.props.currentEvent.place} <AccessTimeIcon/>{moment(this.props.currentEvent.start).format("YYYY-MM-DD HH:mm")} - {moment(this.props.currentEvent.end).format("YYYY-MM-DD HH:mm")}
+                <a href={this.props.currentEvent.facebookUrl}><FacebookIcon/> </a></p>
+            <p><Button tag={Link} to={"/event/" + this.props.currentEvent.id}><EditIcon/></Button>
+                <Button> <DeleteIcon onClick={this.props.onClick}/></Button></p>
         </div>;
     }
 }

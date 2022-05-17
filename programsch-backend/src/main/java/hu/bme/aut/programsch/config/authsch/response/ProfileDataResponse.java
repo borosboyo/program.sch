@@ -84,11 +84,6 @@ public final class ProfileDataResponse implements Serializable {
         return eduPersonEntitlement;
     }
 
-    /**
-     * Room number
-     *
-     * @deprecated Due to legal reasons.
-     */
     @Deprecated
     public String getRoomNumber() {
         return roomNumber;

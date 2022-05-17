@@ -10,6 +10,11 @@ import hu.bme.aut.programsch.domain.AppUser;
 import hu.bme.aut.programsch.domain.LoginUrl;
 import hu.bme.aut.programsch.service.AppUserService;
 import hu.bme.aut.programsch.service.CircleService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,6 +53,7 @@ public class LoginController {
     private boolean loggedIn = false;
 
     @GetMapping("/loggedin")
+    @Operation(summary = "The redirect from the login page")
     public ResponseEntity<Void> loggedIn(@RequestParam String code, @RequestParam String state, HttpServletRequest request) {
         Authentication auth = null;
         try {
@@ -94,6 +100,11 @@ public class LoginController {
     }
 
     @GetMapping(value = "/login")
+    @Operation(summary = "Login to the app",
+            responses = {
+                    @ApiResponse(description = "The OAuth2 authorization URL",
+                            content = @Content(mediaType = "application/json",
+                                    array = @ArraySchema(schema = @Schema(implementation = LoginUrl.class))))})
     public ResponseEntity<LoginUrl> getLoginInfo(HttpServletRequest request) {
         return new ResponseEntity<>(new LoginUrl(authSchAPI.generateLoginUrl(buildUniqueState(request),
                 Scope.BASIC, Scope.GIVEN_NAME, Scope.SURNAME, Scope.MAIL, Scope.ENTRANTS, Scope.EDU_PERSON_ENTILEMENT)), HttpStatus.OK);
@@ -105,6 +116,7 @@ public class LoginController {
     }
 
     @GetMapping("/logout")
+    @Operation(summary = "Logout of the app")
     public void logout(HttpServletRequest request) {
         request.getSession(false);
         SecurityContextHolder.clearContext();
@@ -158,6 +170,11 @@ public class LoginController {
     }
 
     @GetMapping(value = "/isLoggedIn", produces = "application/json")
+    @Operation(summary = "Get Login state",
+            responses = {
+                    @ApiResponse(description = "State of the login",
+                            content = @Content(mediaType = "application/json",
+                                    array = @ArraySchema(schema = @Schema(implementation = Boolean.class))))})
     public ResponseEntity<Boolean> getIsLoggedIn() {
         return new ResponseEntity<>(loggedIn, HttpStatus.OK);
     }

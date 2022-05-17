@@ -5,6 +5,7 @@ import hu.bme.aut.programsch.config.authsch.struct.Scope;
 import java.io.Serializable;
 import java.util.List;
 
+
 public final class AuthResponse implements Serializable {
 
     private static final long serialVersionUID = 4140354200501250401L;
@@ -25,33 +26,8 @@ public final class AuthResponse implements Serializable {
         this.refreshToken = refreshToken;
     }
 
-    /**
-     * Used for API requests
-     */
     public String getAccessToken() {
         return accessToken;
-    }
-
-    /**
-     * Timestamp of expire
-     */
-    public long getExpiresIn() {
-        return expiresIn;
-    }
-
-    public String getTokenType() {
-        return tokenType;
-    }
-
-    public List<Scope> getScopes() {
-        return scopes;
-    }
-
-    /**
-     * Used for refreshing the access token
-     */
-    public String getRefreshToken() {
-        return refreshToken;
     }
 
     @Override
