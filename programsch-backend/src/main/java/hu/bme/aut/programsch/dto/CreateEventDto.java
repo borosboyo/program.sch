@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 
 @Data
 public class CreateEventDto {
+    private long id;
     private String name;
     private String resort;
     private String circle;

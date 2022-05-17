@@ -1,9 +1,10 @@
 package hu.bme.aut.programsch.service;
 
 import hu.bme.aut.programsch.dto.AppUserDto;
+import hu.bme.aut.programsch.dto.FilterDto;
 import hu.bme.aut.programsch.mapper.AppUserMapper;
-import hu.bme.aut.programsch.model.AppUser;
-import hu.bme.aut.programsch.model.Filter;
+import hu.bme.aut.programsch.domain.AppUser;
+import hu.bme.aut.programsch.domain.Filter;
 import hu.bme.aut.programsch.repository.AppUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -40,6 +41,7 @@ public class AppUserService {
 
     @Transactional
     public AppUserDto save(AppUser appUser) {
+        filterService.createNewFilter(appUser.getUid());
         return appUserMapper.appUserToDto(appUserRepository.save(appUser));
     }
 
@@ -51,10 +53,5 @@ public class AppUserService {
     @Transactional
     public AppUserDto findUser() {
         return appUserMapper.appUserToDto(appUserRepository.findAll().get(0));
-    }
-
-    @Transactional
-    public Filter findUserFilters(String uid) {
-        return filterService.findUserFilters(uid);
     }
 }

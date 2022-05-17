@@ -13,4 +13,5 @@ public class FullCalendarEventDto {
     private boolean allDay = false;
     private LocalDateTime start;
     private LocalDateTime end;
+    private ExtendedProps extendedProps;
 }

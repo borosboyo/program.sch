@@ -4,6 +4,7 @@ import hu.bme.aut.programsch.dto.CircleDto;
 import hu.bme.aut.programsch.service.CircleService;
 import hu.bme.aut.programsch.service.ResortService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,10 +18,8 @@ public class CircleController {
 
     private final CircleService circleService;
 
-    private final ResortService resortService;
-
     @GetMapping()
-    public List<CircleDto> getCircles() {
-        return circleService.findAll();
+    public ResponseEntity<List<CircleDto>> getCircles() {
+        return ResponseEntity.ok(circleService.findAll());
     }
 }

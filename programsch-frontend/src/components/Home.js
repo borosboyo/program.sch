@@ -1,7 +1,7 @@
 import React from 'react';
-import AppNavbar from './AppNavbar';
-import CalendarHolder from "./CalendarHolder";
-import Footer from "./Footer";
+import AppNavbar from './banner/AppNavbar';
+import CalendarHolder from "./calendar/CalendarHolder";
+import Footer from "./banner/Footer";
 
 export class Home extends React.Component {
 

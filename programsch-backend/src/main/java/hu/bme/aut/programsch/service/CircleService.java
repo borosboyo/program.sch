@@ -3,7 +3,7 @@ package hu.bme.aut.programsch.service;
 import hu.bme.aut.programsch.config.db.DbConfigService;
 import hu.bme.aut.programsch.dto.CircleDto;
 import hu.bme.aut.programsch.mapper.CircleMapper;
-import hu.bme.aut.programsch.model.Circle;
+import hu.bme.aut.programsch.domain.Circle;
 import hu.bme.aut.programsch.repository.CircleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

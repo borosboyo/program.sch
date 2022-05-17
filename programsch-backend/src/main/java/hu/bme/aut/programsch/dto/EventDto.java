@@ -1,12 +1,12 @@
 package hu.bme.aut.programsch.dto;
 
-import hu.bme.aut.programsch.model.Resort;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
 @Data
 public class EventDto {
+    private Long id;
     private String name;
     private CircleDto circle;
     private LocalDateTime start;

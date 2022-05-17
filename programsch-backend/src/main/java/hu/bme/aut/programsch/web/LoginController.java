@@ -6,8 +6,8 @@ import hu.bme.aut.programsch.config.authsch.response.AuthResponse;
 import hu.bme.aut.programsch.config.authsch.response.ProfileDataResponse;
 import hu.bme.aut.programsch.config.authsch.struct.PersonEntitlement;
 import hu.bme.aut.programsch.config.authsch.struct.Scope;
-import hu.bme.aut.programsch.model.AppUser;
-import hu.bme.aut.programsch.model.LoginUrl;
+import hu.bme.aut.programsch.domain.AppUser;
+import hu.bme.aut.programsch.domain.LoginUrl;
 import hu.bme.aut.programsch.service.AppUserService;
 import hu.bme.aut.programsch.service.CircleService;
 import lombok.RequiredArgsConstructor;
@@ -70,7 +70,6 @@ public class LoginController {
                         "",
                         getCirclePermissionList(ownedCircles));
                 appUserService.save(appUser);
-                AppUser appUserEntity = appUser;
             }
 
             auth = new UsernamePasswordAuthenticationToken(code, state, getAuthorities(appUser));
@@ -118,6 +117,7 @@ public class LoginController {
                 cookie.setMaxAge(0);
             }
         }
+
         request.removeAttribute(USER_SESSION_ATTRIBUTE_NAME);
         request.removeAttribute(USER_ENTITY_DTO_SESSION_ATTRIBUTE_NAME);
         request.removeAttribute(CIRCLE_OWNERSHIP_SESSION_ATTRIBUTE_NAME);
@@ -158,7 +158,7 @@ public class LoginController {
     }
 
     @GetMapping(value = "/isLoggedIn", produces = "application/json")
-    public boolean getIsLoggedIn() {
-        return loggedIn;
+    public ResponseEntity<Boolean> getIsLoggedIn() {
+        return new ResponseEntity<>(loggedIn, HttpStatus.OK);
     }
 }

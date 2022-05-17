@@ -1,0 +1,47 @@
+spring:
+  datasource:
+    url: 'jdbc:postgresql://localhost:5432/programsch'
+    username: root
+    password: root
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    open-in-view: false
+  sql:
+    init:
+      mode: always
+  security:
+    oauth2:
+      client:
+        registration:
+          authsch:
+            client-id: '88473560630792347337'
+            client-secret: >-
+              zwALm1QCB1oASkTKgY6ETVRUOOMfyGNo4N1gEHiF9NFQxZaTxWYHrpb65nbttoXn3OJ7VrCT5IkshBCV
+            authorization-grant-type: authorization_code
+            redirect-uri: 'http://127.0.0.1:8080/login/oauth2/code/authsch'
+        provider:
+          authsch:
+            token-uri: 'https://auth.sch.bme.hu/oauth2/token'
+            authorization-uri: 'https://auth.sch.bme.hu/site/login'
+            user-name-attribute: internal_id
+            user-info-authentication-method: header
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: tesztemailkuldo@gmail.com
+    password: bartoscsistvan
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls.enable: true
+          ssl.trust: smtp.gmail.com
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    operationsSorter: method

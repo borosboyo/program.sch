@@ -1,8 +1,8 @@
 package hu.bme.aut.programsch.config.db;
 
 
-import hu.bme.aut.programsch.model.Circle;
-import hu.bme.aut.programsch.model.Resort;
+import hu.bme.aut.programsch.domain.Circle;
+import hu.bme.aut.programsch.domain.Resort;
 import hu.bme.aut.programsch.repository.CircleRepository;
 import hu.bme.aut.programsch.repository.ResortRepository;
 import lombok.RequiredArgsConstructor;
