@@ -1,5 +1,7 @@
 package hu.bme.aut.programsch.service;
 
+import hu.bme.aut.programsch.config.authsch.response.ProfileDataResponse;
+import hu.bme.aut.programsch.domain.Membership;
 import hu.bme.aut.programsch.dto.AppUserDto;
 import hu.bme.aut.programsch.dto.FilterDto;
 import hu.bme.aut.programsch.mapper.AppUserMapper;
@@ -10,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -54,4 +57,5 @@ public class AppUserService {
     public AppUserDto findUser() {
         return appUserMapper.appUserToDto(appUserRepository.findAll().get(0));
     }
+
 }

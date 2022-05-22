@@ -10,6 +10,7 @@ import hu.bme.aut.programsch.domain.AppUser;
 import hu.bme.aut.programsch.domain.LoginUrl;
 import hu.bme.aut.programsch.service.AppUserService;
 import hu.bme.aut.programsch.service.CircleService;
+import hu.bme.aut.programsch.service.MembershipService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -49,6 +50,7 @@ public class LoginController {
     private final AppUserService appUserService;
     private final AuthSchAPI authSchAPI;
     private final CircleService circleService;
+    private final MembershipService memberShipService;
 
     private boolean loggedIn = false;
 
@@ -59,6 +61,7 @@ public class LoginController {
         try {
             AuthResponse response = authSchAPI.validateAuthentication(code);
             ProfileDataResponse profile = authSchAPI.getProfile(response.getAccessToken());
+            memberShipService.addMemberships(profile);
             AppUser appUser;
             List<Long> ownedCircles = getOwnedCircleIds(profile);
             if (appUserService.exists(profile.getInternalId().toString())) {
@@ -77,6 +80,7 @@ public class LoginController {
                         getCirclePermissionList(ownedCircles));
                 appUserService.save(appUser);
             }
+
 
             auth = new UsernamePasswordAuthenticationToken(code, state, getAuthorities(appUser));
 

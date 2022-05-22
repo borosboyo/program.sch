@@ -28,11 +28,15 @@ public class FilterController {
             responses = {
                     @ApiResponse(description = "The filter that was changed",
                             content = @Content(mediaType = "application/json",
-                                    schema = @Schema(implementation = FilterDto.class)))})
+                                    schema = @Schema(implementation = FilterDto.class))),
+                    @ApiResponse(responseCode = "400", description = "Filter not found")})
     public ResponseEntity<FilterDto> changeUserFilters(
             @RequestBody(description = "The filter object", required = true,
                     content = @Content(
-                            schema = @Schema(implementation = FilterDto.class))) FilterDto filterDto) {
+                            schema = @Schema(implementation = FilterDto.class))) @org.springframework.web.bind.annotation.RequestBody FilterDto filterDto) {
+        if(filterService.findUserFilters(filterDto.getUserId()) == null) {
+            return ResponseEntity.badRequest().build();
+        }
         return new ResponseEntity<>(filterService.changeUserFilters(filterDto), HttpStatus.OK);
     }
 
@@ -73,8 +77,12 @@ public class FilterController {
             responses = {
                     @ApiResponse(description = "The filter that the user has",
                             content = @Content(mediaType = "application/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = FilterDto.class))))})
+                                    array = @ArraySchema(schema = @Schema(implementation = FilterDto.class)))),
+                    @ApiResponse(responseCode = "400", description = "Filter not found")})
     public ResponseEntity<FilterDto> getUserFilters() {
+        if(filterService.findUserFilters(appUserService.findUser().getUid()) == null) {
+            return ResponseEntity.badRequest().build();
+        }
         return new ResponseEntity<>(filterService.findUserFilters(appUserService.findUser().getUid()), HttpStatus.OK);
     }
 }

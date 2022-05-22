@@ -28,8 +28,12 @@ public class CircleController {
             responses = {
                     @ApiResponse(description = "All of the Circles",
                             content = @Content(mediaType = "application/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = CircleDto.class))))})
+                                    array = @ArraySchema(schema = @Schema(implementation = CircleDto.class)))),
+                    @ApiResponse(responseCode = "400", description = "Circles not found")})
     public ResponseEntity<List<CircleDto>> getCircles() {
+        if(circleService.findAll().isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
         return ResponseEntity.ok(circleService.findAll());
     }
 }

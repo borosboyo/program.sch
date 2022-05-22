@@ -2,7 +2,6 @@ package hu.bme.aut.programsch.domain;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
-import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -27,11 +26,6 @@ public class Circle implements Serializable {
     private String description;
     @Column
     private int founded;
-
-    //@Column
-    //@OneToMany(mappedBy = "circle", fetch = FetchType.LAZY, orphanRemoval = true)
-    //@JsonManagedReference
-    //private List<CircleMember> members;
 
     @Column
     @OneToMany(mappedBy = "circle", fetch = FetchType.LAZY, orphanRemoval = true)

@@ -28,8 +28,12 @@ public class EventController {
             responses = {
                     @ApiResponse(description = "All of the Events",
                             content = @Content(mediaType = "application/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = EventDto.class))))})
+                                    array = @ArraySchema(schema = @Schema(implementation = EventDto.class)))),
+                    @ApiResponse(responseCode = "400", description = "Events not found")})
     public ResponseEntity<List<EventDto>> getEvents() {
+        if(eventService.findAll().isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
         return ResponseEntity.ok(eventService.findAll());
     }
 
@@ -42,6 +46,9 @@ public class EventController {
                     @ApiResponse(responseCode = "400", description = "Event not found")})
     public ResponseEntity<EventDto> getEventById(
             @Parameter(description = "The ID of the Event", required = true) @PathVariable Long id) {
+        if(eventService.findById(id) == null) {
+            return ResponseEntity.badRequest().build();
+        }
         return ResponseEntity.ok(eventService.findById(id));
     }
 
@@ -54,6 +61,9 @@ public class EventController {
                     @ApiResponse(responseCode = "400", description = "Event not found")})
     public ResponseEntity<List<EventDto>> getEventsByDay(
             @Parameter(description = "The Date of the Event", required = true) @RequestParam String date) {
+        if(eventService.findEventsByDay(date) == null) {
+            return ResponseEntity.badRequest().build();
+        }
         return ResponseEntity.ok(eventService.findEventsByDay(date));
     }
 
@@ -66,7 +76,13 @@ public class EventController {
     public ResponseEntity<EventDto> createEvent(
             @RequestBody(description = "Created Event object", required = true,
                     content = @Content(
-                            schema = @Schema(implementation = EventDto.class))) CreateEventDto createEventDto) {
+                            schema = @Schema(implementation = EventDto.class))) @org.springframework.web.bind.annotation.RequestBody CreateEventDto createEventDto) {
+        if(createEventDto == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        System.out.println("----");
+        System.out.println(createEventDto);
+        System.out.println("----");
         return ResponseEntity.ok(eventService.createEvent(createEventDto));
     }
 
@@ -75,8 +91,12 @@ public class EventController {
             responses = {
                     @ApiResponse(description = "All of the Events",
                             content = @Content(mediaType = "application/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = FullCalendarEventDto.class))))})
+                                    array = @ArraySchema(schema = @Schema(implementation = FullCalendarEventDto.class)))),
+                    @ApiResponse(responseCode = "400", description = "Events not found")})
     public ResponseEntity<List<FullCalendarEventDto>> getFullCalendarEvents() {
+        if(eventService.findAllFullCalendarEvents().isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
         return ResponseEntity.ok(eventService.findAllFullCalendarEvents());
     }
 
@@ -85,8 +105,12 @@ public class EventController {
             responses = {
                     @ApiResponse(description = "All of the Events",
                             content = @Content(mediaType = "application/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = FullCalendarEventDto.class))))})
+                                    array = @ArraySchema(schema = @Schema(implementation = FullCalendarEventDto.class)))),
+                    @ApiResponse(responseCode = "400", description = "Events not found")})
     public ResponseEntity<List<FullCalendarEventDto>> getFullCalendarFilteredEvents() {
+        if(eventService.findAllFullCalendarFilteredEvents().isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
         return ResponseEntity.ok(eventService.findAllFullCalendarFilteredEvents());
     }
 
@@ -99,6 +123,9 @@ public class EventController {
                     @ApiResponse(responseCode = "400", description = "Event not found")})
     public ResponseEntity<Void> deleteEvent(
             @Parameter(description = "The ID of the Event", required = true) @PathVariable long id) {
+        if(eventService.findById(id) == null) {
+            return ResponseEntity.badRequest().build();
+        }
         eventService.deleteEvent(id);
         return ResponseEntity.noContent().build();
     }
@@ -108,11 +135,15 @@ public class EventController {
             responses = {
                     @ApiResponse(description = "Event that was updated",
                             content = @Content(mediaType = "application/json",
-                                    schema = @Schema(implementation = EventDto.class)))})
+                                    schema = @Schema(implementation = EventDto.class))),
+                    @ApiResponse(responseCode = "400", description = "Event not found")})
     public ResponseEntity<EventDto> updateEvent(
             @RequestBody(description = "Update Event object", required = true,
             content = @Content(
-                    schema = @Schema(implementation = EventDto.class))) CreateEventDto createEventDto) {
+                    schema = @Schema(implementation = EventDto.class))) @org.springframework.web.bind.annotation.RequestBody CreateEventDto createEventDto) {
+        if(eventService.updateEvent(createEventDto) == null) {
+            return ResponseEntity.badRequest().build();
+        }
         return ResponseEntity.ok(eventService.updateEvent(createEventDto));
     }
 }

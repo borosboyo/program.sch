@@ -26,10 +26,13 @@ public class AppUserController {
             responses = {
                     @ApiResponse(description = "Get the current user",
                             content = @Content(mediaType = "application/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = AppUserDto.class))))})
+                                    array = @ArraySchema(schema = @Schema(implementation = AppUserDto.class)))),
+                    @ApiResponse(responseCode = "400", description = "AppUser not found")})
     public ResponseEntity<AppUserDto> getAppUserEntity() {
+        if(appUserService.findUser() == null) {
+            return ResponseEntity.badRequest().build();
+        }
         return ResponseEntity.ok(appUserService.findUser());
     }
-
 }
 
