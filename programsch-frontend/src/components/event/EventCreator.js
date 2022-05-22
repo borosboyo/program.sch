@@ -4,7 +4,6 @@ import Footer from "../banner/Footer";
 import './EventCreator.css';
 import {Button, Form, Input, Label} from 'reactstrap';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import moment from "moment";
 
 export class EventCreator extends React.Component {
 
@@ -39,12 +38,12 @@ export class EventCreator extends React.Component {
             this.setState({event: event});
         }
 
-        this.fetchResorts();
         this.handleGetLoginState();
+        this.fetchResorts();
     }
 
     fetchResorts() {
-        fetch(`http://localhost:8080/api/resort`, {
+        fetch(`http://localhost:8080/api/resort/usermemberships`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -81,6 +80,7 @@ export class EventCreator extends React.Component {
             .then(data => this.setState({selectedResort: data}));
     }
 
+
     handleActualCircleList() {
         const circles = this.state.selectedResort.circles;
         if (circles !== undefined) {
@@ -107,8 +107,8 @@ export class EventCreator extends React.Component {
         const name = target.name;
         let event = {...this.state.event};
         event[name] = value;
-        event.start = moment(event.start).format('YYYY-MM-DD HH:mm')
-        event.end = moment(event.end).format('YYYY-MM-DD HH:mm')
+        console.log(event.start);
+        console.log(event.end);
         this.setState({event});
     }
 
@@ -133,7 +133,7 @@ export class EventCreator extends React.Component {
 
         let currentEvent = {};
 
-        if(this.state.event !== undefined) {
+        if (this.state.event !== undefined) {
             currentEvent = this.state.event;
         }
 
@@ -162,7 +162,8 @@ export class EventCreator extends React.Component {
                                         <div className="form-group col-md-6">
                                             <Label for="name">Program neve</Label>
                                             <Input type="text" className="form-control" id="name" name="name"
-                                                   placeholder="" onChange={this.handleChange} value={currentEvent.name || ''}/>
+                                                   placeholder="" onChange={this.handleChange}
+                                                   value={currentEvent.name || ''}/>
                                         </div>
                                     </div>
                                     <div className="form-row">
@@ -187,21 +188,24 @@ export class EventCreator extends React.Component {
                                             <Label for="start">Esemény kezdete</Label>
                                             <Input type="datetime-local" className="form-control" id="start"
                                                    name="start"
-                                                   placeholder="" onChange={this.handleChange} value={currentEvent.start || ''}/>
+                                                   placeholder="" onChange={this.handleChange}
+                                                   value={currentEvent.start || ''}/>
                                         </div>
                                     </div>
                                     <div className="form-row">
                                         <div className="form-group col-md-6">
                                             <Label for="end">Esemény vége</Label>
                                             <Input type="datetime-local" className="form-control" id="end" name="end"
-                                                   placeholder="" onChange={this.handleChange} value={currentEvent.end || ''}/>
+                                                   placeholder="" onChange={this.handleChange}
+                                                   value={currentEvent.end || ''}/>
                                         </div>
                                     </div>
                                     <div className="form-row">
                                         <div className="form-group col-md-6">
                                             <Label for="place">Helyszín</Label>
                                             <Input type="text" className="form-control" id="place" name="place"
-                                                   placeholder="" onChange={this.handleChange} value={currentEvent.place || ''}/>
+                                                   placeholder="" onChange={this.handleChange}
+                                                   value={currentEvent.place || ''}/>
                                         </div>
                                     </div>
                                     <div className="form-row">
@@ -209,28 +213,32 @@ export class EventCreator extends React.Component {
                                             <Label for="facebookUrl">Facebook esemény linkje</Label>
                                             <Input type="text" className="form-control" id="facebookUrl"
                                                    name="facebookUrl"
-                                                   placeholder="" onChange={this.handleChange} value={currentEvent.facebookUrl || ''}/>
+                                                   placeholder="" onChange={this.handleChange}
+                                                   value={currentEvent.facebookUrl || ''}/>
                                         </div>
                                     </div>
                                     <div className="form-row">
                                         <div className="form-group col-md-6">
                                             <Label for="poster">Plakát linkje</Label>
                                             <Input type="text" className="form-control" id="poster" name="poster"
-                                                   placeholder="" onChange={this.handleChange} value={currentEvent.poster || ''}/>
+                                                   placeholder="" onChange={this.handleChange}
+                                                   value={currentEvent.poster || ''}/>
                                         </div>
                                     </div>
                                     <div className="form-row">
                                         <div className="form-group col-md-6">
                                             <Label for="tldr">Program TLDR</Label>
                                             <Input type="text" className="form-control" id="tldr" name="tldr"
-                                                   placeholder="" onChange={this.handleChange} value={currentEvent.tldr || ''}/>
+                                                   placeholder="" onChange={this.handleChange}
+                                                   value={currentEvent.tldr || ''}/>
                                         </div>
                                     </div>
                                     <div className="form-row">
                                         <div className="form-group col-md-6">
                                             <Label for="description">Az esemény leírása</Label>
                                             <textarea id="description" name="description" rows="4" cols="50"
-                                                      onChange={this.handleChange} value={currentEvent.description || ''}>
+                                                      onChange={this.handleChange}
+                                                      value={currentEvent.description || ''}>
                                         </textarea>
                                         </div>
                                     </div>

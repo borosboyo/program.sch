@@ -21,7 +21,18 @@ export default class Calendar extends React.Component {
         this.handleGetLoginState();
         this.handleGetFilterState();
         this.fetchFilteredEvents();
-        this.fetchEvents()
+        this.fetchEvents();
+        this.reloadPage();
+    }
+
+    reloadPage() {
+        const reloadCount = sessionStorage.getItem('reloadCount');
+        if (reloadCount < 2) {
+            sessionStorage.setItem('reloadCount', String(reloadCount + 1));
+            window.location.reload();
+        } else {
+            sessionStorage.removeItem('reloadCount');
+        }
     }
 
     handleGetLoginState() {
