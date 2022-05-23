@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+    <span>Egy új program lett létrehozva a naptárban az alábbi adatokkal:</span> <br/>
+    <span>Esemény neve: </span> <span th:text="${event.name}" ></span> <br/>
+    <span>Kör: </span> <span th:text="${event.circle.displayName}" ></span> <br/>
+    <span>Helyszín: </span> <span th:text="${event.place}" ></span> <br/>
+    <span>Kezdés: </span> <span th:text="${event.start}" ></span> <br/>
+    <span>Befejezés: </span> <span th:text="${event.end}" ></span> <br/>
+    <span>TLDR: </span> <span th:text="${event.tldr}" ></span> <br/>
+    <span>Megjegyzés: </span> <span th:text="${event.description}" ></span> <br/>
+    <span>Facebook esemény: </span> <span th:text="${event.facebookUrl}" ></span> 
+</body>
+</html>

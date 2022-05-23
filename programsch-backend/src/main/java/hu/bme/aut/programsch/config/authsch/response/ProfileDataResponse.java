@@ -26,6 +26,7 @@ public final class ProfileDataResponse implements Serializable {
     private final List<Entrant> entrants;
     private final List<String> admembership;
     private final List<BMEUnitScope> bmeunitscope;
+
     private ProfileDataResponse(UUID internalId, String displayName, String surname, String givenName, String mail,
                                 String neptun, Map<String, String> linkedAccounts, List<PersonEntitlement> eduPersonEntitlement,
                                 String roomNumber, String mobile, List<String> courses, List<Entrant> entrants,
@@ -83,11 +84,6 @@ public final class ProfileDataResponse implements Serializable {
         return eduPersonEntitlement;
     }
 
-    /**
-     * Room number
-     *
-     * @deprecated Due to legal reasons.
-     */
     @Deprecated
     public String getRoomNumber() {
         return roomNumber;

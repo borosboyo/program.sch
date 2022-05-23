@@ -1,12 +1,11 @@
 package hu.bme.aut.programsch.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
-@AllArgsConstructor
+import java.util.List;
+
+@Data
 public class ResortDto {
+    private String name;
+    private List<CircleDto> circles;
 }

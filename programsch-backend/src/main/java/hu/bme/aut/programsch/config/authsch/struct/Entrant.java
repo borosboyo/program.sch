@@ -16,18 +16,6 @@ public class Entrant implements Serializable {
         this.entrantType = entrantType;
     }
 
-    public int getGroupId() {
-        return groupId;
-    }
-
-    public String getGroupName() {
-        return groupName;
-    }
-
-    public String getEntrantType() {
-        return entrantType;
-    }
-
     @Override
     public String toString() {
         return "Entrant [groupId=" + groupId + ", groupName=" + groupName + ", entrantType=" + entrantType + "]";
