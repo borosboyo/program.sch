@@ -6,6 +6,7 @@ import hu.bme.aut.programsch.domain.Resort;
 import hu.bme.aut.programsch.repository.CircleRepository;
 import hu.bme.aut.programsch.repository.ResortRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

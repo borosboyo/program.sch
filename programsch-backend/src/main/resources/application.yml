@@ -1,4 +1,7 @@
 spring:
+  banner:
+    location:
+      'classpath:banner.txt'
   datasource:
     url: 'jdbc:postgresql://localhost:5432/programsch'
     username: root
