@@ -24,18 +24,22 @@ jobs:
         node-version: ${{ matrix.node-version }}
 
     - name: Install dependencies
+      working-directory: programsch-frontend
       run: npm install
 
     - name: Run the tests and generate coverage report
+      working-directory: programsch-frontend
       run: npm test -- --coverage
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1
 
     - name: Build
+      working-directory: programsch-frontend
       run: npm run build
 
     - name: Deploy
+      working-directory: programsch-frontend
       run: |
         git config --global user.name $borosboyo
         git config --global user.email $borosgergo00@gmail.com
