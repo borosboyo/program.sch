@@ -78,8 +78,10 @@ export class EditFilters extends React.Component {
                         </h4>
                     </li>
                     {
+                        // eslint-disable-next-line array-callback-return
                         this.state.circleList.map(circle => {
                             if (circle.resort.name === resort.name) {
+                                // eslint-disable-next-line jsx-a11y/anchor-is-valid
                                 return <a onClick={() => this.handleClickOnCircle(circle)} key={circle.displayName} href="#"
                                           className={this.handleCircleState(circle.displayName)}>
                                     {circle.displayName}

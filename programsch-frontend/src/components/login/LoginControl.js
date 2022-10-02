@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import '../banner/AppNavbar.css'
 import {Button} from "reactstrap";
 
