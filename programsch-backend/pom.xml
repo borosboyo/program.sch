@@ -14,6 +14,8 @@
     </parent>
 
     <properties>
+        <sonar.organization>borosboyo</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
