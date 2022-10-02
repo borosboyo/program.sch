@@ -1,7 +1,10 @@
 {
   "name": "programsch-frontend",
+  "homepage": "https://borosboyo.github.io/programsch",
   "version": "0.1.0",
   "private": true,
+  "predeploy": "npm run build",
+  "deploy": "gh-pages -d build",
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
@@ -23,6 +26,7 @@
     "bootstrap-icons": "^1.8.1",
     "font-awesome": "^4.7.0",
     "fullcalendar": "^5.11.0",
+    "gh-pages": "^4.0.0",
     "mdb-react-ui-kit": "^3.0.0",
     "moment": "^2.29.1",
     "react": "^17.0.2",

@@ -10,7 +10,7 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
-    show-sql: true
+    show-sql: false
     open-in-view: false
   sql:
     init:
@@ -42,6 +42,16 @@ spring:
           auth: true
           starttls.enable: true
           ssl.trust: smtp.gmail.com
+
+logging:
+  level:
+    org:
+      hibernate: ERROR
+      springframework:
+        web: INFO
+    net:
+      guides: DEBUG
+
 
 springdoc:
   api-docs:
