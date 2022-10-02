@@ -3,8 +3,6 @@
   "homepage": "https://borosboyo.github.io/programsch",
   "version": "0.1.0",
   "private": true,
-  "predeploy": "npm run build",
-  "deploy": "gh-pages -d build",
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
@@ -41,6 +39,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
