@@ -38,8 +38,8 @@ jobs:
     - name: Deploy
       working-directory: programsch-frontend
       run: |
-        git config --global user.name $borosboyo
-        git config --global user.email $borosgergo00@gmail.com
+        git config --global user.name borosboyo
+        git config --global user.email borosgergo00@gmail.com
         git remote set-url origin https://${github_token}@github.com/${repository}
         npm run deploy
       env:
