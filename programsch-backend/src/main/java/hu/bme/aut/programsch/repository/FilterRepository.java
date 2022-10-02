@@ -1,6 +1,6 @@
 package hu.bme.aut.programsch.repository;
 
-import hu.bme.aut.programsch.model.Filter;
+import hu.bme.aut.programsch.domain.Filter;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

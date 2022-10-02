@@ -1,20 +1,29 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {Home} from './components/Home';
-import {Profile} from './components/Profile';
-import {EditFilters} from './components/EditFilters';
-import {LoginRedirect} from './components/LoginRedirect';
+import {EventCreator} from './components/event/EventCreator';
+import {Profile} from './components/profile/Profile';
+import {EditFilters} from './components/profile/EditFilters';
+import {EventViewer} from "./components/event/EventViewer";
+import {DayViewer} from "./components/event/DayViewer";
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import {Component} from "react";
 
 class App extends Component {
+
+    constructor(props) {
+        super(props);
+        document.title= "Program.sch";
+    }
+
     render() {
         return (
             <Router>
                 <Switch>
                     <Route path='/' exact={true} component={Home}/>
-                    <Route path='/loggedin' component={LoginRedirect}/>
-                    <Route path='/profile' component={Profile}/>
+                    <Route path='/event/:id'exact={true} component={EventCreator}/>
+                    <Route path='/profile' exact={true} component={Profile}/>
                     <Route path='/filters' exact={true} component={EditFilters}/>
+                    <Route path='/eventview/:id' component={EventViewer}/>
+                    <Route path='/dayview/:id' component={DayViewer}/>
                 </Switch>
             </Router>
         )

@@ -1,4 +1,3 @@
-// Role.java
 package hu.bme.aut.programsch.config.security;
 
 import hu.bme.aut.programsch.config.authsch.AuthSchAPI;
@@ -26,8 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors().and()
                 .csrf().disable() // Don't use it in production!
                 .authorizeRequests()
-                .antMatchers("/", "/index", "/circle", "/items", "/search/**",
-                        "/item/**", "/items/**", "/provider/**", "/p/**", "/enableFilters").permitAll()
+                .antMatchers("/", "/index", "/circle", "/items", "/search/**", "/enableFilters").permitAll()
                 .antMatchers("/loggedin", "/logout").permitAll()
                 .antMatchers("/api/**").permitAll()
                 .and()

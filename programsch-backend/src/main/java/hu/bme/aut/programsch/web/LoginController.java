@@ -6,10 +6,16 @@ import hu.bme.aut.programsch.config.authsch.response.AuthResponse;
 import hu.bme.aut.programsch.config.authsch.response.ProfileDataResponse;
 import hu.bme.aut.programsch.config.authsch.struct.PersonEntitlement;
 import hu.bme.aut.programsch.config.authsch.struct.Scope;
-import hu.bme.aut.programsch.model.AppUser;
-import hu.bme.aut.programsch.model.LoginUrl;
+import hu.bme.aut.programsch.domain.AppUser;
+import hu.bme.aut.programsch.domain.LoginUrl;
 import hu.bme.aut.programsch.service.AppUserService;
 import hu.bme.aut.programsch.service.CircleService;
+import hu.bme.aut.programsch.service.MembershipService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,15 +50,18 @@ public class LoginController {
     private final AppUserService appUserService;
     private final AuthSchAPI authSchAPI;
     private final CircleService circleService;
+    private final MembershipService memberShipService;
 
     private boolean loggedIn = false;
 
     @GetMapping("/loggedin")
+    @Operation(summary = "The redirect from the login page")
     public ResponseEntity<Void> loggedIn(@RequestParam String code, @RequestParam String state, HttpServletRequest request) {
         Authentication auth = null;
         try {
             AuthResponse response = authSchAPI.validateAuthentication(code);
             ProfileDataResponse profile = authSchAPI.getProfile(response.getAccessToken());
+            memberShipService.addMemberships(profile);
             AppUser appUser;
             List<Long> ownedCircles = getOwnedCircleIds(profile);
             if (appUserService.exists(profile.getInternalId().toString())) {
@@ -70,8 +79,8 @@ public class LoginController {
                         "",
                         getCirclePermissionList(ownedCircles));
                 appUserService.save(appUser);
-                AppUser appUserEntity = appUser;
             }
+
 
             auth = new UsernamePasswordAuthenticationToken(code, state, getAuthorities(appUser));
 
@@ -95,6 +104,11 @@ public class LoginController {
     }
 
     @GetMapping(value = "/login")
+    @Operation(summary = "Login to the app",
+            responses = {
+                    @ApiResponse(description = "The OAuth2 authorization URL",
+                            content = @Content(mediaType = "application/json",
+                                    array = @ArraySchema(schema = @Schema(implementation = LoginUrl.class))))})
     public ResponseEntity<LoginUrl> getLoginInfo(HttpServletRequest request) {
         return new ResponseEntity<>(new LoginUrl(authSchAPI.generateLoginUrl(buildUniqueState(request),
                 Scope.BASIC, Scope.GIVEN_NAME, Scope.SURNAME, Scope.MAIL, Scope.ENTRANTS, Scope.EDU_PERSON_ENTILEMENT)), HttpStatus.OK);
@@ -106,6 +120,7 @@ public class LoginController {
     }
 
     @GetMapping("/logout")
+    @Operation(summary = "Logout of the app")
     public void logout(HttpServletRequest request) {
         request.getSession(false);
         SecurityContextHolder.clearContext();
@@ -118,6 +133,7 @@ public class LoginController {
                 cookie.setMaxAge(0);
             }
         }
+
         request.removeAttribute(USER_SESSION_ATTRIBUTE_NAME);
         request.removeAttribute(USER_ENTITY_DTO_SESSION_ATTRIBUTE_NAME);
         request.removeAttribute(CIRCLE_OWNERSHIP_SESSION_ATTRIBUTE_NAME);
@@ -158,7 +174,12 @@ public class LoginController {
     }
 
     @GetMapping(value = "/isLoggedIn", produces = "application/json")
-    public boolean getIsLoggedIn() {
-        return loggedIn;
+    @Operation(summary = "Get Login state",
+            responses = {
+                    @ApiResponse(description = "State of the login",
+                            content = @Content(mediaType = "application/json",
+                                    array = @ArraySchema(schema = @Schema(implementation = Boolean.class))))})
+    public ResponseEntity<Boolean> getIsLoggedIn() {
+        return new ResponseEntity<>(loggedIn, HttpStatus.OK);
     }
 }

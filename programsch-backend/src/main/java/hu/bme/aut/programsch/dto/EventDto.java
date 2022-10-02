@@ -6,9 +6,15 @@ import java.time.LocalDateTime;
 
 @Data
 public class EventDto {
-    private String eventDescription;
+    private Long id;
+    private String name;
     private CircleDto circle;
-    private DayDto day;
     private LocalDateTime start;
-    private LocalDateTime finish;
+    private LocalDateTime end;
+    private String place;
+    private String facebookUrl;
+    private String poster;
+    private String tldr;
+    private String description;
+
 }

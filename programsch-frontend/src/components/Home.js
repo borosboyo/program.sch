@@ -1,6 +1,7 @@
 import React from 'react';
-import AppNavbar from './AppNavbar';
-import Calendar from "./Calendar";
+import AppNavbar from './banner/AppNavbar';
+import CalendarHolder from "./calendar/CalendarHolder";
+import Footer from "./banner/Footer";
 
 export class Home extends React.Component {
 
@@ -8,7 +9,8 @@ export class Home extends React.Component {
         return (
             <div>
                 <AppNavbar/>
-                <Calendar/>
+                <CalendarHolder/>
+                <Footer/>
             </div>
         );
     }

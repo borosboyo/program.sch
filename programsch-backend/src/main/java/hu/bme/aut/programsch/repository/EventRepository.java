@@ -1,6 +1,6 @@
 package hu.bme.aut.programsch.repository;
 
-import hu.bme.aut.programsch.model.Event;
+import hu.bme.aut.programsch.domain.Event;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
