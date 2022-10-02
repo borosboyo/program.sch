@@ -35,7 +35,7 @@ services:
     #    ipv4_address:
   db:
     image: 'postgres:13.1-alpine'
-    container_name: program-sch-db
+    container_name: programsch-db
     environment:
       - POSTGRES_USER=compose-postgres
       - POSTGRES_PASSWORD=compose-postgres
