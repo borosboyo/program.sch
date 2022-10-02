@@ -8,6 +8,7 @@ import hu.bme.aut.programsch.config.authsch.struct.PersonEntitlement;
 import hu.bme.aut.programsch.config.authsch.struct.Scope;
 import hu.bme.aut.programsch.domain.AppUser;
 import hu.bme.aut.programsch.domain.LoginUrl;
+import hu.bme.aut.programsch.logging.LogExecutionTime;
 import hu.bme.aut.programsch.service.AppUserService;
 import hu.bme.aut.programsch.service.CircleService;
 import hu.bme.aut.programsch.service.MembershipService;
@@ -56,6 +57,7 @@ public class LoginController {
 
     @GetMapping("/loggedin")
     @Operation(summary = "The redirect from the login page")
+    @LogExecutionTime
     public ResponseEntity<Void> loggedIn(@RequestParam String code, @RequestParam String state, HttpServletRequest request) {
         Authentication auth = null;
         try {
@@ -109,6 +111,7 @@ public class LoginController {
                     @ApiResponse(description = "The OAuth2 authorization URL",
                             content = @Content(mediaType = "application/json",
                                     array = @ArraySchema(schema = @Schema(implementation = LoginUrl.class))))})
+    @LogExecutionTime
     public ResponseEntity<LoginUrl> getLoginInfo(HttpServletRequest request) {
         return new ResponseEntity<>(new LoginUrl(authSchAPI.generateLoginUrl(buildUniqueState(request),
                 Scope.BASIC, Scope.GIVEN_NAME, Scope.SURNAME, Scope.MAIL, Scope.ENTRANTS, Scope.EDU_PERSON_ENTILEMENT)), HttpStatus.OK);
@@ -121,6 +124,7 @@ public class LoginController {
 
     @GetMapping("/logout")
     @Operation(summary = "Logout of the app")
+    @LogExecutionTime
     public void logout(HttpServletRequest request) {
         request.getSession(false);
         SecurityContextHolder.clearContext();
@@ -179,6 +183,7 @@ public class LoginController {
                     @ApiResponse(description = "State of the login",
                             content = @Content(mediaType = "application/json",
                                     array = @ArraySchema(schema = @Schema(implementation = Boolean.class))))})
+    @LogExecutionTime
     public ResponseEntity<Boolean> getIsLoggedIn() {
         return new ResponseEntity<>(loggedIn, HttpStatus.OK);
     }
