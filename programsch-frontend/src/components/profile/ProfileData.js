@@ -9,7 +9,7 @@ export function ProfileData() {
 
     useEffect(() => {
         handleGetUserObject();
-    });
+    }, []);
 
     const handleGetUserObject = () => {
         fetch(`http://localhost:8080/api/appuser`, {

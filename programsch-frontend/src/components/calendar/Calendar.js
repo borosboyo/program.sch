@@ -19,7 +19,7 @@ export function Calendar() {
         fetchFilteredEvents();
         fetchEvents();
         //reloadPage();
-    });
+    }, []);
 
     const reloadPage = () => {
         const reloadCount = sessionStorage.getItem('reloadCount');
