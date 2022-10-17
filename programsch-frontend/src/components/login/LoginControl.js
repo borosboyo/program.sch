@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import '../banner/AppNavbar.css'
-import {Button} from "reactstrap";
+import {Button} from '@chakra-ui/react'
+import {LockIcon, UnlockIcon} from "@chakra-ui/icons";
 
 
 export function LoginControl() {
@@ -51,23 +51,12 @@ export function LoginControl() {
 
     const handleRender = () => {
         if (isLoggedIn) {
-            return (<div className="collapse navbar-collapse" id="rightButtons">
-                <ul className="navbar-nav me-auto mb-2 mb-lg-0" id="loginButtons">
-                    <li className="nav-item">
-                        <a className="nav-link active" aria-current="page" href="/profile">Profil</a>
-                    </li>
-                    <li className="nav-item">
-                        <Button className="btn btn-danger" onClick={() => handleLogout()}>Kijelentkezés</Button>
-                    </li>
-                </ul>
+            return (<div>
+                <Button colorScheme="white" variant="ghost"><a href="/profile">Profil</a></Button>
+                <Button colorScheme="red" rightIcon={<LockIcon/>} onClick={() => handleLogout()}>Kijelentkezés</Button>
             </div>);
         } else {
-            return (<div className="collapse navbar-collapse" id="rightButtons">
-                <ul className="navbar-nav me-auto mb-2 mb-lg-0" id="loginButtons">
-                    <li className="nav-item">
-                        <Button className="btn btn-success"><a id={"signInButton"} href={handleLogin()}>Bejelentkezés</a></Button>                    </li>
-                </ul>
-            </div>);
+            return (<Button colorScheme="green" rightIcon={<UnlockIcon/>}><a id={"signInButton"} href={handleLogin()}>Bejelentkezés</a></Button>);
         }
     }
 
