@@ -1,23 +1,17 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {Button} from "reactstrap";
 import {Link} from "react-router-dom";
 import './ProfileFilter.css';
 
-export class ProfileFilters extends React.Component {
+export function ProfileFilters(){
 
-    constructor(props) {
-        super(props);
-        this.state = {filtersEnabled: {}};
-        this.handleGetFilterState = this.handleGetFilterState.bind(this);
-        this.handleEnableFilters = this.handleEnableFilters.bind(this);
-        this.handleDisableFilters = this.handleDisableFilters.bind(this);
-    }
+    const [filtersEnabled, setFiltersEnabled] = useState({});
 
-    componentDidMount() {
-        this.handleGetFilterState();
-    }
+    useEffect(() => {
+        handleGetFilterState();
+    });
 
-    reloadPage() {
+    const reloadPage = () => {
         const reloadCount = sessionStorage.getItem('reloadCount');
         if (reloadCount < 2) {
             sessionStorage.setItem('reloadCount', String(reloadCount + 1));
@@ -27,7 +21,7 @@ export class ProfileFilters extends React.Component {
         }
     }
 
-    handleGetFilterState() {
+    const handleGetFilterState = () => {
         fetch(`http://localhost:8080/api/filter/filtersEnabled`, {
             method: 'GET',
             headers: {
@@ -36,40 +30,35 @@ export class ProfileFilters extends React.Component {
             }
         })
             .then((response) => response.json())
-            .then(data => this.setState({filter: data}));
+            .then(data => setFiltersEnabled(data));
     }
 
-     handleEnableFilters() {
+     const handleEnableFilters = () => {
          fetch('http://localhost:8080/api/filter/enableFilters', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             }
-        }).then(data => console.log("enable"));
-         this.handleGetFilterState();
-         this.reloadPage();
+        }).then(data => console.log("Enable"));
+         handleGetFilterState();
+         reloadPage();
     }
 
-     handleDisableFilters() {
+     const handleDisableFilters = () => {
          fetch('http://localhost:8080/api/filter/disableFilters', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             }
-        }).then(data => console.log("disable"));
-         this.handleGetFilterState();
-         this.reloadPage();
+        }).then(data => console.log("Disable"));
+         handleGetFilterState();
+         reloadPage();
     }
 
-    //isEmptyObject(obj) {
-    //  return !Object.keys(obj).length;
-    //}
-
-    render() {
-        const filter = this.state.filter;
-        if (filter) {
+    const renderFilters = () => {
+        if (filtersEnabled) {
             return (
                 <div className="col-md-6">
                     <div className="panel panel-default">
@@ -79,7 +68,7 @@ export class ProfileFilters extends React.Component {
                         <div className="list-group align-items-center">
                             <Button tag={Link} to={"/filters"}
                                className="list-group-item list-group-item-info">Szűrők beállítása</Button>
-                            <Button onClick={this.handleDisableFilters}
+                            <Button onClick={handleDisableFilters}
                                className="list-group-item list-group-item-danger">Programok szűrésének
                                 kikapcsolása</Button>
                         </div>
@@ -94,7 +83,7 @@ export class ProfileFilters extends React.Component {
                             <h3 className="panel-title">Műveletek</h3>
                         </div>
                         <div className="list-group  align-items-center">
-                            <Button className="list-group-item list-group-item-success" onClick={this.handleEnableFilters}>
+                            <Button className="list-group-item list-group-item-success" onClick={handleEnableFilters}>
                                 Programok szűrésének bekapcsolása
                             </Button>
                         </div>
@@ -103,4 +92,8 @@ export class ProfileFilters extends React.Component {
             );
         }
     }
+
+    return renderFilters();
 }
+
+export default ProfileFilters;

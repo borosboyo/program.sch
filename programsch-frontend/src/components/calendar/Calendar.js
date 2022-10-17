@@ -1,31 +1,27 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import FullCalendar from '@fullcalendar/react' // must go before plugins
 import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
 import timeGridPlugin from '@fullcalendar/timegrid' // a plugin
 import {Tooltip} from "bootstrap";
 
 let tooltipInstance = null;
-export default class Calendar extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {filteredEvents: [], events: [], filtersEnabled: false, isLoggedIn: false};
-        this.fetchFilteredEvents = this.fetchFilteredEvents.bind(this);
-        this.fetchEvents = this.fetchEvents.bind(this);
-        this.handleGetLoginState = this.handleGetLoginState.bind(this);
-        this.handleMouseEnter = this.handleMouseEnter.bind(this);
-        this.handleMouseLeave = this.handleMouseLeave.bind(this);
-    }
+export function Calendar() {
 
-    componentDidMount() {
-        this.handleGetLoginState();
-        this.handleGetFilterState();
-        this.fetchFilteredEvents();
-        this.fetchEvents();
-        this.reloadPage();
-    }
+    const [filteredEvents, setFilteredEvents] = useState([]);
+    const [events, setEvents] = useState([]);
+    const [filtersEnabled, setFiltersEnabled] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    reloadPage() {
+    useEffect(() => {
+        handleGetLoginState();
+        handleGetFilterState();
+        fetchFilteredEvents();
+        fetchEvents();
+        //reloadPage();
+    });
+
+    const reloadPage = () => {
         const reloadCount = sessionStorage.getItem('reloadCount');
         if (reloadCount < 2) {
             sessionStorage.setItem('reloadCount', String(reloadCount + 1));
@@ -35,7 +31,7 @@ export default class Calendar extends React.Component {
         }
     }
 
-    handleGetLoginState() {
+    const handleGetLoginState = () => {
         fetch(`http://localhost:8080/api/isLoggedIn`, {
             headers: {
                 'Content-Type': 'application/json',
@@ -43,10 +39,10 @@ export default class Calendar extends React.Component {
             }
         })
             .then((response) => response.json())
-            .then(data => this.setState({isLoggedIn: data}))
+            .then(data => setIsLoggedIn(data))
     }
 
-    handleGetFilterState() {
+    const handleGetFilterState = () => {
         fetch(`http://localhost:8080/api/filter/filtersEnabled`, {
             method: 'GET',
             headers: {
@@ -55,10 +51,10 @@ export default class Calendar extends React.Component {
             }
         })
             .then((response) => response.json())
-            .then(data => this.setState({filtersEnabled: data}));
+            .then(data => setFiltersEnabled(data));
     }
 
-    fetchFilteredEvents() {
+    const fetchFilteredEvents = () => {
         fetch(`http://localhost:8080/api/event/calendar/filtered`, {
             method: 'GET',
             headers: {
@@ -67,10 +63,10 @@ export default class Calendar extends React.Component {
             }
         })
             .then((response) => response.json())
-            .then(data => this.setState({filteredEvents: data}))
+            .then(data => setFilteredEvents(data));
     }
 
-    fetchEvents() {
+    const fetchEvents = () => {
         fetch(`http://localhost:8080/api/event/calendar`, {
             method: 'GET',
             headers: {
@@ -79,10 +75,10 @@ export default class Calendar extends React.Component {
             }
         })
             .then((response) => response.json())
-            .then(data => this.setState({events: data}))
+            .then(data => setEvents(data));
     }
 
-    handleMouseEnter(info) {
+    const handleMouseEnter = (info) => {
         if (info.event.extendedProps.description) {
             tooltipInstance = new Tooltip(info.el, {
                 title: info.event.extendedProps.description,
@@ -95,18 +91,18 @@ export default class Calendar extends React.Component {
         }
     }
 
-    handleMouseLeave() {
+    const handleMouseLeave = (info) => {
         if (tooltipInstance) {
             tooltipInstance.dispose();
             tooltipInstance = null;
         }
     }
 
-    render() {
-        let events = this.state.events;
-        if (this.state.isLoggedIn) {
-            if (this.state.filtersEnabled) {
-                events = this.state.filteredEvents;
+    const render = () => {
+        let displayEvents = events;
+        if (isLoggedIn) {
+            if (filtersEnabled) {
+                displayEvents = filteredEvents;
             }
         }
 
@@ -116,7 +112,7 @@ export default class Calendar extends React.Component {
                 initialView="timeGridWeek"
                 timeGridWeekCount={2}
                 slotDuration={'00:30:00'}
-                events={events}
+                events={displayEvents}
                 headerToolbar={{
                     left: 'prev,next today',
                     center: 'title',
@@ -131,9 +127,13 @@ export default class Calendar extends React.Component {
                     const day = (date.getMonth() + 1) + "-" + date.getDate();
                     window.location.href = `/dayview/${day}`
                 }}
-                eventMouseEnter={this.handleMouseEnter}
-                eventMouseLeave={this.handleMouseLeave}
+                eventMouseEnter={handleMouseEnter}
+                eventMouseLeave={handleMouseLeave}
             />
         )
     }
+
+    return render();
 }
+
+export default Calendar;

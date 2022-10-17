@@ -2,21 +2,16 @@ import React from 'react'
 import './Calendar.css'
 import Calendar from "./Calendar";
 
-export default class CalendarHolder extends React.Component {
+export function CalendarHolder() {
+    return (
+        <div className="container" id="calendar">
+            <Calendar/>
+        </div>
+    );
 
-    constructor(props) {
-        super(props);
-        this.state = {};
-    }
-
-    render() {
-        return (
-            <div className="container" id="calendar">
-                <Calendar/>
-            </div>
-        );
-    }
 }
+
+export default CalendarHolder;
 
 
 

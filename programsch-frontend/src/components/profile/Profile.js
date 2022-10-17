@@ -1,18 +1,15 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import {ProfileData} from "./ProfileData";
 import AppNavbar from "../banner/AppNavbar";
 
-export class Profile extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {isLoggedIn: {}};
-    }
+export function Profile() {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    componentDidMount() {
-        this.handleGetLoginState()
-    }
+    useEffect(() => {
+       handleGetLoginState();
+    });
 
-    handleGetLoginState() {
+    const handleGetLoginState = () => {
         fetch(`http://localhost:8080/api/isLoggedIn`, {
             method: 'GET',
             headers: {
@@ -21,12 +18,11 @@ export class Profile extends React.Component {
             }
         })
             .then((response) => response.json())
-            .then(data => this.setState({isLoggedIn: data}));
+            .then(data => setIsLoggedIn(data));
     }
 
 
-    render() {
-        const isLoggedIn = this.state.isLoggedIn;
+    const renderProfile = () => {
         if(isLoggedIn) {
             return (
                 <div>
@@ -49,4 +45,8 @@ export class Profile extends React.Component {
             );
         }
     }
+
+    return renderProfile();
 }
+
+export default Profile;

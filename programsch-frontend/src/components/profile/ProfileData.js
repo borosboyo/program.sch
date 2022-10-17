@@ -1,20 +1,17 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {ProfileFilters} from "./ProfileFilters";
 import './ProfileData.css';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 
-export class ProfileData extends React.Component {
+export function ProfileData() {
 
-    constructor(props) {
-        super(props);
-        this.state = {userObject: {}};
-    }
+    const [userObject, setUsersObject] = useState({});
 
-    componentDidMount() {
-        this.handleGetUserObject()
-    }
+    useEffect(() => {
+        handleGetUserObject();
+    });
 
-    handleGetUserObject() {
+    const handleGetUserObject = () => {
         fetch(`http://localhost:8080/api/appuser`, {
             headers: {
                 'Content-Type': 'application/json',
@@ -22,11 +19,10 @@ export class ProfileData extends React.Component {
             }
         })
             .then((response) => response.json())
-            .then(data => this.setState({userObject: data}));
+            .then(data => setUsersObject(data));
     }
 
-    render() {
-        const userObject = this.state.userObject;
+    const render = () =>  {
         return (
             <section id="profilePanel" className="container justify-content-center">
                 <div className="container text-center">
@@ -61,5 +57,9 @@ export class ProfileData extends React.Component {
             </section>
         );
     }
+
+    return render();
 }
+
+export default ProfileData;
 

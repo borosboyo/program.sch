@@ -47,8 +47,11 @@ public class FilterController {
                             content = @Content(mediaType = "application/json",
                                     array = @ArraySchema(schema = @Schema(implementation = Boolean.class))))})
     public ResponseEntity<Boolean> getAreFiltersEnabled() {
-        FilterDto filter = filterService.findUserFilters(appUserService.findUser().getUid());
-        return new ResponseEntity<>(filter != null, HttpStatus.OK);
+        FilterDto filterDto = null;
+        if(appUserService.findUser() != null) {
+            filterDto = filterService.findUserFilters(appUserService.findUser().getUid());
+        }
+        return new ResponseEntity<>( filterDto != null, HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/enableFilters")

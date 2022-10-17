@@ -1,42 +1,38 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import AppNavbar from "../banner/AppNavbar";
 import './EditFilter.css';
 
-export class EditFilters extends React.Component {
+export function EditFilters() {
 
-    constructor(props) {
-        super(props);
-        this.state = {resorts: [], circleList: [], userFilters: {}};
-        this.handleClickOnCircle = this.handleClickOnCircle.bind(this);
-        this.handleCircleState = this.handleCircleState.bind(this);
-    }
+    const [resorts, setResorts] = useState([]);
+    const [circleList, setCircleList] = useState([]);
+    const [userFilters, setUserFilters] = useState([]);
 
-    componentDidMount() {
-        this.fetchResorts();
-        this.fetchCircles();
-        this.fetchUserFilters();
-    }
+    useEffect(() => {
+        fetchResorts();
+        fetchCircles();
+        fetchUserFilters();
+    });
 
-    fetchCircles() {
+    const fetchCircles = () => {
         fetch('http://localhost:8080/api/circle')
             .then(response => response.json())
-            .then(data => this.setState({circleList: data}));
+            .then(data => setCircleList(data));
     }
 
-    fetchResorts() {
+    const fetchResorts = () => {
         fetch('http://localhost:8080/api/resort')
             .then(response => response.json())
-            .then(data => this.setState({resorts: data}));
+            .then(data => setResorts(data));
     }
 
-    fetchUserFilters() {
+    const fetchUserFilters = () => {
         fetch('http://localhost:8080/api/filter')
             .then(response => response.json())
-            .then(data => this.setState({userFilters: data}));
+            .then(data => setUserFilters(data));
     }
 
-    handleClickOnCircle(circle){
-        let userFilters = this.state.userFilters;
+    const handleClickOnCircle = (circle) => {
 
         if(userFilters.filteredCircles.includes(circle.displayName)){
             userFilters.filteredCircles.splice(userFilters.filteredCircles.indexOf(circle.displayName), 1);
@@ -44,10 +40,10 @@ export class EditFilters extends React.Component {
             userFilters.filteredCircles.push(circle.displayName);
         }
 
-        this.handleUserFiltersChange(userFilters);
+        handleUserFiltersChange(userFilters);
     }
 
-    handleUserFiltersChange(userFilters) {
+    const handleUserFiltersChange = (userFilters) => {
         fetch('http://localhost:8080/api/filter/', {
             method: 'POST',
             headers: {
@@ -55,12 +51,12 @@ export class EditFilters extends React.Component {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(userFilters),
-        });
+        }).then(r => r.json())
     }
 
-    handleCircleState(circleName) {
-        if(this.state.userFilters.filteredCircles !== undefined) {
-            if(this.state.userFilters.filteredCircles.includes(circleName)) {
+    const handleCircleState = (circleName) => {
+        if(userFilters.filteredCircles !== undefined) {
+            if(userFilters.filteredCircles.includes(circleName)) {
                 return "list-group-item list-group-item-danger";
             } else {
                 return "list-group-item list-group-item-success";
@@ -68,8 +64,8 @@ export class EditFilters extends React.Component {
         }
     }
 
-    render() {
-        const resortList = this.state.resorts.map(resort => {
+    const render = () => {
+        const resortList = resorts.map(resort => {
             return <div className="col-md-4" id="resortCard" key={resort.name}>
                 <div className="list-group">
                     <li className="list-group-item">
@@ -78,10 +74,10 @@ export class EditFilters extends React.Component {
                         </h4>
                     </li>
                     {
-                        this.state.circleList.map(circle => {
+                        circleList.map(circle => {
                             if (circle.resort.name === resort.name) {
-                                return <a onClick={() => this.handleClickOnCircle(circle)} key={circle.displayName} href="#"
-                                          className={this.handleCircleState(circle.displayName)}>
+                                return <a onClick={() => handleClickOnCircle(circle)} key={circle.displayName} href="#"
+                                          className={handleCircleState(circle.displayName)}>
                                     {circle.displayName}
                                 </a>
                             }
@@ -103,4 +99,5 @@ export class EditFilters extends React.Component {
         );
     }
 
+    return render();
 }
