@@ -1,13 +1,21 @@
 import React, {useEffect, useState} from 'react'
 import {ProfileData} from "./ProfileData";
 import AppNavbar from "../banner/AppNavbar";
+import {
+    Alert,
+    AlertIcon,
+    AlertDescription,
+} from '@chakra-ui/react'
+import {ScaleFade, useDisclosure} from "@chakra-ui/react";
 
 export function Profile() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const {isOpen, onToggle} = useDisclosure()
 
     useEffect(() => {
-       handleGetLoginState();
-    });
+        onToggle();
+        handleGetLoginState();
+    }, []);
 
     const handleGetLoginState = () => {
         fetch(`http://localhost:8080/api/isLoggedIn`, {
@@ -23,12 +31,14 @@ export function Profile() {
 
 
     const renderProfile = () => {
-        if(isLoggedIn) {
+        if (isLoggedIn) {
             return (
                 <div>
                     <AppNavbar/>
-                    <div className="container">
-                        <ProfileData/>
+                    <div style={{marginTop: '50px'}}>
+                        <ScaleFade initialScale={0.5} in={isOpen}>
+                            <ProfileData/>
+                        </ScaleFade>
                     </div>
                 </div>
             );
@@ -36,11 +46,12 @@ export function Profile() {
             return (
                 <div>
                     <AppNavbar/>
-                    <div className="container justify-content-center">
-                        <div className="card" id="card">
-                            <div className="card-header">Kérlek jelentkezz be!</div>
-                        </div>
-                    </div>
+                    <ScaleFade initialScale={0.5} in={isOpen}>
+                        <Alert status='error'>
+                            <AlertIcon/>
+                            <AlertDescription>A profilod megtekintéséhez kérlek jelentkezz be.</AlertDescription>
+                        </Alert>
+                    </ScaleFade>
                 </div>
             );
         }

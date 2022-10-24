@@ -38,4 +38,18 @@ public class MembershipController {
         }
         return new ResponseEntity<>(membershipService.getMembershipsByAppUserUid(appUserUid), HttpStatus.OK);
     }
+
+    @GetMapping()
+    @Operation(summary = "Get Memberships of User",
+            responses = {
+                    @ApiResponse(description = "Memberships that were found",
+                            content = @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = EventDto.class))),
+                    @ApiResponse(responseCode = "400", description = "Memberships not found")})
+    public ResponseEntity<List<MembershipDto>> getMembershipsOfUser() {
+        if(membershipService.getMembershipsOfUser().isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(membershipService.getMembershipsOfUser(), HttpStatus.OK);
+    }
 }

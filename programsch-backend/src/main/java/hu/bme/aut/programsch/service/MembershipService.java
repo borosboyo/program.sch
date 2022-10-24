@@ -4,6 +4,7 @@ import hu.bme.aut.programsch.config.authsch.response.ProfileDataResponse;
 import hu.bme.aut.programsch.domain.Membership;
 import hu.bme.aut.programsch.dto.MembershipDto;
 import hu.bme.aut.programsch.mapper.MemberShipMapper;
+import hu.bme.aut.programsch.repository.AppUserRepository;
 import hu.bme.aut.programsch.repository.MembershipRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,8 @@ public class MembershipService {
 
     private final MembershipRepository membershipRepository;
     private final MemberShipMapper memberShipMapper;
+
+    private final AppUserRepository appUserRepository;
 
     @Transactional
     public void addMemberships(ProfileDataResponse profileDataResponses) {
@@ -35,5 +38,10 @@ public class MembershipService {
     @Transactional
     public List<MembershipDto> getMembershipsByAppUserUid(String appUserUid) {
         return memberShipMapper.membershipsToDtos(membershipRepository.findByAppUserUid(appUserUid));
+    }
+
+    @Transactional
+    public List<MembershipDto> getMembershipsOfUser() {
+        return memberShipMapper.membershipsToDtos(membershipRepository.findByAppUserUid(appUserRepository.findAll().get(0).uid));
     }
 }

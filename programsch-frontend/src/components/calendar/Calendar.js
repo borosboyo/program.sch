@@ -3,6 +3,7 @@ import FullCalendar from '@fullcalendar/react' // must go before plugins
 import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
 import timeGridPlugin from '@fullcalendar/timegrid' // a plugin
 import {Tooltip} from "bootstrap";
+import huLocale from "@fullcalendar/core/locales/hu";
 
 let tooltipInstance = null;
 
@@ -129,6 +130,8 @@ export function Calendar() {
                 }}
                 eventMouseEnter={handleMouseEnter}
                 eventMouseLeave={handleMouseLeave}
+                lang={'hu'}
+                locales={[huLocale]}
             />
         )
     }

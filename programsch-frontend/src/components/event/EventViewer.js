@@ -1,22 +1,23 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import AppNavbar from "../banner/AppNavbar";
 import GroupsIcon from '@mui/icons-material/Groups';
 import './EventViewer.css';
 import {Event} from "./Event";
+import {useHistory} from "react-router-dom";
 
-export class EventViewer extends React.Component {
+export function EventViewer(props) {
 
-    constructor(props) {
-        super(props);
-        this.state = {currentEvent: {}, currentCircle: {}};
-    }
+    const [currentEvent, setCurrentEvent] = useState({});
+    const [currentCircle, setCurrentCircle] = useState({});
+    const id = props.match.params.id;
+    const history = useHistory();
 
-    componentDidMount() {
-        this.fetchEvent();
-    }
+    useEffect(() => {
+        fetchEvent();
+    }, []);
 
-    fetchEvent() {
-        fetch(`http://localhost:8080/api/event/${this.props.match.params.id}`, {
+    const fetchEvent = () => {
+        fetch(`http://localhost:8080/api/event/${id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -24,23 +25,24 @@ export class EventViewer extends React.Component {
             }
         })
             .then((response) => response.json())
-            .then(data => this.setState({currentEvent: data, currentCircle: data.circle}))
+            .then((data) => {
+                setCurrentEvent(data);
+                setCurrentCircle(data.circle);
+            })
     }
 
-    handleDelete() {
-        fetch(`http://localhost:8080/api/event/${this.props.match.params.id}`, {
+    const handleDelete = () => {
+        fetch(`http://localhost:8080/api/event/${id}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             },
         })
-        this.props.history.push("/");
+        history.push("/");
     }
 
-    render() {
-        const currentEvent = this.state.currentEvent;
-        const currentCircle = this.state.currentCircle;
+    const render = () => {
         return (
             <div>
                 <AppNavbar/>
@@ -48,11 +50,12 @@ export class EventViewer extends React.Component {
                     <div className="card" id="card">
                         <div className="card-header"><GroupsIcon/> {currentCircle.displayName}</div>
                         <img src={currentEvent.poster} className="card-img-top" alt="..."/>
-                        <Event currentEvent={currentEvent} onClick={() => this.handleDelete()}/>
+                        <Event currentEvent={currentEvent} onClick={() => handleDelete()}/>
                     </div>
                 </div>
             </div>
         );
     }
 
+    return render();
 }

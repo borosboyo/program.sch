@@ -33,6 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login");
     }
 
+    @Override
     protected void configure(AuthenticationManagerBuilder auth) {
         if (auth != null) {
             auth.eraseCredentials(true);

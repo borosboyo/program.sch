@@ -1,26 +1,28 @@
 import './EventViewer.css';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import AppNavbar from "../banner/AppNavbar";
 import GroupsIcon from "@mui/icons-material/Groups";
 import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
 import moment from "moment";
 import {Event} from "./Event";
+import {useHistory} from "react-router-dom";
 
 
-export class DayViewer extends React.Component {
+export function DayViewer(props) {
 
-    constructor(props) {
-        super(props);
-        this.state = {dayEvents: [], loading: false}
-    }
+    const [dayEvents, setDayEvents] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const history = useHistory();
+    const id = props.match.params.id;
 
-    componentDidMount() {
-        this.setState({loading: true});
-        this.fetchDay();
-    }
+    useEffect(() => {
+        setLoading(true);
+        fetchDay();
+    }, []);
 
-    fetchDay() {
-        fetch(`http://localhost:8080/api/event/day?date=${this.props.match.params.id}`, {
+
+    const fetchDay = (props) => {
+        fetch(`http://localhost:8080/api/event/day?date=${id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -28,10 +30,11 @@ export class DayViewer extends React.Component {
             }
         })
             .then((response) => response.json())
-            .then(data => this.setState({dayEvents: data, loading: false}))
+            .then(data => setDayEvents(data));
+        setLoading(false);
     }
 
-    handleDelete(event) {
+    const handleDelete = (event) => {
         fetch(`http://localhost:8080/api/event/${event.id}`, {
             method: 'DELETE',
             headers: {
@@ -39,26 +42,25 @@ export class DayViewer extends React.Component {
                 'Accept': 'application/json'
             },
         })
-        this.props.history.push("/");
+        history.push("/");
     }
 
-    render() {
-        console.log(this.state.dayEvents);
-        const dayEvents = this.state.dayEvents.map(currentEvent =>
+    const renderEvents = (props) => {
+        const currentDayEvents = dayEvents.map(currentEvent =>
             <div className="container justify-content-center" key={currentEvent.name}>
                 <div className="card" id="card">
                     <div className="card-header"><GroupsIcon/> {currentEvent.circle.displayName}</div>
                     <img src={currentEvent.poster} className="card-img-top" alt="..."/>
-                    <Event currentEvent={currentEvent} onClick={() => this.handleDelete()}/>
+                    <Event currentEvent={currentEvent} onClick={() => handleDelete()}/>
                 </div>
             </div>
         );
 
-        if (this.state.loading === true) {
+        if (loading === true) {
             return <div>Loading...</div>
         }
 
-        if (this.state.dayEvents.length === 0) {
+        if (dayEvents.length === 0) {
             return (
                 <div>
                     <AppNavbar/>
@@ -79,12 +81,13 @@ export class DayViewer extends React.Component {
                     <AppNavbar/>
                     <div className="container justify-content-center">
                         <div className="card" id="card">
-                            <div className="card-header">{moment(this.props.match.params.id).format("MM. DD.")}</div>
+                            <div className="card-header">{moment(id).format("MM. DD.")}</div>
                         </div>
                     </div>
-                    {dayEvents}
+                    {currentDayEvents}
                 </div>
             );
         }
     }
+    return renderEvents(props);
 }

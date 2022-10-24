@@ -53,10 +53,17 @@ export function LoginControl() {
         if (isLoggedIn) {
             return (<div>
                 <Button colorScheme="white" variant="ghost"><a href="/profile">Profil</a></Button>
-                <Button colorScheme="red" rightIcon={<LockIcon/>} onClick={() => handleLogout()}>Kijelentkezés</Button>
+                <Button colorScheme="red" rightIcon={<LockIcon/>} onClick={() => handleLogout()}
+                        boxShadow={
+                            '0px 1px 25px -5px rgb(255 0 0 / 40%), 0 10px 10px -5px rgb(255 0 0 / 35%)'
+                        }
+                >Kijelentkezés</Button>
             </div>);
         } else {
-            return (<Button colorScheme="green" rightIcon={<UnlockIcon/>}><a id={"signInButton"} href={handleLogin()}>Bejelentkezés</a></Button>);
+            return (<Button colorScheme="green" rightIcon={<UnlockIcon/>}
+                            boxShadow={
+                                '0px 1px 25px -5px rgb(0 255 0 / 40%), 0 10px 10px -5px rgb(0 255 0 / 35%)'
+                            }><a id={"signInButton"} href={handleLogin()}>Bejelentkezés</a></Button>);
         }
     }
 

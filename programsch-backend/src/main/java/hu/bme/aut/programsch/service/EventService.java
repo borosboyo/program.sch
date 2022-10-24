@@ -80,8 +80,10 @@ public class EventService {
             filter = filterService.findUserFilters(appUserService.findUser().getUid());
         }
 
-        FilterDto finalFilter = filter;
-        events.removeIf(e -> finalFilter.getFilteredCircles().contains(e.getCircle().getDisplayName()));
+        if(filter != null) {
+            FilterDto finalFilter = filter;
+            events.removeIf(e -> finalFilter.getFilteredCircles().contains(e.getCircle().getDisplayName()));
+        }
 
         List<FullCalendarEventDto> filteredEvents = fullCalendarEventDtoMapper.eventsToDtos(events);
 
