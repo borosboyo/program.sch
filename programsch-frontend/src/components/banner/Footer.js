@@ -8,8 +8,8 @@ import {
     useColorModeValue,
     VisuallyHidden,
 } from '@chakra-ui/react';
-import {FaGithub, FaInstagram, FaTwitter, FaYoutube} from 'react-icons/fa';
-import { ReactNode } from 'react';
+import {FaGithub, FaInstagram} from 'react-icons/fa';
+import {ReactNode} from 'react';
 
 const SocialButton = ({
                           children,
@@ -52,20 +52,20 @@ export function Footer() {
                 as={Stack}
                 maxW={'3xl'}
                 py={3}
-                direction={{ base: 'column', md: 'row' }}
+                direction={{base: 'column', md: 'row'}}
                 spacing={4}
-                justify={{ base: 'center', md: 'center' }}
-                align={{ base: 'center', md: 'center' }}>
+                justify={{base: 'center', md: 'center'}}
+                align={{base: 'center', md: 'center'}}>
                 <Text>
                     <a className='text-reset fw-bold' href='https://pek.sch.bme.hu/profiles/borosgergo'>
                         &lt;&gt; with ❤ by borosboyo</a>
                 </Text>
                 <Stack direction={'row'} spacing={6}>
                     <SocialButton label={'Github'} href={'https://github.com/borosboyo'}>
-                        <FaGithub />
+                        <FaGithub/>
                     </SocialButton>
                     <SocialButton label={'Instagram'} href={'https://www.instagram.com/borosboyo/'}>
-                        <FaInstagram />
+                        <FaInstagram/>
                     </SocialButton>
                 </Stack>
             </Container>

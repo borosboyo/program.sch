@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react'
-import './Calendar.css'
 import Calendar from "./Calendar";
 import {ScaleFade, useDisclosure} from "@chakra-ui/react";
 

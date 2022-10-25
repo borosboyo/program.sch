@@ -1,18 +1,35 @@
 import React, {useEffect, useState} from 'react';
 import AppNavbar from "../banner/AppNavbar";
 import './EditFilter.css';
+import {Alert, AlertDescription, AlertIcon, ScaleFade, useDisclosure} from "@chakra-ui/react";
 
 export function EditFilters() {
 
     const [resorts, setResorts] = useState([]);
     const [circleList, setCircleList] = useState([]);
     const [userFilters, setUserFilters] = useState([]);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const {isOpen, onToggle} = useDisclosure()
 
     useEffect(() => {
+        onToggle();
         fetchResorts();
         fetchCircles();
         fetchUserFilters();
-    });
+        handleGetLoginState();
+    },[]);
+
+    const handleGetLoginState = () => {
+        fetch(`http://localhost:8080/api/isLoggedIn`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
+            .then((response) => response.json())
+            .then(data => setIsLoggedIn(data));
+    }
 
     const fetchCircles = () => {
         fetch('http://localhost:8080/api/circle')
@@ -87,16 +104,30 @@ export function EditFilters() {
             </div>
         });
 
-        return (
-            <div>
-                <AppNavbar/>
-                <div className="container">
-                    <div className="row">
-                        {resortList}
+        if(!isLoggedIn) {
+            return (
+                <div>
+                    <AppNavbar/>
+                    <ScaleFade initialScale={0.5} in={isOpen}>
+                        <Alert status='error'>
+                            <AlertIcon/>
+                            <AlertDescription>A szűrőid szerkesztéséhez kérlek jelentkezz be.</AlertDescription>
+                        </Alert>
+                    </ScaleFade>
+                </div>
+            )
+        } else {
+            return (
+                <div>
+                    <AppNavbar/>
+                    <div className="container" style={{marginTop: '35px'}}>
+                        <div className="row">
+                            {resortList}
+                        </div>
                     </div>
                 </div>
-            </div>
-        );
+            );
+        }
     }
 
     return render();

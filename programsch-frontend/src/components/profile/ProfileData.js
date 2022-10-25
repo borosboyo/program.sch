@@ -7,9 +7,9 @@ import {
     Center,
     Text,
     Stack,
-    Badge, Button, Link, useColorModeValue,
+    Badge, Button, useColorModeValue,
 } from '@chakra-ui/react';
-
+import {Link} from "react-router-dom";
 
 export function ProfileData() {
     const boxColor = useColorModeValue('white', 'gray.900');
@@ -99,13 +99,19 @@ export function ProfileData() {
             return (
                 <Stack mt={8} direction={'row'} spacing={4}>
                     <Button
+                        as={Link}
+                        to={'/filters'}
                         flex={1}
                         fontSize={'sm'}
+                        style={{textDecoration: 'none'}}
                         rounded={'full'}
+                        _hover={{
+                            bg: badgeColor,
+                        }}
                         _focus={{
                             bg: badgeColor,
                         }}>
-                        <Link style={{textDecoration: 'none'}} href="/filter" color={textColor}>Szűrők beállítása</Link>
+                        Szűrők beállítása
                     </Button>
                     <Button
                         flex={1}

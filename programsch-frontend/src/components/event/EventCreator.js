@@ -1,7 +1,6 @@
-import React, {useEffect, useState, } from 'react';
+import React, {useEffect, useState,} from 'react';
 import AppNavbar from "../banner/AppNavbar";
 import Footer from "../banner/Footer";
-import './EventCreator.css';
 import {Form, Input} from 'reactstrap';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import {
@@ -17,7 +16,7 @@ import {
     Link,
     ScaleFade,
     Stack,
-    useColorModeValue, Textarea, Select
+    useColorModeValue, Textarea, Select, useDisclosure
 } from "@chakra-ui/react";
 import {useHistory} from "react-router-dom";
 
@@ -29,6 +28,7 @@ export function EventCreator() {
     const [selectedResort, setSelectedResort] = useState({});
     const [userResort, setUserResort] = useState({});
     const history = useHistory();
+    const {isOpen, onToggle} = useDisclosure()
 
     function newEvent() {
         return {
@@ -56,6 +56,7 @@ export function EventCreator() {
         }
         handleGetLoginState();
         fetchResorts();
+        onToggle();
 
     }, []);
 
@@ -137,17 +138,24 @@ export function EventCreator() {
         setEvent({...event, [name]: value});
     }
 
-   const handleGetLoginState = () =>  {
-       fetch(`http://localhost:8080/api/isLoggedIn`, {
-           method: 'GET',
-           headers: {
-               'Content-Type': 'application/json',
-               'Accept': 'application/json'
-           }
-       })
-           .then((response) => response.json())
-           .then(data => setIsLoggedIn(data));
-   }
+    const handleGetLoginState = () => {
+        fetch(`http://localhost:8080/api/isLoggedIn`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
+            .then((response) => response.json())
+            .then(data => setIsLoggedIn(data));
+    }
+
+    const createButton = () => {
+        if (event.name === '') {
+            return <p>Létrehozás</p>
+        }
+        return <p>Módosítás</p>
+    }
 
     const render = () => {
         const resortList = resorts.map(resort =>
@@ -160,11 +168,12 @@ export function EventCreator() {
             return (
                 <div>
                     <AppNavbar/>
-                    <div className="container justify-content-center">
-                        <div className="card" id="card">
-                            <div className="card-header">Kérlek jelentkezz be!</div>
-                        </div>
-                    </div>
+                    <ScaleFade initialScale={0.5} in={isOpen}>
+                        <Alert status='error'>
+                            <AlertIcon/>
+                            <AlertDescription>Esemény létrehozásához kérlek jelentkezz be.</AlertDescription>
+                        </Alert>
+                    </ScaleFade>
                 </div>
 
             );
@@ -174,7 +183,8 @@ export function EventCreator() {
                     <AppNavbar/>
                     <Box style={{marginTop: '50px'}} bg={boxColor} className="container" id="eventCardHolder">
                         <Box bg={boxColor} className="card">
-                            <Heading color={textColor} className="card-header"><CalendarMonthIcon/> Eseménykezelő</Heading>
+                            <Heading color={textColor}
+                                     className="card-header"><CalendarMonthIcon/> Eseménykezelő</Heading>
                             <div className="card-body">
                                 <Form id="form" onSubmit={handleSubmit}>
                                     <div className="form-row">
@@ -187,8 +197,10 @@ export function EventCreator() {
                                     </div>
                                     <div className="form-row">
                                         <FormControl>
-                                            <FormLabel color={textColor} className="my-1 mr-2" for="resort">Reszort</FormLabel><br/>
-                                            <Select bg={'white'} color={'black'} className="custom-select my-1 mr-sm-2" id="resort"
+                                            <FormLabel color={textColor} className="my-1 mr-2"
+                                                       for="resort">Reszort</FormLabel><br/>
+                                            <Select bg={'white'} color={'black'} className="custom-select my-1 mr-sm-2"
+                                                    id="resort"
                                                     name="resort" onChange={handleResortChange}>
                                                 <option hidden/>
                                                 {resortList}
@@ -196,12 +208,14 @@ export function EventCreator() {
                                         </FormControl>
                                     </div>
                                     <div className="form-row">
-                                            <FormLabel color={textColor} className="my-1 mr-2" for="circle">Kör</FormLabel><br/>
-                                            <Select bg={'white'} color={'black'} className="custom-select my-1 mr-sm-2" id="circle"
-                                                   name="circle" onChange={handleChange}>
-                                                <option hidden/>
-                                                {circleList}
-                                            </Select>
+                                        <FormLabel color={textColor} className="my-1 mr-2"
+                                                   for="circle">Kör</FormLabel><br/>
+                                        <Select bg={'white'} color={'black'} className="custom-select my-1 mr-sm-2"
+                                                id="circle"
+                                                name="circle" onChange={handleChange}>
+                                            <option hidden/>
+                                            {circleList}
+                                        </Select>
                                     </div>
                                     <div className="form-row">
                                         <div className="form-group col-md-6">
@@ -230,7 +244,8 @@ export function EventCreator() {
                                     </div>
                                     <div className="form-row">
                                         <div className="form-group col-md-12">
-                                            <FormLabel color={textColor} for="facebookUrl">Facebook esemény linkje</FormLabel>
+                                            <FormLabel color={textColor} for="facebookUrl">Facebook esemény
+                                                linkje</FormLabel>
                                             <Input type="text" className="form-control" id="facebookUrl"
                                                    name="facebookUrl"
                                                    placeholder="" onChange={handleChange}
@@ -255,18 +270,19 @@ export function EventCreator() {
                                     </div>
                                     <div className="form-row">
                                         <div className="form-group col-md-12">
-                                            <FormLabel color={textColor} for="description">Az esemény leírása</FormLabel>
+                                            <FormLabel color={textColor} for="description">Az esemény
+                                                leírása</FormLabel>
                                             <Textarea id="description" name="description" size='lg' fontSize={16}
                                                       bg={'white'}
                                                       onChange={handleChange}
                                                       value={event.description || ''}>
-                                        </Textarea>
+                                            </Textarea>
                                         </div>
                                     </div>
                                     <Button colorScheme="green"
                                             boxShadow={
                                                 '0px 1px 25px -5px rgb(0 255 0 / 40%), 0 10px 10px -5px rgb(0 255 0 / 35%)'
-                                            }>Létrehozás</Button>
+                                            }>{createButton()}</Button>
                                 </Form>
                             </div>
                         </Box>
