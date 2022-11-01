@@ -1,9 +1,6 @@
 package hu.bme.aut.programsch.service;
 
-import hu.bme.aut.programsch.dto.CreateEventDto;
-import hu.bme.aut.programsch.dto.EventDto;
-import hu.bme.aut.programsch.dto.FilterDto;
-import hu.bme.aut.programsch.dto.FullCalendarEventDto;
+import hu.bme.aut.programsch.dto.*;
 import hu.bme.aut.programsch.mapper.EventMapper;
 import hu.bme.aut.programsch.mapper.FullCalendarEventDtoMapper;
 import hu.bme.aut.programsch.domain.EmailType;
@@ -22,10 +19,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Service
 @RequiredArgsConstructor
 public class EventService {
+    private static final Logger logger = Logger.getLogger(EventService.class.getName());
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     private final EventRepository eventRepository;
@@ -56,7 +56,7 @@ public class EventService {
             Mail mail = emailService.createMail(appUserService.findUser().getEmail(), EmailType.NEWEVENT, Map.of("event", newEvent));
             emailService.sendMail(mail);
         } catch (MessagingException | UnsupportedEncodingException e) {
-            e.printStackTrace();
+             logger.log(Level.SEVERE, "Error while sending email", e);
         }
 
         return eventMapper.eventToDto(eventRepository.save(newEvent));
@@ -95,7 +95,7 @@ public class EventService {
 
     @Transactional
     public EventDto findById(Long id) {
-        return eventMapper.eventToDto(eventRepository.findById(id).get());
+        return eventMapper.eventToDto(eventRepository.findById(id).orElseThrow());
     }
 
     @Transactional
@@ -120,7 +120,7 @@ public class EventService {
 
     @Transactional
     public EventDto updateEvent(CreateEventDto createEventDto) {
-        Event event = eventRepository.findById(createEventDto.getId()).get();
+        Event event = eventRepository.findById(createEventDto.getId()).orElseThrow();
         event.setName(createEventDto.getName());
         event.setCircle(circleRepository.findByDisplayName(createEventDto.getCircle()));
 
@@ -132,16 +132,17 @@ public class EventService {
     private void configureNewEvent(CreateEventDto createEventDto, Event event) {
         createEventDto.setStart(createEventDto.getStart().replace("T", " "));
         createEventDto.setEnd(createEventDto.getEnd().replace("T", " "));
-        setEventParameters(event, LocalDateTime.parse(createEventDto.getStart(), formatter), LocalDateTime.parse(createEventDto.getEnd(), formatter), createEventDto.getPlace(), createEventDto.getFacebookUrl(), createEventDto.getPoster(), createEventDto.getTldr(), createEventDto.getDescription());
+        SetEventParameterDto setEventParameterDto = new SetEventParameterDto(LocalDateTime.parse(createEventDto.getStart(), formatter), LocalDateTime.parse(createEventDto.getEnd(), formatter), createEventDto.getPlace(), createEventDto.getFacebookUrl(), createEventDto.getPoster(), createEventDto.getTldr(), createEventDto.getDescription());
+        setEventParameters(event, setEventParameterDto);
     }
 
-    private void setEventParameters(Event event, LocalDateTime parse, LocalDateTime parse2, String place, String facebookUrl, String poster, String tldr, String description) {
-        event.setStart(parse);
-        event.setEnd(parse2);
-        event.setPlace(place);
-        event.setFacebookUrl(facebookUrl);
-        event.setPoster(poster);
-        event.setTldr(tldr);
-        event.setDescription(description);
+    private void setEventParameters(Event event, SetEventParameterDto setEventParameterDto) {
+        event.setStart(setEventParameterDto.getParse());
+        event.setEnd(setEventParameterDto.getParse2());
+        event.setPlace(setEventParameterDto.getPlace());
+        event.setFacebookUrl(setEventParameterDto.getFacebookUrl());
+        event.setPoster(setEventParameterDto.getPoster());
+        event.setTldr(setEventParameterDto.getTldr());
+        event.setDescription(setEventParameterDto.getDescription());
     }
 }

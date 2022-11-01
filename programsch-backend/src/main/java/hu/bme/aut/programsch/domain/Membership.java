@@ -1,6 +1,5 @@
 package hu.bme.aut.programsch.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;

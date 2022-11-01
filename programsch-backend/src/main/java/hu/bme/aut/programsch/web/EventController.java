@@ -85,9 +85,6 @@ public class EventController {
         if(createEventDto == null) {
             return ResponseEntity.badRequest().build();
         }
-        System.out.println("----");
-        System.out.println(createEventDto);
-        System.out.println("----");
         return ResponseEntity.ok(eventService.createEvent(createEventDto));
     }
 

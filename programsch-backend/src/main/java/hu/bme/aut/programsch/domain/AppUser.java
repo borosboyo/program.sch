@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
@@ -14,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public final class AppUser {
+public final class AppUser implements Serializable {
     @Id
     @Column(unique = true)
     public String uid;
