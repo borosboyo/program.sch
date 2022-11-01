@@ -1,6 +1,5 @@
 package hu.bme.aut.programsch.web;
 
-import hu.bme.aut.programsch.dto.MembershipDto;
 import hu.bme.aut.programsch.dto.ResortDto;
 import hu.bme.aut.programsch.service.ResortService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -61,5 +60,19 @@ public class    ResortController {
                     @ApiResponse(responseCode = "400", description = "Resorts not found")})
     public ResponseEntity<List<ResortDto>> getResortsWithUserMemberships() {
         return ResponseEntity.ok(resortService.findByMemberships());
+    }
+
+    @GetMapping("/byCircle")
+    @Operation(summary = "Get Resort by Circle",
+            responses = {
+                    @ApiResponse(description = "The Resort",
+                            content = @Content(mediaType = "application/json",
+                                    array = @ArraySchema(schema = @Schema(implementation = ResortDto.class)))),
+                    @ApiResponse(responseCode = "400", description = "Resort not found")})
+    public ResponseEntity<ResortDto> getResortByCircle(@RequestParam String circleName) {
+        if(resortService.findResortByCircle(circleName) == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(resortService.findResortByCircle(circleName));
     }
 }

@@ -75,9 +75,15 @@ public class EventService {
     @Transactional
     public List<FullCalendarEventDto> findAllFullCalendarFilteredEvents() {
         List<Event> events = eventRepository.findAll();
-        FilterDto filter = filterService.findUserFilters(appUserService.findUser().getUid());
+        FilterDto filter = new FilterDto();
+        if(appUserService.findUser() != null) {
+            filter = filterService.findUserFilters(appUserService.findUser().getUid());
+        }
 
-        events.removeIf(e -> filter.getFilteredCircles().contains(e.getCircle().getDisplayName()));
+        if(filter != null) {
+            FilterDto finalFilter = filter;
+            events.removeIf(e -> finalFilter.getFilteredCircles().contains(e.getCircle().getDisplayName()));
+        }
 
         List<FullCalendarEventDto> filteredEvents = fullCalendarEventDtoMapper.eventsToDtos(events);
 

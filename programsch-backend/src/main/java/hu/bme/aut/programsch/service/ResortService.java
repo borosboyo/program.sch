@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -66,5 +67,20 @@ public class ResortService {
         }
 
         return resortMapper.resortsToDtos(userResorts);
+    }
+
+    @Transactional
+    public ResortDto findResortByCircle(String circleName) {
+        List<Resort> resorts = resortRepository.findAll();
+        Resort resort = new Resort();
+        for(Resort r : resorts) {
+            for(Circle c : r.getCircles()){
+                if (Objects.equals(c.getDisplayName(), circleName)) {
+                    resort = r;
+                    break;
+                }
+            }
+        }
+        return resortMapper.resortToDto(resort);
     }
 }
