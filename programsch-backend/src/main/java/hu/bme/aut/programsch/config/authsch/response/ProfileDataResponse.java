@@ -84,6 +84,10 @@ public final class ProfileDataResponse implements Serializable {
         return eduPersonEntitlement;
     }
 
+    public String getRoomNumber() {
+        return roomNumber;
+    }
+
     public String getMobile() {
         return mobile;
     }
@@ -109,7 +113,7 @@ public final class ProfileDataResponse implements Serializable {
         return "ProfileDataResponse [internalId=" + internalId + ", displayName=" + displayName
                 + ", surname=" + surname + ", givenName=" + givenName + ", mail=" + mail + ", neptun="
                 + neptun + ", linkedAccounts=" + linkedAccounts + ", eduPersonEntitlement="
-                + eduPersonEntitlement + ", mobile=" + mobile
+                + eduPersonEntitlement + ", roomNumber=" + roomNumber + ", mobile=" + mobile
                 + ", courses=" + courses + ", entrants=" + entrants + ", admembership="
                 + admembership + ", bmeunitscope=" + bmeunitscope + "]";
     }
@@ -123,6 +127,8 @@ public final class ProfileDataResponse implements Serializable {
         private String neptun = null;
         private Map<String, String> linkedAccounts = new HashMap<>();
         private List<PersonEntitlement> eduPersonEntitlement = new ArrayList<>();
+        @Deprecated
+        private String roomNumber = null;
         private String mobile = null;
         private List<String> courses = new ArrayList<>();
         private List<Entrant> entrants = new ArrayList<>();
