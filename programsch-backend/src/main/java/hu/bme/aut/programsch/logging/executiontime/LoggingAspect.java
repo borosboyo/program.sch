@@ -1,4 +1,4 @@
-package hu.bme.aut.programsch.logging;
+package hu.bme.aut.programsch.logging.executiontime;
 
 import java.util.Arrays;
 

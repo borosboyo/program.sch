@@ -2,8 +2,7 @@ package hu.bme.aut.programsch.web;
 
 import hu.bme.aut.programsch.dto.EventDto;
 import hu.bme.aut.programsch.dto.MembershipDto;
-import hu.bme.aut.programsch.logging.LogExecutionTime;
-import hu.bme.aut.programsch.service.AppUserService;
+import hu.bme.aut.programsch.logging.executiontime.LogExecutionTime;
 import hu.bme.aut.programsch.service.MembershipService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

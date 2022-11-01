@@ -1,4 +1,4 @@
-package hu.bme.aut.programsch.logging;
+package hu.bme.aut.programsch.logging.executiontime;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

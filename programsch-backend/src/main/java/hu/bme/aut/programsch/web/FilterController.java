@@ -1,7 +1,6 @@
 package hu.bme.aut.programsch.web;
 
-import hu.bme.aut.programsch.domain.Filter;
-import hu.bme.aut.programsch.logging.LogExecutionTime;
+import hu.bme.aut.programsch.logging.executiontime.LogExecutionTime;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import hu.bme.aut.programsch.dto.FilterDto;

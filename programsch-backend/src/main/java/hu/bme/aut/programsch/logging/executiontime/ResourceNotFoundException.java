@@ -1,4 +1,4 @@
-package hu.bme.aut.programsch.logging;
+package hu.bme.aut.programsch.logging.executiontime;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

@@ -1,7 +1,7 @@
 package hu.bme.aut.programsch.web;
 
 import hu.bme.aut.programsch.dto.AppUserDto;
-import hu.bme.aut.programsch.logging.LogExecutionTime;
+import hu.bme.aut.programsch.logging.executiontime.LogExecutionTime;
 import hu.bme.aut.programsch.service.AppUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;

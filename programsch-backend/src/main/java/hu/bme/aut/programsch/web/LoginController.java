@@ -8,7 +8,7 @@ import hu.bme.aut.programsch.config.authsch.struct.PersonEntitlement;
 import hu.bme.aut.programsch.config.authsch.struct.Scope;
 import hu.bme.aut.programsch.domain.AppUser;
 import hu.bme.aut.programsch.domain.LoginUrl;
-import hu.bme.aut.programsch.logging.LogExecutionTime;
+import hu.bme.aut.programsch.logging.executiontime.LogExecutionTime;
 import hu.bme.aut.programsch.service.AppUserService;
 import hu.bme.aut.programsch.service.CircleService;
 import hu.bme.aut.programsch.service.MembershipService;

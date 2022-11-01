@@ -1,4 +1,4 @@
-package hu.bme.aut.programsch.logging;
+package hu.bme.aut.programsch.logging.executiontime;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -14,7 +14,7 @@ import org.springframework.util.StopWatch;
 public class ExecutionTimeAspect {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Around("@annotation(hu.bme.aut.programsch.logging.LogExecutionTime)")
+    @Around("@annotation(hu.bme.aut.programsch.logging.executiontime.LogExecutionTime)")
     public Object logExecutionTime(ProceedingJoinPoint joinPoint) {
         final StopWatch stopWatch = new StopWatch();
         stopWatch.start();

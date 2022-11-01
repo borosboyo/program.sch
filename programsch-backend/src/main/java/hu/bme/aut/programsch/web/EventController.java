@@ -3,7 +3,7 @@ package hu.bme.aut.programsch.web;
 import hu.bme.aut.programsch.dto.CreateEventDto;
 import hu.bme.aut.programsch.dto.EventDto;
 import hu.bme.aut.programsch.dto.FullCalendarEventDto;
-import hu.bme.aut.programsch.logging.LogExecutionTime;
+import hu.bme.aut.programsch.logging.executiontime.LogExecutionTime;
 import hu.bme.aut.programsch.service.EventService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
