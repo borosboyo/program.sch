@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="3c4247d4-31f4-4f92-92db-97c37b5b4d30" name="Changes" comment="login working">
+      <change afterPath="$PROJECT_DIR$/../programsch-backend/src/main/java/hu/bme/aut/programsch/model/Filter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../programsch-backend/src/main/java/hu/bme/aut/programsch/repository/FilterRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../programsch-backend/src/main/java/hu/bme/aut/programsch/service/FilterService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../programsch-backend/src/main/java/hu/bme/aut/programsch/dto/AppUserDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/../programsch-backend/src/main/java/hu/bme/aut/programsch/dto/AppUserDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../programsch-backend/src/main/java/hu/bme/aut/programsch/dto/CircleFilterDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../programsch-backend/src/main/java/hu/bme/aut/programsch/mapper/AppUserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/../programsch-backend/src/main/java/hu/bme/aut/programsch/mapper/AppUserMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../programsch-backend/src/main/java/hu/bme/aut/programsch/mapper/CircleMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../programsch-backend/src/main/java/hu/bme/aut/programsch/model/AppUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/../programsch-backend/src/main/java/hu/bme/aut/programsch/model/AppUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../programsch-backend/src/main/java/hu/bme/aut/programsch/model/Circle.java" beforeDir="false" afterPath="$PROJECT_DIR$/../programsch-backend/src/main/java/hu/bme/aut/programsch/model/Circle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../programsch-backend/src/main/java/hu/bme/aut/programsch/service/AppUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../programsch-backend/src/main/java/hu/bme/aut/programsch/service/AppUserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../programsch-backend/src/main/java/hu/bme/aut/programsch/service/CircleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../programsch-backend/src/main/java/hu/bme/aut/programsch/service/CircleService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../programsch-backend/src/main/java/hu/bme/aut/programsch/web/AppUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../programsch-backend/src/main/java/hu/bme/aut/programsch/web/AppUserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../programsch-backend/src/main/java/hu/bme/aut/programsch/web/CircleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../programsch-backend/src/main/java/hu/bme/aut/programsch/web/CircleController.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+        <option value="JavaScript File" />
+        <option value="CSS File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="PackageJsonUpdateNotifier">
+    <dismissed value="$PROJECT_DIR$/package.json" />
+  </component>
+  <component name="ProjectId" id="26bbBH83GY6aFEBKZ7Qgbl7eJmg" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2021.3.2\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3c4247d4-31f4-4f92-92db-97c37b5b4d30" name="Changes" comment="" />
+      <created>1647695095612</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1647695095612</updated>
+      <workItem from="1647695100255" duration="8002000" />
+      <workItem from="1647771392732" duration="15221000" />
+      <workItem from="1648126320345" duration="15000" />
+      <workItem from="1648127048739" duration="4704000" />
+      <workItem from="1648238411418" duration="25554000" />
+      <workItem from="1648633223742" duration="19000" />
+      <workItem from="1648633253324" duration="140000" />
+      <workItem from="1648833088638" duration="1520000" />
+      <workItem from="1648834756143" duration="3053000" />
+      <workItem from="1649005928864" duration="1294000" />
+      <workItem from="1649049494979" duration="26000" />
+    </task>
+    <task id="LOCAL-00001" summary="LoginControl">
+      <created>1647786928227</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1647786928228</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="LoginControl" />
+    <MESSAGE value="login working" />
+    <option name="LAST_COMMIT_MESSAGE" value="login working" />
+  </component>
+</project>

@@ -13,7 +13,6 @@ import {
 } from '@chakra-ui/react'
 import {LockIcon, UnlockIcon} from "@chakra-ui/icons";
 
-
 export function LoginControl() {
 
     const [loginUrl, setLoginUrl] = useState('');
