@@ -17,5 +17,5 @@ public interface ResortMapper {
 
     @Mapping(target = "resort", ignore = true)
     @Mapping(target = "events", ignore = true)
-    CircleDto circleToDto(Circle Circle);
+    CircleDto circleToDto(Circle circle);
 }

@@ -30,7 +30,7 @@ public final class AppUser implements Serializable {
     public String room;
 
     @ElementCollection(fetch = FetchType.EAGER)
-    public List<String> permissions;
+    private List<String> permissions;
 
 
     public AppUser(String uid, String name, String email, String room, List<String> permissions) {

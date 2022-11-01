@@ -73,7 +73,7 @@ public class LoginController {
                 appUser = appUserService.getById(profile.getInternalId().toString());
                 List<String> permissionsByVIR = getCirclePermissionList(ownedCircles);
                 if (!appUser.getPermissions().containsAll(permissionsByVIR)) {
-                    permissionsByVIR.addAll(appUser.permissions);
+                    permissionsByVIR.addAll(appUser.getPermissions());
                     appUserService.save(appUser);
                 }
 
@@ -175,7 +175,7 @@ public class LoginController {
     private List<GrantedAuthority> getAuthorities(AppUser user) {
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_${Role.USER.name}"));
-        if (user.permissions.contains("ROLE_${Role.LEADER.name}"))
+        if (user.getPermissions().contains("ROLE_${Role.LEADER.name}"))
             authorities.add(new SimpleGrantedAuthority("ROLE_${Role.LEADER.name}"));
         return authorities;
     }

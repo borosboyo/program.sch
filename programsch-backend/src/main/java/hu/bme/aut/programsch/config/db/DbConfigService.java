@@ -183,7 +183,7 @@ public class DbConfigService {
         circleRepository.save(new Circle("Kollégiumi Bizottság", resortRepository.findByName(EGYEB_RESORT)));
         circleRepository.save(new Circle("Schönherz Qpa", resortRepository.findByName(EGYEB_RESORT)));
         circleRepository.save(new Circle("SVIE", resortRepository.findByName(EGYEB_RESORT)));
-        circleRepository.save(new Circle("Egyéb", resortRepository.findByName(EGYEB_RESORT)));
+        circleRepository.save(new Circle(EGYEB_RESORT, resortRepository.findByName(EGYEB_RESORT)));
 
         Resort resort = resortRepository.findByName(EGYEB_RESORT);
         resort.setCircles(circleRepository.findAllByResort(resort));
