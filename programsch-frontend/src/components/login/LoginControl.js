@@ -3,19 +3,14 @@ import {
     Button, Center,
     Modal,
     ModalBody,
-    ModalCloseButton,
     ModalContent,
-    ModalFooter,
     ModalHeader,
     ModalOverlay, Spinner,
-    Text,
     useDisclosure
 } from '@chakra-ui/react'
 import {LockIcon, UnlockIcon} from "@chakra-ui/icons";
 
 export function LoginControl() {
-
-    const [loginUrl, setLoginUrl] = useState('');
     const [isLoggedIn, setLoggedIn] = useState(false);
     const {isOpen, onOpen, onClose} = useDisclosure()
 

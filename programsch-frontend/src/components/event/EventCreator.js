@@ -11,11 +11,7 @@ import {
     AlertDescription,
     AlertIcon,
     FormLabel, Heading,
-    FormErrorMessage,
-    FormHelperText,
-    Link,
     ScaleFade,
-    Stack,
     useColorModeValue, Textarea, Select, useDisclosure
 } from "@chakra-ui/react";
 import {useHistory} from "react-router-dom";
@@ -24,9 +20,8 @@ export function EventCreator() {
     const boxColor = useColorModeValue('white', 'gray.900');
     const textColor = useColorModeValue('gray.700', 'gray.400');
     const [resorts, setResorts] = useState([]);
-    const [circles, setCircles] = useState([]);
     const [selectedResort, setSelectedResort] = useState({});
-    const [userResort, setUserResort] = useState({});
+    const [setUserResort] = useState({});
     const history = useHistory();
     const {isOpen, onToggle} = useDisclosure()
 
@@ -57,8 +52,7 @@ export function EventCreator() {
         handleGetLoginState();
         fetchResorts();
         onToggle();
-
-    }, []);
+    }, []);  // eslint-disable-line react-hooks/exhaustive-deps
 
     const fetchResorts = () => {
         fetch(`http://localhost:8080/api/resort/usermemberships`, {

@@ -20,17 +20,17 @@ export function Calendar() {
         fetchFilteredEvents();
         fetchEvents();
         //reloadPage();
-    }, []);
+    }, []);  // eslint-disable-line react-hooks/exhaustive-deps
 
-    const reloadPage = () => {
-        const reloadCount = sessionStorage.getItem('reloadCount');
-        if (reloadCount < 2) {
-            sessionStorage.setItem('reloadCount', String(reloadCount + 1));
-            window.location.reload();
-        } else {
-            sessionStorage.removeItem('reloadCount');
-        }
-    }
+    // const reloadPage = () => {
+    //     const reloadCount = sessionStorage.getItem('reloadCount');
+    //     if (reloadCount < 2) {
+    //         sessionStorage.setItem('reloadCount', String(reloadCount + 1));
+    //         window.location.reload();
+    //     } else {
+    //         sessionStorage.removeItem('reloadCount');
+    //     }
+    // }
 
     const handleGetLoginState = () => {
         fetch(`http://localhost:8080/api/isLoggedIn`, {

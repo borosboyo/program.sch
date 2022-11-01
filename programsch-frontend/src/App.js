@@ -1,4 +1,4 @@
-import React, {Component, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {Home} from './components/Home';
 import {EventCreator} from './components/event/EventCreator';
 import {Profile} from './components/profile/Profile';

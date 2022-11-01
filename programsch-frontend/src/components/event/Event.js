@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import PlaceIcon from "@mui/icons-material/Place";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import moment from "moment";
@@ -11,7 +11,7 @@ export function Event(props) {
     const history = useHistory();
     const id = props.currentEvent.id;
     const [currentEvent, setCurrentEvent] = useState(props.currentEvent);
-    const boxColor = useColorModeValue('white', 'gray.900');
+    // const boxColor = useColorModeValue('white', 'gray.900');
     const textColor = useColorModeValue('gray.700', 'gray.400');
     const badgeColor = useColorModeValue('gray.50', 'gray.800');
 
