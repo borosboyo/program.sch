@@ -3,7 +3,7 @@ name: NodeJS CI
 on:
   pull_request:
     types: [opened, synchronize, reopened]
-    branches: [main, develop, feature/cicd]
+    branches: [main, develop, feature/cicd, feature/testing]
 
 jobs:
   build:
