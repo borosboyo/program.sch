@@ -1,6 +1,6 @@
 package hu.bme.aut.programsch.web;
 
-import hu.bme.aut.programsch.domain.Filter;
+import hu.bme.aut.programsch.logging.executiontime.LogExecutionTime;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import hu.bme.aut.programsch.dto.FilterDto;
@@ -30,6 +30,7 @@ public class FilterController {
                             content = @Content(mediaType = "application/json",
                                     schema = @Schema(implementation = FilterDto.class))),
                     @ApiResponse(responseCode = "400", description = "Filter not found")})
+    @LogExecutionTime
     public ResponseEntity<FilterDto> changeUserFilters(
             @RequestBody(description = "The filter object", required = true,
                     content = @Content(
@@ -46,6 +47,7 @@ public class FilterController {
                     @ApiResponse(description = "The state of the filter for the current user.",
                             content = @Content(mediaType = "application/json",
                                     array = @ArraySchema(schema = @Schema(implementation = Boolean.class))))})
+    @LogExecutionTime
     public ResponseEntity<Boolean> getAreFiltersEnabled() {
         FilterDto filterDto = null;
         if(appUserService.findUser() != null) {
@@ -60,6 +62,7 @@ public class FilterController {
                     @ApiResponse(description = "The filter that was enabled",
                             content = @Content(mediaType = "application/json",
                                     schema = @Schema(implementation = FilterDto.class)))})
+    @LogExecutionTime
     public ResponseEntity<FilterDto> enableFilters() {
         return new ResponseEntity<>(filterService.createNewFilter(appUserService.findUser().getUid()), HttpStatus.OK);
     }
@@ -69,6 +72,7 @@ public class FilterController {
             responses = {
                     @ApiResponse(description = "Void",
                             content = @Content(mediaType = "application/json"))})
+    @LogExecutionTime
     public ResponseEntity<Void> disableFilters() {
         FilterDto filter = filterService.findUserFilters(appUserService.findUser().getUid());
         filterService.delete(filter);
@@ -82,6 +86,7 @@ public class FilterController {
                             content = @Content(mediaType = "application/json",
                                     array = @ArraySchema(schema = @Schema(implementation = FilterDto.class)))),
                     @ApiResponse(responseCode = "400", description = "Filter not found")})
+    @LogExecutionTime
     public ResponseEntity<FilterDto> getUserFilters() {
         if(filterService.findUserFilters(appUserService.findUser().getUid()) == null) {
             return ResponseEntity.badRequest().build();

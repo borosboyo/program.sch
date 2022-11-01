@@ -1,6 +1,7 @@
 package hu.bme.aut.programsch.web;
 
 import hu.bme.aut.programsch.dto.AppUserDto;
+import hu.bme.aut.programsch.logging.executiontime.LogExecutionTime;
 import hu.bme.aut.programsch.service.AppUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -28,6 +29,7 @@ public class AppUserController {
                             content = @Content(mediaType = "application/json",
                                     array = @ArraySchema(schema = @Schema(implementation = AppUserDto.class)))),
                     @ApiResponse(responseCode = "400", description = "AppUser not found")})
+    @LogExecutionTime
     public ResponseEntity<AppUserDto> getAppUserEntity() {
         if(appUserService.findUser() == null) {
             return ResponseEntity.badRequest().build();

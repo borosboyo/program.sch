@@ -3,6 +3,7 @@ package hu.bme.aut.programsch.web;
 import hu.bme.aut.programsch.dto.CreateEventDto;
 import hu.bme.aut.programsch.dto.EventDto;
 import hu.bme.aut.programsch.dto.FullCalendarEventDto;
+import hu.bme.aut.programsch.logging.executiontime.LogExecutionTime;
 import hu.bme.aut.programsch.service.EventService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -30,6 +31,7 @@ public class EventController {
                             content = @Content(mediaType = "application/json",
                                     array = @ArraySchema(schema = @Schema(implementation = EventDto.class)))),
                     @ApiResponse(responseCode = "400", description = "Events not found")})
+    @LogExecutionTime
     public ResponseEntity<List<EventDto>> getEvents() {
         if(eventService.findAll().isEmpty()) {
             return ResponseEntity.badRequest().build();
@@ -44,6 +46,7 @@ public class EventController {
                             content = @Content(mediaType = "application/json",
                                     schema = @Schema(implementation = EventDto.class))),
                     @ApiResponse(responseCode = "400", description = "Event not found")})
+    @LogExecutionTime
     public ResponseEntity<EventDto> getEventById(
             @Parameter(description = "The ID of the Event", required = true) @PathVariable Long id) {
         if(eventService.findById(id) == null) {
@@ -59,6 +62,7 @@ public class EventController {
                             content = @Content(mediaType = "application/json",
                                     schema = @Schema(implementation = EventDto.class))),
                     @ApiResponse(responseCode = "400", description = "Event not found")})
+    @LogExecutionTime
     public ResponseEntity<List<EventDto>> getEventsByDay(
             @Parameter(description = "The Date of the Event", required = true) @RequestParam String date) {
         if(eventService.findEventsByDay(date) == null) {
@@ -73,6 +77,7 @@ public class EventController {
                     @ApiResponse(description = "Event that was created",
                             content = @Content(mediaType = "application/json",
                                     schema = @Schema(implementation = EventDto.class)))})
+    @LogExecutionTime
     public ResponseEntity<EventDto> createEvent(
             @RequestBody(description = "Created Event object", required = true,
                     content = @Content(
@@ -93,6 +98,7 @@ public class EventController {
                             content = @Content(mediaType = "application/json",
                                     array = @ArraySchema(schema = @Schema(implementation = FullCalendarEventDto.class)))),
                     @ApiResponse(responseCode = "400", description = "Events not found")})
+    @LogExecutionTime
     public ResponseEntity<List<FullCalendarEventDto>> getFullCalendarEvents() {
         if(eventService.findAllFullCalendarEvents().isEmpty()) {
             return ResponseEntity.badRequest().build();
@@ -107,6 +113,7 @@ public class EventController {
                             content = @Content(mediaType = "application/json",
                                     array = @ArraySchema(schema = @Schema(implementation = FullCalendarEventDto.class)))),
                     @ApiResponse(responseCode = "400", description = "Events not found")})
+    @LogExecutionTime
     public ResponseEntity<List<FullCalendarEventDto>> getFullCalendarFilteredEvents() {
         if(eventService.findAllFullCalendarFilteredEvents().isEmpty()) {
             return ResponseEntity.badRequest().build();
@@ -121,6 +128,7 @@ public class EventController {
                             content = @Content(mediaType = "application/json",
                                     schema = @Schema(implementation = EventDto.class))),
                     @ApiResponse(responseCode = "400", description = "Event not found")})
+    @LogExecutionTime
     public ResponseEntity<Void> deleteEvent(
             @Parameter(description = "The ID of the Event", required = true) @PathVariable long id) {
         if(eventService.findById(id) == null) {
@@ -137,6 +145,7 @@ public class EventController {
                             content = @Content(mediaType = "application/json",
                                     schema = @Schema(implementation = EventDto.class))),
                     @ApiResponse(responseCode = "400", description = "Event not found")})
+    @LogExecutionTime
     public ResponseEntity<EventDto> updateEvent(
             @RequestBody(description = "Update Event object", required = true,
             content = @Content(

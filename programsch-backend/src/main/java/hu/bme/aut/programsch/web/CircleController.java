@@ -1,8 +1,8 @@
 package hu.bme.aut.programsch.web;
 
 import hu.bme.aut.programsch.dto.CircleDto;
+import hu.bme.aut.programsch.logging.executiontime.LogExecutionTime;
 import hu.bme.aut.programsch.service.CircleService;
-import hu.bme.aut.programsch.service.ResortService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -30,6 +30,7 @@ public class CircleController {
                             content = @Content(mediaType = "application/json",
                                     array = @ArraySchema(schema = @Schema(implementation = CircleDto.class)))),
                     @ApiResponse(responseCode = "400", description = "Circles not found")})
+    @LogExecutionTime
     public ResponseEntity<List<CircleDto>> getCircles() {
         if(circleService.findAll().isEmpty()) {
             return ResponseEntity.badRequest().build();

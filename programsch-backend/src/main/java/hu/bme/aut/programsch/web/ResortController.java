@@ -1,6 +1,7 @@
 package hu.bme.aut.programsch.web;
 
 import hu.bme.aut.programsch.dto.ResortDto;
+import hu.bme.aut.programsch.logging.executiontime.LogExecutionTime;
 import hu.bme.aut.programsch.service.ResortService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -29,6 +30,7 @@ public class    ResortController {
                             content = @Content(mediaType = "application/json",
                                     array = @ArraySchema(schema = @Schema(implementation = ResortDto.class)))),
                     @ApiResponse(responseCode = "400", description = "Resorts not found")})
+    @LogExecutionTime
     public ResponseEntity<List<ResortDto>> getResorts() {
         if(resortService.findAll().isEmpty()) {
             return ResponseEntity.badRequest().build();
@@ -43,6 +45,7 @@ public class    ResortController {
                             content = @Content(mediaType = "application/json",
                                     schema = @Schema(implementation = ResortDto.class))),
                     @ApiResponse(responseCode = "400", description = "Resort not found")})
+    @LogExecutionTime
     public ResponseEntity<ResortDto> getResortByName(
             @Parameter(description = "The Name of the Resort", required = true) @PathVariable String name) {
         if(name == null) {
@@ -58,6 +61,7 @@ public class    ResortController {
                             content = @Content(mediaType = "application/json",
                                     array = @ArraySchema(schema = @Schema(implementation = ResortDto.class)))),
                     @ApiResponse(responseCode = "400", description = "Resorts not found")})
+    @LogExecutionTime
     public ResponseEntity<List<ResortDto>> getResortsWithUserMemberships() {
         return ResponseEntity.ok(resortService.findByMemberships());
     }
