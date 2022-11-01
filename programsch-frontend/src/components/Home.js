@@ -1,18 +1,16 @@
 import React from 'react';
-import AppNavbar from './banner/AppNavbar';
 import CalendarHolder from "./calendar/CalendarHolder";
 import Footer from "./banner/Footer";
+import AppNavbar from "./banner/AppNavbar";
 
-export class Home extends React.Component {
+export function Home() {
 
-    render() {
-        return (
-            <div>
-                <AppNavbar/>
-                <CalendarHolder/>
-                <Footer/>
-            </div>
-        );
-    }
+    return (
+        <div>
+            <AppNavbar/>
+            <CalendarHolder/>
+            <Footer/>
+        </div>);
 }
 
+export default Home;

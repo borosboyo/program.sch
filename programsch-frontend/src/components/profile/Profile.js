@@ -1,18 +1,23 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import {ProfileData} from "./ProfileData";
 import AppNavbar from "../banner/AppNavbar";
+import {
+    Alert,
+    AlertIcon,
+    AlertDescription,
+} from '@chakra-ui/react'
+import {ScaleFade, useDisclosure} from "@chakra-ui/react";
 
-export class Profile extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {isLoggedIn: {}};
-    }
+export function Profile() {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const {isOpen, onToggle} = useDisclosure()
 
-    componentDidMount() {
-        this.handleGetLoginState()
-    }
+    useEffect(() => {
+        onToggle();
+        handleGetLoginState();
+    }, []);
 
-    handleGetLoginState() {
+    const handleGetLoginState = () => {
         fetch(`http://localhost:8080/api/isLoggedIn`, {
             method: 'GET',
             headers: {
@@ -21,18 +26,19 @@ export class Profile extends React.Component {
             }
         })
             .then((response) => response.json())
-            .then(data => this.setState({isLoggedIn: data}));
+            .then(data => setIsLoggedIn(data));
     }
 
 
-    render() {
-        const isLoggedIn = this.state.isLoggedIn;
-        if(isLoggedIn) {
+    const renderProfile = () => {
+        if (isLoggedIn) {
             return (
                 <div>
                     <AppNavbar/>
-                    <div className="container">
-                        <ProfileData/>
+                    <div style={{marginTop: '50px'}}>
+                        <ScaleFade initialScale={0.5} in={isOpen}>
+                            <ProfileData/>
+                        </ScaleFade>
                     </div>
                 </div>
             );
@@ -40,13 +46,18 @@ export class Profile extends React.Component {
             return (
                 <div>
                     <AppNavbar/>
-                    <div className="container justify-content-center">
-                        <div className="card" id="card">
-                            <div className="card-header">Kérlek jelentkezz be!</div>
-                        </div>
-                    </div>
+                    <ScaleFade initialScale={0.5} in={isOpen}>
+                        <Alert status='error'>
+                            <AlertIcon/>
+                            <AlertDescription>A profilod megtekintéséhez kérlek jelentkezz be.</AlertDescription>
+                        </Alert>
+                    </ScaleFade>
                 </div>
             );
         }
     }
+
+    return renderProfile();
 }
+
+export default Profile;

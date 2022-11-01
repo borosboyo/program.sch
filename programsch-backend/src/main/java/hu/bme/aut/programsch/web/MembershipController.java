@@ -2,7 +2,7 @@ package hu.bme.aut.programsch.web;
 
 import hu.bme.aut.programsch.dto.EventDto;
 import hu.bme.aut.programsch.dto.MembershipDto;
-import hu.bme.aut.programsch.service.AppUserService;
+import hu.bme.aut.programsch.logging.executiontime.LogExecutionTime;
 import hu.bme.aut.programsch.service.MembershipService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -32,10 +32,25 @@ public class MembershipController {
                             content = @Content(mediaType = "application/json",
                                     schema = @Schema(implementation = EventDto.class))),
                     @ApiResponse(responseCode = "400", description = "Memberships not found")})
+    @LogExecutionTime
     public ResponseEntity<List<MembershipDto>> getMembershipsByAppUserUid(@PathVariable String appUserUid) {
         if(membershipService.getMembershipsByAppUserUid(appUserUid).isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return ResponseEntity.badRequest().build();
         }
         return new ResponseEntity<>(membershipService.getMembershipsByAppUserUid(appUserUid), HttpStatus.OK);
+    }
+
+    @GetMapping()
+    @Operation(summary = "Get Memberships of User",
+            responses = {
+                    @ApiResponse(description = "Memberships that were found",
+                            content = @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = EventDto.class))),
+                    @ApiResponse(responseCode = "400", description = "Memberships not found")})
+    public ResponseEntity<List<MembershipDto>> getMembershipsOfUser() {
+        if(membershipService.getMembershipsOfUser().isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(membershipService.getMembershipsOfUser(), HttpStatus.OK);
     }
 }

@@ -32,16 +32,16 @@ spring:
             user-name-attribute: internal_id
             user-info-authentication-method: header
   mail:
-    host: smtp.gmail.com
+    host: smtp-mail.outlook.com
     port: 587
-    username: tesztemailkuldo@gmail.com
-    password: bartoscsistvan
+    username: boros.gergo@hotmail.com
+    password: ${email_password}
     properties:
       mail:
         smtp:
           auth: true
           starttls.enable: true
-          ssl.trust: smtp.gmail.com
+          ssl.trust: smtp-mail.outlook.com
 
 logging:
   level:
