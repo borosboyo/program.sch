@@ -3,7 +3,7 @@ name: Java CI with Maven and SonarCloud
 on:
   pull_request:
     types: [opened, synchronize, reopened]
-    branches: [main, develop, feature/cicd]
+    branches: [main, develop, feature/cicd, feature/testing]
     paths: [src/**, pom.xml, .github/workflows/maven.yml]
 
 jobs:
