@@ -29,6 +29,7 @@ export function EventViewer(props) {
             .then((data) => {
                 setCurrentEvent(data);
                 setCurrentCircle(data.circle);
+                console.log(data)
             })
     }
 
