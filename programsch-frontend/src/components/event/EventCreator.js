@@ -28,7 +28,6 @@ export function EventCreator() {
     const boxColor = useColorModeValue('white', 'gray.900');
     const textColor = useColorModeValue('gray.700', 'gray.400');
     const [resorts, setResorts] = useState([]);
-    const [circles, setCircles] = useState([]);
     const [selectedResort, setSelectedResort] = useState({});
     const [userResort, setUserResort] = useState({});
     const history = useHistory();
@@ -83,6 +82,7 @@ export function EventCreator() {
         })
             .then((response) => response.json())
             .then(data => setUserResort(data));
+        console.log(userResort);
     }
 
     const handleSubmit = (event) => {
