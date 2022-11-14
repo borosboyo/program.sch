@@ -96,7 +96,7 @@ public class EventService {
     @Transactional
     public EventDto findById(Long id) {
         if(eventRepository.findById(id).isPresent()) {
-            return eventMapper.eventToDto(eventRepository.findById(id).get());
+            return eventMapper.eventToDto(eventRepository.findById(id).orElse(null));
         }
         return null;
     }
