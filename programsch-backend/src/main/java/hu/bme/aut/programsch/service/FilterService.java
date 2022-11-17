@@ -5,7 +5,6 @@ import hu.bme.aut.programsch.dto.FilterDto;
 import hu.bme.aut.programsch.mapper.FilterMapper;
 import hu.bme.aut.programsch.repository.FilterRepository;
 import lombok.RequiredArgsConstructor;
-import org.apache.tomcat.util.descriptor.web.FilterMap;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,8 +36,8 @@ public class FilterService {
     }
 
     @Transactional
-    public void save(Filter newFilter) {
-        filterRepository.save(newFilter);
+    public FilterDto save(Filter newFilter) {
+        return filterMapper.filterToDto(filterRepository.save(newFilter));
     }
 
     @Transactional

@@ -1,20 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3c4247d4-31f4-4f92-92db-97c37b5b4d30" name="Changes" comment="login working">
-      <change afterPath="$PROJECT_DIR$/../programsch-backend/src/main/java/hu/bme/aut/programsch/model/Filter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../programsch-backend/src/main/java/hu/bme/aut/programsch/repository/FilterRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../programsch-backend/src/main/java/hu/bme/aut/programsch/service/FilterService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../programsch-backend/src/main/java/hu/bme/aut/programsch/dto/AppUserDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/../programsch-backend/src/main/java/hu/bme/aut/programsch/dto/AppUserDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../programsch-backend/src/main/java/hu/bme/aut/programsch/dto/CircleFilterDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../programsch-backend/src/main/java/hu/bme/aut/programsch/mapper/AppUserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/../programsch-backend/src/main/java/hu/bme/aut/programsch/mapper/AppUserMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../programsch-backend/src/main/java/hu/bme/aut/programsch/mapper/CircleMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../programsch-backend/src/main/java/hu/bme/aut/programsch/model/AppUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/../programsch-backend/src/main/java/hu/bme/aut/programsch/model/AppUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../programsch-backend/src/main/java/hu/bme/aut/programsch/model/Circle.java" beforeDir="false" afterPath="$PROJECT_DIR$/../programsch-backend/src/main/java/hu/bme/aut/programsch/model/Circle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../programsch-backend/src/main/java/hu/bme/aut/programsch/service/AppUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../programsch-backend/src/main/java/hu/bme/aut/programsch/service/AppUserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../programsch-backend/src/main/java/hu/bme/aut/programsch/service/CircleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../programsch-backend/src/main/java/hu/bme/aut/programsch/service/CircleService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../programsch-backend/src/main/java/hu/bme/aut/programsch/web/AppUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../programsch-backend/src/main/java/hu/bme/aut/programsch/web/AppUserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../programsch-backend/src/main/java/hu/bme/aut/programsch/web/CircleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../programsch-backend/src/main/java/hu/bme/aut/programsch/web/CircleController.java" afterDir="false" />
+    <list default="true" id="3c4247d4-31f4-4f92-92db-97c37b5b4d30" name="Changes" comment="Implement tests">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,8 +13,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="HTML File" />
-        <option value="JavaScript File" />
         <option value="CSS File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -86,6 +74,16 @@
       <workItem from="1648834756143" duration="3053000" />
       <workItem from="1649005928864" duration="1294000" />
       <workItem from="1649049494979" duration="26000" />
+      <workItem from="1667378784906" duration="3000" />
+      <workItem from="1667473169954" duration="4088000" />
+      <workItem from="1667843327071" duration="2590000" />
+      <workItem from="1667919548748" duration="596000" />
+      <workItem from="1667982989304" duration="4000" />
+      <workItem from="1668096586908" duration="2408000" />
+      <workItem from="1668176758157" duration="458000" />
+      <workItem from="1668188598948" duration="594000" />
+      <workItem from="1668253411634" duration="6161000" />
+      <workItem from="1668422609327" duration="12000" />
     </task>
     <task id="LOCAL-00001" summary="LoginControl">
       <created>1647786928227</created>
@@ -94,11 +92,63 @@
       <option name="project" value="LOCAL" />
       <updated>1647786928228</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Correct lockfileversion">
+      <created>1667306783909</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1667306783909</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Correct lockfileversion">
+      <created>1667308008591</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1667308008591</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Add framer-motion">
+      <created>1667308259034</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1667308259034</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Add mui">
+      <created>1667308438781</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1667308438781</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Remove warnings">
+      <created>1667312089074</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1667312089074</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Implement tests">
+      <created>1668259976165</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1668259976165</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ID_ORDER">
+      <list>
+        <option value="Default.Root" />
+        <option value="Default.Author" />
+        <option value="Default.Date" />
+        <option value="Default.Subject" />
+      </list>
+    </option>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -114,6 +164,11 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="LoginControl" />
     <MESSAGE value="login working" />
-    <option name="LAST_COMMIT_MESSAGE" value="login working" />
+    <MESSAGE value="Correct lockfileversion" />
+    <MESSAGE value="Add framer-motion" />
+    <MESSAGE value="Add mui" />
+    <MESSAGE value="Remove warnings" />
+    <MESSAGE value="Implement tests" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implement tests" />
   </component>
 </project>

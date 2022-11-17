@@ -2,12 +2,11 @@ import React, {useEffect, useState} from 'react';
 import AppNavbar from "../banner/AppNavbar";
 import moment from "moment";
 import {Event} from "./Event";
-import {useHistory} from "react-router-dom";
 import {
     Alert,
     AlertDescription,
-    AlertIcon, Avatar,
-    Box, Center, Heading, Image,
+    AlertIcon,
+    Box, Center, Heading,
     ScaleFade,
     Text,
     useColorModeValue,
@@ -20,18 +19,13 @@ export function DayViewer(props) {
     const headerColor = useColorModeValue('gray.100', 'gray.900');
     const textColor = useColorModeValue('gray.700', 'gray.400');
     const [dayEvents, setDayEvents] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [link, setLink] = useState('');
-    const [eventPoster, setEventPoster] = useState({});
-    const history = useHistory();
     const id = props.match.params.id;
     const {isOpen, onToggle} = useDisclosure()
 
     useEffect(() => {
         onToggle();
-        setLoading(true);
         fetchDay();
-    }, []);
+    }, []);  // eslint-disable-line react-hooks/exhaustive-deps
 
 
     const fetchDay = () => {
@@ -44,16 +38,15 @@ export function DayViewer(props) {
         })
             .then((response) => response.json())
             .then(data => setDayEvents(data));
-        setLoading(false);
     }
 
-    const setImage = () => {
-        setLink("https://via.placeholder.com/350");
-    }
+    //const setImage = () => {
+    //    setLink("https://via.placeholder.com/350");
+    //}
 
-    const myImage = () => {
-        return <Center><Image src={link} alt="event image" onError={() => setImage()}/> </Center>
-    }
+    // const myImage = () => {
+    //     return <Center><Image src={link} alt="event image" onError={() => setImage()}/> </Center>
+    // }
 
     const renderEvents = () => {
         const currentDayEvents = dayEvents.map(currentEvent =>

@@ -23,7 +23,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .cors().and()
-                .csrf().disable() // Don't use it in production!
                 .authorizeRequests()
                 .antMatchers("/", "/index", "/circle", "/items", "/search/**", "/enableFilters").permitAll()
                 .antMatchers("/loggedin", "/logout").permitAll()

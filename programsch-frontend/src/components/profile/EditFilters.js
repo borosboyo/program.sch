@@ -17,7 +17,7 @@ export function EditFilters() {
         fetchCircles();
         fetchUserFilters();
         handleGetLoginState();
-    },[]);
+    },[]);  // eslint-disable-line react-hooks/exhaustive-deps
 
     const handleGetLoginState = () => {
         fetch(`http://localhost:8080/api/isLoggedIn`, {
@@ -93,11 +93,13 @@ export function EditFilters() {
                     {
                         circleList.map(circle => {
                             if (circle.resort.name === resort.name) {
+                                //eslint-disable-next-line jsx-a11y/anchor-is-valid
                                 return <a onClick={() => handleClickOnCircle(circle)} key={circle.displayName} href="#"
                                           className={handleCircleState(circle.displayName)}>
                                     {circle.displayName}
                                 </a>
                             }
+                            return <></>
                         })
                     }
                 </div>

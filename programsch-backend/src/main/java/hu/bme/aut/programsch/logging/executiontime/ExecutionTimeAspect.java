@@ -18,12 +18,12 @@ public class ExecutionTimeAspect {
     public Object logExecutionTime(ProceedingJoinPoint joinPoint) {
         final StopWatch stopWatch = new StopWatch();
         stopWatch.start();
-        Object proceed = null;
+        Object proceed;
 
         try {
             proceed = joinPoint.proceed();
         } catch (Throwable e) {
-            throw new RuntimeException(e);
+            throw new CustomRuntimeException(e);
         }
 
         stopWatch.stop();

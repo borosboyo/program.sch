@@ -23,7 +23,7 @@ export function ProfileData() {
         handleGetUserObject();
         handleGetFilterState();
         handleGetUserMemberships();
-    }, []);
+    }, []);  // eslint-disable-line react-hooks/exhaustive-deps
 
     const handleGetUserObject = () => {
         fetch(`http://localhost:8080/api/appuser`, {

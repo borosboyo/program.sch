@@ -38,15 +38,18 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
 public class LoginController {
 
-    private final String USER_SESSION_ATTRIBUTE_NAME = "user_id";
-    private final String USER_ENTITY_DTO_SESSION_ATTRIBUTE_NAME = "user";
-    private final String CIRCLE_OWNERSHIP_SESSION_ATTRIBUTE_NAME = "circles";
+    private static final String USER_SESSION_ATTRIBUTE_NAME = "user_id";
+    private static final String USER_ENTITY_DTO_SESSION_ATTRIBUTE_NAME = "user";
+    private static final String CIRCLE_OWNERSHIP_SESSION_ATTRIBUTE_NAME = "circles";
+
+    private static final Logger logger = Logger.getLogger(LoginController.class.getName());
 
     private final AppUserService appUserService;
     private final AuthSchAPI authSchAPI;
@@ -70,7 +73,7 @@ public class LoginController {
                 appUser = appUserService.getById(profile.getInternalId().toString());
                 List<String> permissionsByVIR = getCirclePermissionList(ownedCircles);
                 if (!appUser.getPermissions().containsAll(permissionsByVIR)) {
-                    permissionsByVIR.addAll(appUser.permissions);
+                    permissionsByVIR.addAll(appUser.getPermissions());
                     appUserService.save(appUser);
                 }
 
@@ -98,7 +101,7 @@ public class LoginController {
             if (auth != null) {
                 auth.setAuthenticated(false);
             }
-            e.printStackTrace();
+           logger.log(java.util.logging.Level.SEVERE, e.getMessage());
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .location(URI.create(""))
@@ -172,7 +175,7 @@ public class LoginController {
     private List<GrantedAuthority> getAuthorities(AppUser user) {
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_${Role.USER.name}"));
-        if (user.permissions.contains("ROLE_${Role.LEADER.name}"))
+        if (user.getPermissions().contains("ROLE_${Role.LEADER.name}"))
             authorities.add(new SimpleGrantedAuthority("ROLE_${Role.LEADER.name}"));
         return authorities;
     }

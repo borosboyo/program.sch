@@ -1,6 +1,5 @@
 package hu.bme.aut.programsch.logging.controller;
 
-import hu.bme.aut.programsch.logging.controller.RestApiMessageType;
 import lombok.extern.log4j.Log4j2;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
@@ -60,9 +59,9 @@ public class EndpointLogger {
         } else {
             requestValue.append("Response value: ");
         }
-        Arrays.stream(obj).forEach(x -> {
-            requestValue.append(x.toString());
-        });
+        Arrays.stream(obj).forEach(x ->
+            requestValue.append(x.toString())
+        );
         requestValue.append("\r\n");
         return requestValue.toString();
     }

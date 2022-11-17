@@ -15,7 +15,7 @@ export function Profile() {
     useEffect(() => {
         onToggle();
         handleGetLoginState();
-    }, []);
+    }, []);  // eslint-disable-line react-hooks/exhaustive-deps
 
     const handleGetLoginState = () => {
         fetch(`http://localhost:8080/api/isLoggedIn`, {

@@ -7,7 +7,7 @@ export function CalendarHolder() {
 
     useEffect(() => {
         onToggle();
-    }, []);
+    }, []);  // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <ScaleFade in={isOpen}>

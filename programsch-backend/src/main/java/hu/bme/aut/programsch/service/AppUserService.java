@@ -26,7 +26,7 @@ public class AppUserService {
 
     @Transactional
     public AppUser getById(String uid) {
-        return appUserRepository.getById(uid);
+        return appUserRepository.findById(uid).orElse(null);
     }
 
     @Transactional
