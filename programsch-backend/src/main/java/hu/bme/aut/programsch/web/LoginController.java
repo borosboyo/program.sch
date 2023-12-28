@@ -8,6 +8,7 @@ import hu.bme.aut.programsch.config.authsch.struct.PersonEntitlement;
 import hu.bme.aut.programsch.config.authsch.struct.Scope;
 import hu.bme.aut.programsch.domain.AppUser;
 import hu.bme.aut.programsch.domain.LoginUrl;
+import hu.bme.aut.programsch.logging.executiontime.LogExecutionTime;
 import hu.bme.aut.programsch.service.AppUserService;
 import hu.bme.aut.programsch.service.CircleService;
 import hu.bme.aut.programsch.service.MembershipService;
@@ -37,15 +38,18 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
 public class LoginController {
 
-    private final String USER_SESSION_ATTRIBUTE_NAME = "user_id";
-    private final String USER_ENTITY_DTO_SESSION_ATTRIBUTE_NAME = "user";
-    private final String CIRCLE_OWNERSHIP_SESSION_ATTRIBUTE_NAME = "circles";
+    private static final String USER_SESSION_ATTRIBUTE_NAME = "user_id";
+    private static final String USER_ENTITY_DTO_SESSION_ATTRIBUTE_NAME = "user";
+    private static final String CIRCLE_OWNERSHIP_SESSION_ATTRIBUTE_NAME = "circles";
+
+    private static final Logger logger = Logger.getLogger(LoginController.class.getName());
 
     private final AppUserService appUserService;
     private final AuthSchAPI authSchAPI;
@@ -56,6 +60,7 @@ public class LoginController {
 
     @GetMapping("/loggedin")
     @Operation(summary = "The redirect from the login page")
+    @LogExecutionTime
     public ResponseEntity<Void> loggedIn(@RequestParam String code, @RequestParam String state, HttpServletRequest request) {
         Authentication auth = null;
         try {
@@ -68,7 +73,7 @@ public class LoginController {
                 appUser = appUserService.getById(profile.getInternalId().toString());
                 List<String> permissionsByVIR = getCirclePermissionList(ownedCircles);
                 if (!appUser.getPermissions().containsAll(permissionsByVIR)) {
-                    permissionsByVIR.addAll(appUser.permissions);
+                    permissionsByVIR.addAll(appUser.getPermissions());
                     appUserService.save(appUser);
                 }
 
@@ -96,7 +101,7 @@ public class LoginController {
             if (auth != null) {
                 auth.setAuthenticated(false);
             }
-            e.printStackTrace();
+           logger.log(java.util.logging.Level.SEVERE, e.getMessage());
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .location(URI.create(""))
@@ -109,6 +114,7 @@ public class LoginController {
                     @ApiResponse(description = "The OAuth2 authorization URL",
                             content = @Content(mediaType = "application/json",
                                     array = @ArraySchema(schema = @Schema(implementation = LoginUrl.class))))})
+    @LogExecutionTime
     public ResponseEntity<LoginUrl> getLoginInfo(HttpServletRequest request) {
         return new ResponseEntity<>(new LoginUrl(authSchAPI.generateLoginUrl(buildUniqueState(request),
                 Scope.BASIC, Scope.GIVEN_NAME, Scope.SURNAME, Scope.MAIL, Scope.ENTRANTS, Scope.EDU_PERSON_ENTILEMENT)), HttpStatus.OK);
@@ -121,6 +127,7 @@ public class LoginController {
 
     @GetMapping("/logout")
     @Operation(summary = "Logout of the app")
+    @LogExecutionTime
     public void logout(HttpServletRequest request) {
         request.getSession(false);
         SecurityContextHolder.clearContext();
@@ -168,7 +175,7 @@ public class LoginController {
     private List<GrantedAuthority> getAuthorities(AppUser user) {
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_${Role.USER.name}"));
-        if (user.permissions.contains("ROLE_${Role.LEADER.name}"))
+        if (user.getPermissions().contains("ROLE_${Role.LEADER.name}"))
             authorities.add(new SimpleGrantedAuthority("ROLE_${Role.LEADER.name}"));
         return authorities;
     }
@@ -179,6 +186,7 @@ public class LoginController {
                     @ApiResponse(description = "State of the login",
                             content = @Content(mediaType = "application/json",
                                     array = @ArraySchema(schema = @Schema(implementation = Boolean.class))))})
+    @LogExecutionTime
     public ResponseEntity<Boolean> getIsLoggedIn() {
         return new ResponseEntity<>(loggedIn, HttpStatus.OK);
     }

@@ -1,0 +1,49 @@
+name: NodeJS CI
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [main, develop, feature/cicd, feature/testing]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Install dependencies
+      working-directory: programsch-frontend
+      run: npm install
+
+    #- name: Run the tests and generate coverage report
+    #  working-directory: programsch-frontend
+    #  run: npm test -- --coverage
+
+    - name: Build
+      working-directory: programsch-frontend
+      run: npm run build
+
+    - name: Deploy
+      working-directory: programsch-frontend
+      run: |
+        git config --global user.name borosboyo
+        git config --global user.email borosgergo00@gmail.com
+        git remote set-url origin https://${github_token}@github.com/${repository}
+        npm run deploy
+      env:
+        user_name: 'github-actions[bot]'
+        user_email: 'github-actions[bot]@users.noreply.github.com'
+        github_token: ${{ secrets.ACTIONS_DEPLOY_ACCESS_TOKEN }}
+        repository: ${{ github.repository }}

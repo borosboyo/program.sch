@@ -28,8 +28,8 @@ public class CircleService {
     }
 
     @Transactional
-    public void save(Circle circleEntity) {
-        circleRepository.save(circleEntity);
+    public CircleDto save(Circle circleEntity) {
+        return circleMapper.circleToDto(circleRepository.save(circleEntity));
     }
 
     @Transactional

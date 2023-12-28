@@ -26,7 +26,7 @@ public class AppUserService {
 
     @Transactional
     public AppUser getById(String uid) {
-        return appUserRepository.getById(uid);
+        return appUserRepository.findById(uid).orElse(null);
     }
 
     @Transactional
@@ -55,7 +55,10 @@ public class AppUserService {
 
     @Transactional
     public AppUserDto findUser() {
-        return appUserMapper.appUserToDto(appUserRepository.findAll().get(0));
+        if(!appUserRepository.findAll().isEmpty()) {
+            return appUserMapper.appUserToDto(appUserRepository.findAll().get(0));
+        }
+        return null;
     }
 
 }

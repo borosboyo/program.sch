@@ -2,8 +2,6 @@ package hu.bme.aut.programsch.dto;
 
 import lombok.Data;
 
-import java.time.LocalDateTime;
-
 @Data
 public class CreateEventDto {
     private long id;

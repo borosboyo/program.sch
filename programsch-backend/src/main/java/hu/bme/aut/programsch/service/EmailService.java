@@ -31,7 +31,7 @@ public class EmailService  {
         MimeMessage emailMessage = mailSender.createMimeMessage();
         MimeMessageHelper mailBuilder = new MimeMessageHelper(emailMessage, true);
 
-        mailBuilder.setFrom(message.getMailFrom(), "Program.sch admin");
+        mailBuilder.setFrom(message.getMailFrom(), "Program.sch");
         mailBuilder.setTo(message.getMailTo());
         mailBuilder.setSubject(message.getMailSubject());
         mailBuilder.setText(message.getMailContent(), true);
@@ -48,7 +48,7 @@ public class EmailService  {
 
         Mail result = new Mail();
         result.setMailTo(to);
-        result.setMailFrom("program@sch.hu");
+        result.setMailFrom("boros.gergo@hotmail.com");
         result.setMailContent(stringWriter.toString());
         result.setMailSubject(emailType.getEmailSubject());
 

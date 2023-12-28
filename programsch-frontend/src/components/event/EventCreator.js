@@ -1,255 +1,380 @@
-import React from 'react';
+import React, {useEffect, useState,} from 'react';
 import AppNavbar from "../banner/AppNavbar";
 import Footer from "../banner/Footer";
-import './EventCreator.css';
-import {Button, Form, Input, Label} from 'reactstrap';
+import {Form} from 'reactstrap';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import {
+    FormControl,
+    Button,
+    Box,
+    Alert,
+    AlertDescription,
+    AlertIcon,
+    FormLabel,
+    Heading,
+    ScaleFade,
+    Input,
+    useColorModeValue,
+    Textarea,
+    Select,
+    useDisclosure,
+    FormHelperText,
+    FormErrorMessage
+} from "@chakra-ui/react";
+import {useHistory} from "react-router-dom";
+import moment from "moment";
 
-export class EventCreator extends React.Component {
+export function EventCreator() {
+    const boxColor = useColorModeValue('white', 'gray.900');
+    const textColor = useColorModeValue('gray.700', 'gray.400');
+    const [resorts, setResorts] = useState([]);
+    const [selectedResort, setSelectedResort] = useState({});
+    const [userResort, setUserResort] = useState({});
+    const history = useHistory();
+    const {isOpen, onToggle} = useDisclosure()
 
-    newEvent: {
-        name: '',
-        resort: '',
-        circle: '',
-        start: '',
-        end: '',
-        place: '',
-        facebookUrl: '',
-        poster: '',
-        tldr: '',
-        descirption: '',
-    }
-
-    constructor(props) {
-        super(props);
-
-        this.state = {resorts: [], circles: [], selectedResort: {}, event: this.newEvent};
-        this.handleResortChange = this.handleResortChange.bind(this);
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleApiCreateCall = this.handleApiCreateCall.bind(this);
-
-    }
-
-    async componentDidMount() {
-        const parameter = this.props.match.url.replace('/event/', '')
-        if (parameter !== 'new') {
-            const event = await (await (fetch(`http://localhost:8080/api/event/${parameter}`))).json();
-            this.setState({event: event});
+    function newEvent() {
+        return {
+            name: '',
+            resort: '',
+            circle: '',
+            start: '',
+            end: '',
+            place: '',
+            facebookUrl: '',
+            poster: '',
+            tldr: '',
+            descirption: '',
         }
-
-        this.handleGetLoginState();
-        this.fetchResorts();
     }
 
-    fetchResorts() {
+    const [event, setEvent] = useState(newEvent);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    useEffect(() => {
+        const parameter = history.location.pathname.replace('/event/', '');
+        if (parameter !== 'new') {
+            fetch(`http://localhost:8080/api/event/${parameter}`).then((response) => response.json())
+                .then(data => fetchResortByCircleName(data))
+        }
+        handleGetLoginState();
+        fetchResorts();
+        onToggle();
+
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+    const fetchResorts = () => {
         fetch(`http://localhost:8080/api/resort/usermemberships`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
+            method: 'GET', headers: {
+                'Content-Type': 'application/json', 'Accept': 'application/json'
             }
         })
             .then((response) => response.json())
-            .then(data => this.setState({resorts: data}));
+            .then(data => setResorts(data));
     }
 
-    handleSubmit(e) {
-        e.preventDefault()
-        const {event} = this.state;
+    const fetchResortByCircleName = (data) => {
+        setEvent(data);
+        fetch(`http://localhost:8080/api/resort/byCircle?circleName=` + event.circle.displayName, {
+            method: 'GET', headers: {
+                'Content-Type': 'application/json', 'Accept': 'application/json'
+            }
+        })
+            .then((response) => response.json())
+            .then(data => setUserResort(data));
+        console.log(userResort);
+    }
 
-        this.handleApiCreateCall(event)
+    const handleSubmit = (event) => {
+
+        handleApiCreateCall(event)
 
         const onFinish = () => {
-            this.props.history.push('/')
+            history.push('/')
             window.location.reload();
         }
         onFinish();
     }
 
-    handleResortChange(e) {
-        this.handleChange(e);
+    const handleResortChange = (e) => {
+        handleChange(e);
         fetch(`http://localhost:8080/api/resort/` + e.target.value, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
+            method: 'GET', headers: {
+                'Content-Type': 'application/json', 'Accept': 'application/json'
             }
         })
             .then((response) => response.json())
-            .then(data => this.setState({selectedResort: data}));
+            .then(data => setSelectedResort(data));
     }
 
 
-    handleActualCircleList() {
-        const circles = this.state.selectedResort.circles;
+    const handleActualCircleList = (e) => {
+        const circles = selectedResort.circles;
         if (circles !== undefined) {
-            return circles.map(circle =>
-                <option key={circle.displayName}>{circle.displayName}</option>
-            );
+            return circles.map(circle => <option key={circle.displayName}>{circle.displayName}</option>);
         }
     }
 
-    handleApiCreateCall(newEvent) {
-        fetch('http://localhost:8080/api/event' + (newEvent.id ? '/' + newEvent.id : ''), {
-            method: newEvent.id ? 'PUT' : 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(newEvent),
+    const handleApiCreateCall = (newEvent) => {
+        newEvent.start = moment(newEvent.start).format("YYYY-MM-DD HH:mm");
+        newEvent.end = moment(newEvent.end).format("YYYY-MM-DD HH:mm");
+        fetch('http://localhost:8080/api/event' + (newEvent.id ? ('/' + newEvent.id) : ''), {
+            method: newEvent.id ? 'PUT' : 'POST', headers: {
+                'Accept': 'application/json', 'Content-Type': 'application/json'
+            }, body: JSON.stringify(newEvent),
         });
     }
 
-    handleChange(e) {
+    const handleChange = (e) => {
         const target = e.target;
         const value = target.value;
         const name = target.name;
-        let event = {...this.state.event};
-        event[name] = value;
-        console.log(event.start);
-        console.log(event.end);
-        this.setState({event});
+        setEvent({...event, [name]: value});
     }
 
-    handleGetLoginState() {
+    const handleGetLoginState = () => {
         fetch(`http://localhost:8080/api/isLoggedIn`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
+            method: 'GET', headers: {
+                'Content-Type': 'application/json', 'Accept': 'application/json'
             }
         })
             .then((response) => response.json())
-            .then(data => this.setState({isLoggedIn: data}));
+            .then(data => setIsLoggedIn(data));
     }
 
-    render() {
-        const resortList = this.state.resorts.map(resort =>
-            <option key={resort.name}>{resort.name}</option>
-        );
-
-        const circleList = this.handleActualCircleList();
-
-        let currentEvent = {};
-
-        if (this.state.event !== undefined) {
-            currentEvent = this.state.event;
+    const createButton = () => {
+        if (event.name === '') {
+            return <p>Létrehozás</p>
         }
+        return <p>Módosítás</p>
+    }
 
-        if (this.state.isLoggedIn === false) {
-            return (
-                <div>
+    const isNameError = event.name === '';
+    const isResortError = event.resort === '';
+    const isCircleError = event.circle === '';
+
+    const isStartError = () => {
+        return event.start === '';
+    }
+
+    const isStartDateBeforeCurrentDate = () => {
+        return moment(event.start).isBefore(moment());
+    }
+    const isEndDateBeforeCurrentDate = () => {
+        return moment(event.end).isBefore(moment()) || moment(event.end).isBefore(event.start);
+
+    }
+    const isEndError = () => {
+        return event.end === '';
+
+    }
+    const isPlaceError = event.place === '';
+
+    const evaluateStartInputText = () => {
+        if (!(isStartError() || isStartDateBeforeCurrentDate())) {
+            return <FormHelperText>
+                Az időpont, amikor kezdődik az esemény.
+            </FormHelperText>
+        }
+        if (isStartError()) {
+            return <FormErrorMessage>
+                Az esemény kezdési ideje kötelező.
+            </FormErrorMessage>
+        }
+        if (isStartDateBeforeCurrentDate()) {
+            return <FormErrorMessage>
+                Az esemény kezdési ideje nem lehet korábbi időpont.
+            </FormErrorMessage>
+        }
+    }
+
+    const evaluateEndInputText = () => {
+        if (!(isEndError() || isEndDateBeforeCurrentDate())) {
+            return <FormHelperText>
+                Az időpont, amikor véget ér az esemény.
+            </FormHelperText>
+        }
+        if (isEndError()) {
+            return <FormErrorMessage>
+                Az esemény befejezési ideje kötelező.
+            </FormErrorMessage>
+        }
+        if (isEndDateBeforeCurrentDate()) {
+            return <FormErrorMessage>
+                Az esemény befejezési ideje nem lehet korábbi időpont.
+            </FormErrorMessage>
+        }
+    }
+
+    const render = () => {
+        const resortList = resorts.map(resort => <option key={resort.name}>{resort.name}</option>);
+        const circleList = handleActualCircleList();
+        if (isLoggedIn === false) {
+            return (<div>
                     <AppNavbar/>
-                    <div className="container justify-content-center">
-                        <div className="card" id="card">
-                            <div className="card-header">Kérlek jelentkezz be!</div>
-                        </div>
-                    </div>
+                    <ScaleFade initialScale={0.5} in={isOpen}>
+                        <Alert status='error'>
+                            <AlertIcon/>
+                            <AlertDescription>Esemény létrehozásához kérlek jelentkezz be.</AlertDescription>
+                        </Alert>
+                    </ScaleFade>
                 </div>
 
             );
         } else {
-            return (
-                <div>
-                    <AppNavbar/>
-                    <div className="container" id="eventCardHolder">
-                        <div className="card">
-                            <h5 className="card-header"><CalendarMonthIcon/> Eseménykezelő</h5>
-                            <div className="card-body">
-                                <Form id="form" onSubmit={this.handleSubmit}>
-                                    <div className="form-row">
-                                        <div className="form-group col-md-6">
-                                            <Label for="name">Program neve</Label>
+            return (<div>
+                <AppNavbar/>
+                <Box style={{marginTop: '50px'}} bg={boxColor} className="container" id="eventCardHolder"
+                     maxW={"50%"}>
+                    <Box bg={boxColor} className="card">
+                        <Heading color={textColor}
+                                 className="card-header"><CalendarMonthIcon/> Eseménykezelő</Heading>
+                        <div className="card-body">
+                            <Form id="form" onSubmit={() => handleSubmit(event)}>
+                                <div className="form-row">
+                                    <div className="form-group col-md-6">
+                                        <FormControl isRequired={true} mb={'10px'} isInvalid={isNameError}>
+                                            <FormLabel color={textColor} for="name">Program neve</FormLabel>
                                             <Input type="text" className="form-control" id="name" name="name"
-                                                   placeholder="" onChange={this.handleChange}
-                                                   value={currentEvent.name || ''}/>
-                                        </div>
+                                                   placeholder="" onChange={handleChange}
+                                                   value={event.name}/>
+                                            {!isNameError ? (<FormHelperText>
+                                                Az esemény neve, ahogyan szerepelni fog a naptárban.
+                                            </FormHelperText>) : (<FormErrorMessage>Kötelező nevet adni az
+                                                eseménynek.</FormErrorMessage>)}
+                                        </FormControl>
                                     </div>
-                                    <div className="form-row">
-                                        <Label className="my-1 mr-2" for="resort">Reszort</Label><br/>
-                                        <Input type={"select"} className="custom-select my-1 mr-sm-2" id="resort"
-                                               name="resort" onChange={this.handleResortChange}
-                                               defaultValue={"Válassz.."}>
+                                </div>
+                                <div className="form-row">
+                                    <FormControl isRequired={true} mb={'10px'} isInvalid={isResortError}>
+                                        <FormLabel color={textColor} className="my-0 mr-2"
+                                                   for="resort">Reszort</FormLabel><br/>
+                                        <Select bg={'white'} color={'black'} className="custom-select my-0 mr-sm-2"
+                                                id="resort"
+                                                name="resort" onChange={handleResortChange}>
                                             <option hidden/>
                                             {resortList}
-                                        </Input>
-                                    </div>
-                                    <div className="form-row">
-                                        <Label className="my-1 mr-2" for="circle">Kör</Label><br/>
-                                        <Input type={"select"} className="custom-select my-1 mr-sm-2" id="circle"
-                                               name="circle" onChange={this.handleChange}>
+                                        </Select>
+                                        {!isResortError ? (<FormHelperText>
+                                            A reszort, ahová az esemény tartozik.
+                                        </FormHelperText>) : (<FormErrorMessage>Kötelező reszorthoz rendelni
+                                            az eseményt.</FormErrorMessage>)}
+                                    </FormControl>
+                                </div>
+                                <div className="form-row">
+                                    <FormControl isRequired={true} mb={'10px'} isInvalid={isCircleError}>
+                                        <FormLabel color={textColor} className="my-0 mr-2"
+                                                   for="circle">Kör</FormLabel><br/>
+                                        <Select bg={'white'} color={'black'} className="custom-select my-0 mr-sm-2"
+                                                id="circle"
+                                                name="circle" onChange={handleChange}>
                                             <option hidden/>
                                             {circleList}
-                                        </Input>
-                                    </div>
-                                    <div className="form-row">
-                                        <div className="form-group col-md-6">
-                                            <Label for="start">Esemény kezdete</Label>
+                                        </Select>
+                                        {!isCircleError ? (<FormHelperText>
+                                            A kör, ahová az esemény tartozik.
+                                        </FormHelperText>) : (<FormErrorMessage>Kötelező körhöz rendelni
+                                            az eseményt.</FormErrorMessage>)}
+                                    </FormControl>
+                                </div>
+                                <div className="form-row">
+                                    <div className="form-group col-md-6">
+                                        <FormControl isRequired={true} mb={'10px'}
+                                                     isInvalid={isStartError() || isStartDateBeforeCurrentDate()}>
+                                            <FormLabel color={textColor} for="start">Esemény kezdete</FormLabel>
                                             <Input type="datetime-local" className="form-control" id="start"
                                                    name="start"
-                                                   placeholder="" onChange={this.handleChange}
-                                                   value={currentEvent.start || ''}/>
-                                        </div>
+                                                   placeholder="" onChange={handleChange}
+                                                   value={event.start || ''}/>
+                                            {evaluateStartInputText()}
+                                        </FormControl>
                                     </div>
-                                    <div className="form-row">
-                                        <div className="form-group col-md-6">
-                                            <Label for="end">Esemény vége</Label>
-                                            <Input type="datetime-local" className="form-control" id="end" name="end"
-                                                   placeholder="" onChange={this.handleChange}
-                                                   value={currentEvent.end || ''}/>
-                                        </div>
+                                </div>
+                                <div className="form-row">
+                                    <div className="form-group col-md-6">
+                                        <FormControl isRequired={true} mb={'10px'}
+                                                     isInvalid={isEndError() || isEndDateBeforeCurrentDate()}>
+                                            <FormLabel color={textColor} for="end">Esemény vége</FormLabel>
+                                            <Input type="datetime-local" className="form-control" id="end"
+                                                   name="end"
+                                                   placeholder="" onChange={handleChange}
+                                                   value={event.end || ''}/>
+                                            {evaluateEndInputText()}
+                                        </FormControl>
                                     </div>
-                                    <div className="form-row">
-                                        <div className="form-group col-md-6">
-                                            <Label for="place">Helyszín</Label>
+                                </div>
+                                <div className="form-row">
+                                    <div className="form-group col-md-12">
+                                        <FormControl isRequired={true} mb={'10px'} isInvalid={isPlaceError}>
+                                            <FormLabel color={textColor} for="place">Helyszín</FormLabel>
                                             <Input type="text" className="form-control" id="place" name="place"
-                                                   placeholder="" onChange={this.handleChange}
-                                                   value={currentEvent.place || ''}/>
-                                        </div>
+                                                   placeholder="" onChange={handleChange}
+                                                   value={event.place || ''}/>
+                                            {!isPlaceError ? (<FormHelperText>
+                                                A helyszín, ahol megrendezésre kerül az esemény.
+                                            </FormHelperText>) : (<FormErrorMessage>Kötelező helyszínhez rendelni az
+                                                eseményt.</FormErrorMessage>)}
+                                        </FormControl>
                                     </div>
-                                    <div className="form-row">
-                                        <div className="form-group col-md-6">
-                                            <Label for="facebookUrl">Facebook esemény linkje</Label>
+                                </div>
+                                <div className="form-row">
+                                    <div className="form-group col-md-12">
+                                        <FormControl mb={'10px'}>
+                                            <FormLabel color={textColor} for="facebookUrl">Facebook esemény
+                                                linkje</FormLabel>
                                             <Input type="text" className="form-control" id="facebookUrl"
                                                    name="facebookUrl"
-                                                   placeholder="" onChange={this.handleChange}
-                                                   value={currentEvent.facebookUrl || ''}/>
-                                        </div>
+                                                   placeholder='' onChange={handleChange}
+                                                   value={event.facebookUrl || ''}/>
+                                        </FormControl>
                                     </div>
-                                    <div className="form-row">
-                                        <div className="form-group col-md-6">
-                                            <Label for="poster">Plakát linkje</Label>
+                                </div>
+                                <div className="form-row">
+                                    <div className="form-group col-md-12">
+                                        <FormControl mb={'10px'}>
+                                            <FormLabel color={textColor} for="poster">Plakát linkje</FormLabel>
                                             <Input type="text" className="form-control" id="poster" name="poster"
-                                                   placeholder="" onChange={this.handleChange}
-                                                   value={currentEvent.poster || ''}/>
-                                        </div>
+                                                   placeholder={''} onChange={handleChange}
+                                                   value={event.poster || ''}/>
+                                        </FormControl>
                                     </div>
-                                    <div className="form-row">
-                                        <div className="form-group col-md-6">
-                                            <Label for="tldr">Program TLDR</Label>
+                                </div>
+                                <div className="form-row">
+                                    <div className="form-group col-md-12">
+                                        <FormControl mb={'10px'}>
+                                            <FormLabel color={textColor} for="tldr">Program TLDR</FormLabel>
                                             <Input type="text" className="form-control" id="tldr" name="tldr"
-                                                   placeholder="" onChange={this.handleChange}
-                                                   value={currentEvent.tldr || ''}/>
-                                        </div>
+                                                   placeholder={''} onChange={handleChange}
+                                                   value={event.tldr || ''}/>
+                                        </FormControl>
                                     </div>
-                                    <div className="form-row">
-                                        <div className="form-group col-md-6">
-                                            <Label for="description">Az esemény leírása</Label>
-                                            <textarea id="description" name="description" rows="4" cols="50"
-                                                      onChange={this.handleChange}
-                                                      value={currentEvent.description || ''}>
-                                        </textarea>
-                                        </div>
+                                </div>
+                                <div className="form-row">
+                                    <div className="form-group col-md-12">
+                                        <FormControl mb={'10px'}>
+                                            <FormLabel color={textColor} for="description">Az esemény
+                                                leírása</FormLabel>
+                                            <Textarea id="description" name="description" size='lg' fontSize={16}
+                                                      bg={'white'}
+                                                      placeholder={''}
+                                                      onChange={handleChange}
+                                                      value={event.description || ''}>
+                                            </Textarea>
+                                        </FormControl>
                                     </div>
-                                    <Button type="submit" className="btn btn-primary">Létrehozás</Button>
-                                </Form>
-                            </div>
+                                </div>
+                                <Button colorScheme="green"
+                                        type={"submit"}
+                                        boxShadow={'0px 1px 25px -5px rgb(0 255 0 / 40%), 0 10px 10px -5px rgb(0 255 0 / 35%)'}>{createButton()}</Button>
+                            </Form>
                         </div>
-                    </div>
-                    <Footer/>
-                </div>
-            );
+                    </Box>
+                </Box>
+                <Footer/>
+            </div>);
         }
     }
+
+    return render();
 }
+

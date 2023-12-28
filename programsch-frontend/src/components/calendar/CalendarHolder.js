@@ -1,22 +1,25 @@
-import React from 'react'
-import './Calendar.css'
+import React, {useEffect} from 'react'
 import Calendar from "./Calendar";
+import {ScaleFade, useDisclosure} from "@chakra-ui/react";
 
-export default class CalendarHolder extends React.Component {
+export function CalendarHolder() {
+    const { isOpen, onToggle } = useDisclosure()
 
-    constructor(props) {
-        super(props);
-        this.state = {};
-    }
+    useEffect(() => {
+        onToggle();
+    }, []);  // eslint-disable-line react-hooks/exhaustive-deps
 
-    render() {
-        return (
-            <div className="container" id="calendar">
-                <Calendar/>
-            </div>
-        );
-    }
+    return (
+        <ScaleFade in={isOpen}>
+        <div className="container" id="calendar">
+            <Calendar/>
+        </div>
+        </ScaleFade>
+    );
+
 }
+
+export default CalendarHolder;
 
 
 
